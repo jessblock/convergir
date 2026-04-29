@@ -1,527 +1,212 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- saved from url=(0045)file:///C:/Users/jessi/Downloads/index_6.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0F1419">
+<meta name="author" content="J.B. — JBLK Design">
+<meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
 <title>Convergir — Um encontro no fim do mundo</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0F1419; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #F4E8D8; -webkit-font-smoothing: antialiased; }
+  body { height: 100dvh; }
+  #game { position: relative; width: 100vw; height: 100dvh; overflow: hidden; }
+  .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 1.4s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #0F1419; }
+  .scene.active { opacity: 1; pointer-events: auto; }
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #0F1419;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #F4E8D8;
-  }
-
-  #game {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .scene {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1.4s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #0F1419;
-  }
-
-  .scene.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* TELA DE TÍTULO */
-  #scene-title {
-    background-image: linear-gradient(135deg, rgba(15,20,25,0.55) 0%, rgba(15,20,25,0.7) 100%), url('assets/title.png');
-  }
-
-  .title-content {
-    text-align: center;
-    padding: 0 32px;
-    background: rgba(15, 20, 25, 0.35);
-    padding: 40px 32px;
-    backdrop-filter: blur(2px);
-  }
-
-  #scene-title h1 {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 58px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    color: #F4E8D8;
-    margin-bottom: 16px;
-  }
-
-  .subtitle {
-    font-size: 11px;
-    letter-spacing: 0.4em;
-    color: #F4E8D8;
-    opacity: 0.75;
-    margin-bottom: 8px;
-  }
-
-  .divider {
-    width: 60px;
-    height: 1px;
-    background: #F4E8D8;
-    opacity: 0.4;
-    margin: 24px auto;
-  }
-
-  .phase-label {
-    font-size: 10px;
-    letter-spacing: 0.5em;
-    color: #F4E8D8;
-    opacity: 0.6;
-    margin-top: 32px;
-  }
-
-  .start-button {
-    margin-top: 48px;
-    padding: 14px 48px;
-    background: rgba(15, 20, 25, 0.5);
-    border: 0.7px solid #F4E8D8;
-    color: #F4E8D8;
-    font-family: inherit;
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-  }
-
-  .start-button:hover, .start-button:active {
-    background: rgba(244, 232, 216, 0.15);
-  }
+  /* TÍTULO */
+  #scene-title { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.55) 40%, rgba(15,20,25,0.85) 100%), url('assets/title.png'); justify-content: flex-start; padding-top: 8vh; }
+  .title-content { text-align: center; padding: 32px 28px; max-width: 90%; }
+  #scene-title h1 { font-family: Georgia, serif; font-size: clamp(36px, 9vw, 64px); font-weight: 400; letter-spacing: 0.08em; color: #F4E8D8; margin-bottom: 16px; text-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+  .subtitle { font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; color: #F4E8D8; opacity: 0.85; margin-bottom: 8px; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+  .divider { width: 60px; height: 1px; background: #F4E8D8; opacity: 0.5; margin: 24px auto; }
+  .phase-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.5em; color: #F4E8D8; opacity: 0.75; margin-top: 32px; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+  #scene-title .start-button { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); }
+  .start-button { padding: 16px 52px; background: rgba(15, 20, 25, 0.55); border: 0.7px solid rgba(244, 232, 216, 0.85); color: #F4E8D8; font-family: inherit; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.3em; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .start-button:hover, .start-button:active { background: rgba(244, 232, 216, 0.18); border-color: #F4E8D8; }
 
   /* CUTSCENES */
-  .cutscene {
-    padding: 32px;
-  }
+  .cutscene { padding: 24px; justify-content: flex-end; padding-bottom: 14vh; cursor: pointer; }
+  .cutscene-text { width: 100%; max-width: 580px; text-align: center; background: rgba(15, 20, 25, 0.78); padding: 28px 24px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 0.5px solid rgba(244, 232, 216, 0.1); }
+  .cutscene-location { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.75; margin-bottom: 18px; }
+  .cutscene-narration { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4.2vw, 18px); line-height: 1.65; color: #F4E8D8; opacity: 0.95; }
+  .continue-hint { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.3em; opacity: 0.55; animation: blink 2s ease-in-out infinite; cursor: pointer; padding: 12px 24px; z-index: 5; white-space: nowrap; }
+  @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
 
-  .cutscene-text {
-    max-width: 580px;
-    text-align: center;
-    background: rgba(15, 20, 25, 0.6);
-    padding: 32px 36px;
-    backdrop-filter: blur(3px);
-  }
+  #scene-intro-lia { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/lia-uberlandia.png'); }
+  #scene-intro-bento { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/bento-sinop.png'); }
+  #scene-characters { background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%); }
+  #scene-connection { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.88) 100%), url('assets/connection.png'); }
+  #scene-map { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/map.png'); }
+  #scene-fusos-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.9) 100%), url('assets/fusos.png'); }
+  #scene-fusos-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.7) 0%, rgba(15,20,25,0.92) 100%), url('assets/fusos.png'); justify-content: center; }
+  #scene-ruido-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/ruido.png'); }
+  #scene-ruido-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.6) 0%, rgba(15,20,25,0.92) 100%), url('assets/ruido.png'); padding: 32px 20px; justify-content: space-between; }
+  #scene-travessia-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.92) 100%), url('assets/travessia.png'); }
+  #scene-travessia-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.85) 100%), url('assets/travessia.png'); justify-content: space-between; padding: 32px 24px; }
+  #scene-convergencia { background-image: linear-gradient(180deg, rgba(15,20,25,0.25) 0%, rgba(15,20,25,0.7) 100%), url('assets/convergencia.png'); }
+  #scene-encontro-game { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.78) 100%), url('assets/encontro.png'); padding: 24px; justify-content: space-between; }
+  #scene-toque { background-image: linear-gradient(180deg, rgba(15,20,25,0.25) 0%, rgba(15,20,25,0.78) 100%), url('assets/toque.png'); }
+  #scene-end { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.78) 100%), url('assets/end.png'); }
 
-  .cutscene-location {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    opacity: 0.7;
-    margin-bottom: 20px;
-  }
+  /* PERSONAGENS */
+  #scene-characters { padding: 32px 20px; justify-content: center; }
+  .characters-header { text-align: center; margin-bottom: 24px; }
+  .characters-container { display: flex; gap: 16px; align-items: stretch; justify-content: center; width: 100%; max-width: 900px; }
+  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.45); padding: 14px 12px 16px; backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .character-portrait { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center top; border: 0.5px solid rgba(244, 232, 216, 0.2); margin-bottom: 14px; }
+  .character-portrait.lia { background-image: url('assets/lia-portrait.png'); }
+  .character-portrait.bento { background-image: url('assets/bento-portrait.png'); }
+  .character-card h3 { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); font-weight: 400; margin-bottom: 4px; }
+  .character-card .age-loc { font-size: clamp(8px, 2.2vw, 10px); letter-spacing: 0.25em; opacity: 0.75; margin-bottom: 10px; }
+  .character-card .description { font-family: Georgia, serif; font-style: italic; font-size: clamp(11px, 3vw, 13px); line-height: 1.55; opacity: 0.9; }
 
-  .cutscene-narration {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 17px;
-    line-height: 1.8;
-    color: #F4E8D8;
-    opacity: 0.95;
-  }
+  /* FASE 1: SINTONIA */
+  #scene-gameplay { flex-direction: row; padding: 0; }
+  .side { flex: 1; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px; background-size: cover; background-position: center; min-width: 0; }
+  .side-lia { background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.78) 0%, rgba(61, 31, 76, 0.9) 100%), url('assets/lia-night.png'); }
+  .side-bento { background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.78) 0%, rgba(42, 74, 61, 0.9) 100%), url('assets/bento-dawn.png'); }
+  .side-divider { width: 1px; height: 100%; background: rgba(244, 232, 216, 0.25); z-index: 3; }
+  .character-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.85; margin-bottom: 4px; }
+  .character-name { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); margin-bottom: 4px; }
+  .character-location { font-size: clamp(8px, 2vw, 10px); letter-spacing: 0.25em; opacity: 0.65; margin-bottom: 22px; }
+  .radio-dial { width: clamp(120px, 32vw, 180px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.5); position: relative; margin: 8px 0; cursor: grab; touch-action: none; background: rgba(15, 20, 25, 0.4); }
+  .radio-dial:active { cursor: grabbing; }
+  .dial-pointer { position: absolute; top: 50%; left: 50%; width: 4px; height: 38%; background: #F4E8D8; transform-origin: center bottom; border-radius: 2px; pointer-events: none; }
+  .dial-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #F4E8D8; pointer-events: none; }
+  .frequency-display { margin-top: 14px; font-family: 'Courier New', monospace; font-size: clamp(12px, 3vw, 15px); letter-spacing: 0.1em; opacity: 0.95; }
+  .signal-strength { margin-top: 16px; width: clamp(100px, 26vw, 180px); height: 4px; background: rgba(244, 232, 216, 0.2); border-radius: 2px; overflow: hidden; }
+  .signal-bar { height: 100%; width: 0%; background: #F4E8D8; transition: width 0.2s ease; }
+  .signal-label { margin-top: 6px; font-size: clamp(8px, 2vw, 10px); letter-spacing: 0.3em; opacity: 0.65; }
+  #tutorial { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(15, 20, 25, 0.96); border: 0.5px solid rgba(244, 232, 216, 0.35); padding: 24px 28px; text-align: center; z-index: 10; width: calc(100% - 40px); max-width: 340px; transition: opacity 0.6s ease; cursor: pointer; }
+  #tutorial p { font-size: clamp(13px, 3.5vw, 14px); line-height: 1.65; margin-bottom: 16px; }
+  #tutorial small { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.3em; opacity: 0.7; }
+  #connection-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #F4E8D8, transparent); opacity: 0; pointer-events: none; z-index: 5; transition: opacity 0.6s ease; box-shadow: 0 0 20px #F4E8D8; }
+  #connection-line.active { opacity: 0.95; animation: pulseConnection 2s ease-in-out infinite; }
+  @keyframes pulseConnection { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
 
-  .continue-hint {
-    position: absolute;
-    bottom: 32px;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    opacity: 0.5;
-    animation: blink 2s ease-in-out infinite;
-    cursor: pointer;
-    padding: 16px 32px;
-    z-index: 5;
-  }
+  /* FASE 2: FUSOS (espera + respiração) */
+  .fusos-container { text-align: center; padding: 24px; max-width: 540px; }
+  .fusos-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.7; margin-bottom: 40px; opacity: 0.95; transition: opacity 0.6s ease; }
+  .breath-circle-container { width: clamp(160px, 42vw, 220px); height: clamp(160px, 42vw, 220px); margin: 0 auto 32px; position: relative; display: flex; align-items: center; justify-content: center; }
+  .breath-circle { width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.4); background: radial-gradient(circle, rgba(244, 232, 216, 0.06) 0%, transparent 70%); transform: scale(0.7); transition: transform 4s cubic-bezier(0.4, 0, 0.6, 1); }
+  .breath-circle.expanding { transform: scale(1); }
+  .breath-text { position: absolute; font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; opacity: 0.7; transition: opacity 0.6s ease; }
+  .fusos-counter { font-family: 'Courier New', monospace; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.2em; opacity: 0.5; margin-top: 24px; }
 
-  @keyframes blink {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.7; }
-  }
+  /* FASE 3: RUÍDO */
+  .ruido-header { text-align: center; margin-top: 20px; }
+  .ruido-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; margin-bottom: 8px; }
+  .ruido-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
+  .ruido-message { font-family: 'Courier New', monospace; font-size: clamp(20px, 5.5vw, 28px); letter-spacing: 0.15em; text-align: center; line-height: 1.8; margin: 32px 0; min-height: 120px; }
+  .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
+  .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
+  .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
+  .floating-letter { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: grab; touch-action: none; backdrop-filter: blur(4px); transition: transform 0.6s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.4s ease; user-select: none; }
+  .floating-letter.fleeing { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .floating-letter.captured { opacity: 0; pointer-events: none; transform: scale(0.5); }
+  .floating-letter.attracted { transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), top 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-  /* Cenas com imagens específicas */
-  #scene-intro-lia {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/lia-uberlandia.png');
-  }
-  #scene-intro-bento {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/bento-sinop.png');
-  }
-  #scene-characters {
-    background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%);
-  }
-  #scene-connection {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.8) 100%), url('assets/connection.png');
-  }
-  #scene-map {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.8) 100%), url('assets/map.png');
-  }
-  #scene-fusos {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.85) 100%), url('assets/fusos.png');
-  }
-  #scene-ruido {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.8) 100%), url('assets/ruido.png');
-  }
-  #scene-travessia {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/travessia.png');
-  }
-  #scene-convergencia {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.7) 100%), url('assets/convergencia.png');
-  }
-  #scene-encontro {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.7) 100%), url('assets/encontro.png');
-  }
-  #scene-toque {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.75) 100%), url('assets/toque.png');
-  }
-  #scene-end {
-    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.75) 100%), url('assets/end.png');
-  }
+  /* FASE 4: TRAVESSIA */
+  .travessia-header { text-align: center; margin-top: 16px; }
+  .travessia-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(14px, 3.6vw, 16px); line-height: 1.6; opacity: 0.95; margin-bottom: 8px; }
+  .travessia-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
+  .travessia-thought { text-align: center; font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.7; color: #F4E8D8; opacity: 0; transition: opacity 1.5s ease; padding: 20px; max-width: 480px; }
+  .travessia-thought.visible { opacity: 0.85; }
+  .travessia-progress-area { width: 100%; max-width: 480px; margin: 0 auto; }
+  .travessia-km { font-family: 'Courier New', monospace; font-size: clamp(12px, 3vw, 14px); letter-spacing: 0.15em; text-align: center; margin-bottom: 12px; opacity: 0.85; }
+  .travessia-progress { width: 100%; height: 3px; background: rgba(244, 232, 216, 0.15); border-radius: 1.5px; overflow: hidden; margin-bottom: 24px; }
+  .travessia-progress-bar { height: 100%; width: 0%; background: #F4E8D8; transition: width 0.3s ease; }
+  .travessia-touch-zone { width: 100%; height: 80px; border: 0.5px dashed rgba(244, 232, 216, 0.4); background: rgba(244, 232, 216, 0.04); display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; transition: background 0.3s ease, border-color 0.3s ease; }
+  .travessia-touch-zone.active { background: rgba(244, 232, 216, 0.1); border-color: rgba(244, 232, 216, 0.7); border-style: solid; }
+  .travessia-touch-label { font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.3em; opacity: 0.7; }
 
-  /* TELA DE PERSONAGENS */
-  .characters-container {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    justify-content: center;
-    max-width: 900px;
-    padding: 24px;
-    flex-wrap: wrap;
-  }
-
-  .character-card {
-    flex: 1;
-    min-width: 240px;
-    max-width: 320px;
-    text-align: center;
-    background: rgba(15, 20, 25, 0.5);
-    padding: 20px;
-    backdrop-filter: blur(2px);
-  }
-
-  .character-portrait {
-    width: 100%;
-    aspect-ratio: 9/16;
-    background-size: cover;
-    background-position: center top;
-    border: 0.5px solid rgba(244, 232, 216, 0.2);
-    margin-bottom: 16px;
-  }
-
-  .character-portrait.lia {
-    background-image: url('assets/lia-portrait.png');
-  }
-  .character-portrait.bento {
-    background-image: url('assets/bento-portrait.png');
-  }
-
-  .character-card h3 {
-    font-family: Georgia, serif;
-    font-size: 22px;
-    font-weight: 400;
-    margin-bottom: 4px;
-  }
-
-  .character-card .age-loc {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    opacity: 0.7;
-    margin-bottom: 12px;
-  }
-
-  .character-card .description {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 12px;
-    line-height: 1.6;
-    opacity: 0.85;
-  }
-
-  /* GAMEPLAY */
-  #scene-gameplay {
-    flex-direction: row;
-  }
-
-  .side {
-    flex: 1;
-    height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background-size: cover;
-    background-position: center;
-  }
-
-  .side-lia {
-    background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.7) 0%, rgba(61, 31, 76, 0.85) 100%), url('assets/lia-night.png');
-    background-color: #5C1A2B;
-  }
-
-  .side-bento {
-    background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.7) 0%, rgba(42, 74, 61, 0.85) 100%), url('assets/bento-dawn.png');
-    background-color: #1A2B4C;
-  }
-
-  .side-divider {
-    width: 1px;
-    height: 100%;
-    background: rgba(244, 232, 216, 0.2);
-    z-index: 3;
-  }
-
-  .character-label {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    opacity: 0.8;
-    margin-bottom: 4px;
-  }
-
-  .character-name {
-    font-family: Georgia, serif;
-    font-size: 22px;
-    margin-bottom: 4px;
-  }
-
-  .character-location {
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    opacity: 0.6;
-    margin-bottom: 28px;
-  }
-
-  .radio-dial {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    border: 1px solid rgba(244, 232, 216, 0.5);
-    position: relative;
-    margin: 12px 0;
-    cursor: grab;
-    touch-action: none;
-    background: rgba(15, 20, 25, 0.4);
-    backdrop-filter: blur(4px);
-  }
-
-  .radio-dial:active {
-    cursor: grabbing;
-  }
-
-  .dial-pointer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 4px;
-    height: 65px;
-    background: #F4E8D8;
-    transform-origin: center bottom;
-    border-radius: 2px;
-    pointer-events: none;
-  }
-
-  .dial-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #F4E8D8;
-    pointer-events: none;
-  }
-
-  .frequency-display {
-    margin-top: 14px;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    opacity: 0.9;
-  }
-
-  .signal-strength {
-    margin-top: 20px;
-    width: 180px;
-    height: 4px;
-    background: rgba(244, 232, 216, 0.2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .signal-bar {
-    height: 100%;
-    width: 0%;
-    background: #F4E8D8;
-    transition: width 0.2s ease;
-  }
-
-  .signal-label {
-    margin-top: 6px;
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    opacity: 0.6;
-  }
-
-  #tutorial {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(15, 20, 25, 0.94);
-    border: 0.5px solid rgba(244, 232, 216, 0.3);
-    padding: 24px 32px;
-    text-align: center;
-    z-index: 10;
-    max-width: 320px;
-    transition: opacity 0.6s ease;
-    cursor: pointer;
-  }
-
-  #tutorial p {
-    font-size: 13px;
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-
-  #tutorial small {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    opacity: 0.6;
-  }
-
-  #connection-line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #F4E8D8, transparent);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 5;
-    transition: opacity 0.6s ease;
-    box-shadow: 0 0 20px #F4E8D8;
-  }
-
-  #connection-line.active {
-    opacity: 0.95;
-    animation: pulseConnection 2s ease-in-out infinite;
-  }
-
-  @keyframes pulseConnection {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
+  /* FASE 5: ENCONTRO (palavras) */
+  .encontro-header { text-align: center; margin-top: 16px; }
+  .encontro-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; }
+  .encontro-dialogue-area { width: 100%; max-width: 580px; margin: 0 auto; background: rgba(15, 20, 25, 0.7); padding: 24px; backdrop-filter: blur(4px); min-height: 160px; }
+  .encontro-line { margin-bottom: 12px; min-height: 24px; font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.6; }
+  .encontro-line.lia { color: #F0BFD0; }
+  .encontro-line.bento { color: #BFD0F0; padding-left: 24px; }
+  .encontro-slot { display: inline-block; min-width: 50px; border-bottom: 1px solid rgba(244, 232, 216, 0.3); margin: 0 3px; padding: 0 4px; transition: all 0.4s ease; }
+  .encontro-slot.filled { border-bottom-color: transparent; }
+  .encontro-words-area { position: relative; width: 100%; height: 140px; margin-bottom: 20px; }
+  .draggable-word { position: absolute; padding: 10px 18px; background: rgba(15, 20, 25, 0.65); border: 1px solid rgba(244, 232, 216, 0.4); color: #F4E8D8; font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); cursor: grab; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease; user-select: none; }
+  .draggable-word.captured { opacity: 0; pointer-events: none; }
+  .draggable-word:active { cursor: grabbing; }
 
   /* DIÁLOGOS */
-  .dialogue {
-    text-align: left;
-    margin: 20px 0;
-  }
-
-  .dialogue-line {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
-
-  .dialogue-line.lia { color: #E8B5C4; }
-  .dialogue-line.bento {
-    color: #B5C4E8;
-    padding-left: 32px;
-  }
+  .dialogue { text-align: left; margin: 16px 0 4px; }
+  .dialogue-line { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.55; margin-bottom: 8px; }
+  .dialogue-line.lia { color: #F0BFD0; }
+  .dialogue-line.bento { color: #BFD0F0; padding-left: 24px; }
 
   /* TELA FINAL */
-  .end-content {
-    text-align: center;
-    max-width: 540px;
-    background: rgba(15, 20, 25, 0.55);
-    padding: 36px 32px;
-    backdrop-filter: blur(3px);
-  }
+  .end-content { text-align: center; max-width: 540px; background: rgba(15, 20, 25, 0.7); padding: 32px 28px; backdrop-filter: blur(6px); border: 0.5px solid rgba(244, 232, 216, 0.1); }
+  .end-content h2 { font-family: Georgia, serif; font-size: clamp(24px, 6.5vw, 32px); font-weight: 400; letter-spacing: 0.05em; margin-bottom: 22px; }
+  .end-content p { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.6vw, 15px); line-height: 1.7; opacity: 0.92; margin-bottom: 18px; }
+  .end-content p.demo-note { font-style: normal; font-family: 'Inter', sans-serif; font-size: clamp(10px, 2.6vw, 11px); letter-spacing: 0.2em; opacity: 0.7; margin-bottom: 22px; }
+  .end-content .start-button { margin-top: 12px; }
 
-  .end-content h2 {
-    font-family: Georgia, serif;
-    font-size: 30px;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin-bottom: 24px;
-  }
+  /* EASTER EGG */
+  .easter-egg { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); text-align: center; opacity: 0; transition: opacity 3s ease; pointer-events: none; width: 90%; max-width: 400px; }
+  .easter-egg.visible { opacity: 1; }
+  .easter-egg p { font-family: Georgia, serif; font-style: italic; font-size: clamp(11px, 2.8vw, 13px); line-height: 1.6; opacity: 0.7; margin-bottom: 12px; }
+  .easter-egg .signature { font-family: 'Courier New', monospace; font-size: clamp(9px, 2.2vw, 10px); letter-spacing: 0.4em; opacity: 0.45; }
 
-  .end-content p {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.8;
-    opacity: 0.9;
-    margin-bottom: 20px;
-  }
-
-  .demo-note {
-    font-style: normal;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+  /* BOTÃO DE ÁUDIO */
+  .audio-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(15, 20, 25, 0.6);
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    color: #F4E8D8;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
     opacity: 0.7;
-    margin-bottom: 24px;
+    font-size: 16px;
+    padding: 0;
   }
+  .audio-toggle:hover, .audio-toggle:active { opacity: 1; background: rgba(244, 232, 216, 0.15); }
+  .audio-toggle svg { width: 18px; height: 18px; }
 
-  /* RESPONSIVO */
-  @media (max-width: 768px) {
-    #scene-title h1 { font-size: 38px; }
-    .cutscene-narration { font-size: 14px; }
-    .cutscene-text { padding: 24px 20px; }
-    .radio-dial { width: 130px; height: 130px; }
-    .dial-pointer { height: 50px; }
-    .signal-strength { width: 130px; }
-    .character-name { font-size: 18px; }
-    .end-content h2 { font-size: 22px; }
-    .end-content p { font-size: 12px; }
-    .side { padding: 16px; }
+  /* MOBILE */
+  @media (max-width: 640px) {
+    #scene-title { padding-top: 6vh; }
+    .title-content { padding: 20px; }
+    .cutscene { padding-bottom: 16vh; }
+    .cutscene-text { padding: 22px 20px; }
+    #scene-characters { padding: 20px 16px; padding-top: 5vh; }
+    .characters-container { flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
+    .character-card { padding: 12px 14px 14px; flex-direction: row; gap: 14px; text-align: left; align-items: center; }
+    .character-portrait { width: 90px; flex-shrink: 0; aspect-ratio: 3/4; margin-bottom: 0; }
+    .character-card-info { flex: 1; min-width: 0; }
+    .character-card h3 { font-size: 18px; margin-bottom: 2px; }
+    .character-card .age-loc { margin-bottom: 8px; font-size: 9px; }
+    .character-card .description { font-size: 12px; line-height: 1.5; }
+    .side { padding: 16px 8px; }
     .character-location { margin-bottom: 16px; }
-    .characters-container { flex-direction: column; gap: 16px; }
-    .character-card { max-width: 280px; }
-    .character-portrait { aspect-ratio: 4/5; }
-    .dialogue-line { font-size: 14px; }
-  }
-
-  .footer-credit {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 3;
+    .frequency-display { margin-top: 10px; }
+    .signal-strength { margin-top: 12px; }
+    .dialogue-line.bento { padding-left: 16px; }
+    .end-content { padding: 28px 22px; max-width: calc(100% - 32px); }
+    .continue-hint { bottom: 4vh; }
+    .ruido-message { font-size: 18px; margin: 24px 0; }
+    .floating-letter { width: 42px; height: 42px; font-size: 17px; }
+    .ruido-letters-area { height: 200px; }
+    .encontro-line.bento { padding-left: 16px; }
+    .draggable-word { padding: 8px 14px; }
   }
 </style>
 </head>
@@ -529,350 +214,997 @@
 
 <div id="game">
 
-  <!-- 1. TÍTULO -->
+  <button class="audio-toggle" id="audio-toggle" aria-label="Alternar áudio" title="Alternar áudio">
+    <svg id="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+    </svg>
+    <svg id="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="22" y1="9" x2="16" y2="15"></line>
+      <line x1="16" y1="9" x2="22" y2="15"></line>
+    </svg>
+  </button>
+
   <div class="scene active" id="scene-title">
     <div class="title-content">
       <p class="subtitle">UM ENCONTRO NO FIM DO MUNDO</p>
       <div class="divider"></div>
       <h1>CONVERGIR</h1>
       <div class="divider"></div>
-      <p class="phase-label">DEMO — FASE 01: O SINAL</p>
-      <button class="start-button" onclick="goToScene('scene-intro-lia')">INICIAR</button>
+      <p class="phase-label">DEMO</p>
     </div>
-    <div class="footer-credit">UM JOGO DE JESS · 2026</div>
+    <button class="start-button" onclick="goToScene(&#39;scene-intro-lia&#39;)">INICIAR</button>
   </div>
 
-  <!-- 2. INTRO LIA -->
-  <div class="scene cutscene" id="scene-intro-lia">
+  <div class="scene cutscene" id="scene-intro-lia" data-next="scene-intro-bento">
     <div class="cutscene-text">
       <p class="cutscene-location">UBERLÂNDIA, MG · ANO 7 DO SILÊNCIO</p>
       <p class="cutscene-narration">A internet caiu há sete anos. As cidades pararam. Lia ficou. Continuou aprendendo no escuro, do jeito que sempre soube fazer.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-intro-bento')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-intro-bento&#39;)">TOQUE PARA CONTINUAR</p>
   </div>
 
-  <!-- 3. INTRO BENTO -->
-  <div class="scene cutscene" id="scene-intro-bento">
+  <div class="scene cutscene" id="scene-intro-bento" data-next="scene-characters">
     <div class="cutscene-text">
       <p class="cutscene-location">SINOP, MT · A 1.547 KM DALI</p>
       <p class="cutscene-narration">Bento construiu uma rede improvisada de antenas na borda da floresta. Não esperava nada. Só o gesto de tentar.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-characters')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-characters&#39;)">TOQUE PARA CONTINUAR</p>
   </div>
 
-  <!-- 4. PERSONAGENS -->
-  <div class="scene" id="scene-characters">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <p class="subtitle">PERSONAGENS</p>
-    </div>
+  <div class="scene" id="scene-characters" data-action="startGameplay" style="cursor: pointer;">
+    <div class="characters-header"><p class="subtitle">PERSONAGENS</p></div>
     <div class="characters-container">
       <div class="character-card">
         <div class="character-portrait lia"></div>
-        <h3>Lia</h3>
-        <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
-        <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada. Acostumada à própria solidão.</p>
+        <div class="character-card-info">
+          <h3>Lia</h3>
+          <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
+          <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada.</p>
+        </div>
       </div>
       <div class="character-card">
         <div class="character-portrait bento"></div>
-        <h3>Bento</h3>
-        <p class="age-loc">50 ANOS · SINOP, MT</p>
-        <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
+        <div class="character-card-info">
+          <h3>Bento</h3>
+          <p class="age-loc">50 ANOS · SINOP, MT</p>
+          <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
+        </div>
       </div>
     </div>
     <p class="continue-hint" onclick="startGameplay()">TOQUE PARA SINTONIZAR</p>
   </div>
 
-  <!-- 5. GAMEPLAY -->
   <div class="scene" id="scene-gameplay">
-
     <div id="tutorial">
       <p>Arraste os dois dials para sintonizar a mesma frequência ao mesmo tempo.</p>
       <small>FREQUÊNCIA ALVO: 88.7</small>
     </div>
-
     <div id="connection-line"></div>
-
     <div class="side side-lia">
       <p class="character-label">LIA</p>
       <p class="character-name">Uberlândia</p>
       <p class="character-location">CERRADO · NOITE</p>
-
       <div class="radio-dial" id="dial-lia">
-        <div class="dial-pointer" id="pointer-lia"></div>
+        <div class="dial-pointer" id="pointer-lia" style="transform: translate(-50%, -100%) rotate(-120deg);"></div>
         <div class="dial-center"></div>
       </div>
-
       <div class="frequency-display" id="freq-lia">FM 86.0</div>
-
-      <div class="signal-strength">
-        <div class="signal-bar" id="signal-lia"></div>
-      </div>
+      <div class="signal-strength"><div class="signal-bar" id="signal-lia" style="width: 10%;"></div></div>
       <p class="signal-label">SINAL</p>
     </div>
-
     <div class="side-divider"></div>
-
     <div class="side side-bento">
       <p class="character-label">BENTO</p>
       <p class="character-name">Sinop</p>
       <p class="character-location">FLORESTA · ALVORADA</p>
-
       <div class="radio-dial" id="dial-bento">
-        <div class="dial-pointer" id="pointer-bento"></div>
+        <div class="dial-pointer" id="pointer-bento" style="transform: translate(-50%, -100%) rotate(120deg);"></div>
         <div class="dial-center"></div>
       </div>
-
-      <div class="frequency-display" id="freq-bento">FM 91.0</div>
-
-      <div class="signal-strength">
-        <div class="signal-bar" id="signal-bento"></div>
-      </div>
+      <div class="frequency-display" id="freq-bento">FM 92.0</div>
+      <div class="signal-strength"><div class="signal-bar" id="signal-bento" style="width: 0%;"></div></div>
       <p class="signal-label">SINAL</p>
     </div>
-
   </div>
 
-  <!-- 6. CONEXÃO -->
-  <div class="scene cutscene" id="scene-connection">
+  <div class="scene cutscene" id="scene-connection" data-next="scene-map">
     <div class="cutscene-text">
       <div class="dialogue">
         <p class="dialogue-line lia">— Tem alguém aí?</p>
         <p class="dialogue-line bento">— Tem. Tem alguém aqui.</p>
       </div>
-      <p class="cutscene-narration" style="margin-top: 24px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
+      <p class="cutscene-narration" style="margin-top: 18px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-map')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-map&#39;)">TOQUE PARA CONTINUAR</p>
   </div>
 
-  <!-- 7. MAPA -->
-  <div class="scene cutscene" id="scene-map">
+  <div class="scene cutscene" id="scene-map" data-next="scene-fusos-intro">
     <div class="cutscene-text">
       <p class="cutscene-location">ENTRE DOIS PONTOS DO BRASIL</p>
-      <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria por mais quatro fases.</p>
+      <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-fusos')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-fusos-intro&#39;)">TOQUE PARA CONTINUAR</p>
   </div>
 
-  <!-- 8. FUSOS (prévia) -->
-  <div class="scene cutscene" id="scene-fusos">
+  <div class="scene cutscene" id="scene-fusos-intro" data-action="startFusos">
     <div class="cutscene-text">
       <p class="cutscene-location">FASE 02 · OS FUSOS</p>
       <p class="cutscene-narration">Ela vivia de noite. Ele de dia. O encontro só cabia no fio fino entre os dois. Aprenderam a esperar.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-ruido')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="startFusos()">TOQUE PARA ESPERAR</p>
   </div>
 
-  <!-- 9. RUÍDO (prévia) -->
-  <div class="scene cutscene" id="scene-ruido">
+  <div class="scene" id="scene-fusos-game">
+    <div class="fusos-container">
+      <p class="fusos-instruction" id="fusos-instruction">Lia mandou a mensagem. Agora ela espera Bento acordar.</p>
+      <div class="breath-circle-container">
+        <div class="breath-circle" id="breath-circle"></div>
+        <div class="breath-text" id="breath-text">RESPIRE</div>
+      </div>
+      <p class="fusos-counter" id="fusos-counter">00:10</p>
+    </div>
+  </div>
+
+  <div class="scene cutscene" id="scene-ruido-intro" data-action="startRuido">
     <div class="cutscene-text">
       <p class="cutscene-location">FASE 03 · O RUÍDO</p>
-      <p class="cutscene-narration">A comunicação falhou. Cada um interpretou o silêncio à sua maneira. Foi preciso escolher acreditar antes de ter certeza.</p>
+      <p class="cutscene-narration">A comunicação falhou. As palavras chegavam quebradas. Foi preciso aprender a ouvir o que não estava sendo dito.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-travessia')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="startRuido()">TOQUE PARA DECIFRAR</p>
   </div>
 
-  <!-- 10. TRAVESSIA (prévia) -->
-  <div class="scene cutscene" id="scene-travessia">
+  <div class="scene" id="scene-ruido-game">
+    <div class="ruido-header">
+      <p class="ruido-instruction">A mensagem do Bento chegou quebrada. Pegue as letras certas.</p>
+      <p class="ruido-hint">SEGURE PARADO · A LETRA VEM ATÉ VOCÊ</p>
+    </div>
+    <div class="ruido-message" id="ruido-message"></div>
+    <div class="ruido-letters-area" id="ruido-letters-area"></div>
+  </div>
+
+  <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
     <div class="cutscene-text">
       <p class="cutscene-location">FASE 04 · A TRAVESSIA</p>
-      <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado foi um ato de amor que custou tudo.</p>
+      <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado custou tudo o que tinham.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-convergencia')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="startTravessia()">TOQUE PARA ATRAVESSAR</p>
   </div>
 
-  <!-- 11. CONVERGÊNCIA -->
-  <div class="scene cutscene" id="scene-convergencia">
+  <div class="scene" id="scene-travessia-game">
+    <div class="travessia-header">
+      <p class="travessia-instruction">Lia caminha enquanto você sustenta o gesto.</p>
+      <p class="travessia-hint">MANTENHA O DEDO · NÃO SOLTE</p>
+    </div>
+    <p class="travessia-thought" id="travessia-thought"></p>
+    <div class="travessia-progress-area">
+      <p class="travessia-km" id="travessia-km">0 / 1.547 KM</p>
+      <div class="travessia-progress"><div class="travessia-progress-bar" id="travessia-bar"></div></div>
+      <div class="travessia-touch-zone" id="travessia-touch">
+        <p class="travessia-touch-label">SEGURE AQUI</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene cutscene" id="scene-convergencia" data-action="startEncontro">
     <div class="cutscene-text">
       <p class="cutscene-location">FASE 05 · A CONVERGÊNCIA</p>
       <p class="cutscene-narration">Em algum ponto rural de Goiás, no fim de uma tarde dourada, dois caminhos finalmente se cruzaram no mesmo plano.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-encontro')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="startEncontro()">TOQUE PARA SE APROXIMAR</p>
   </div>
 
-  <!-- 12. ENCONTRO -->
-  <div class="scene cutscene" id="scene-encontro">
-    <div class="cutscene-text">
-      <div class="dialogue">
-        <p class="dialogue-line lia">— Você é menor do que eu imaginei.</p>
-        <p class="dialogue-line bento">— Você é mais velho.</p>
-        <p class="dialogue-line lia">— Você é tudo.</p>
-      </div>
+  <div class="scene" id="scene-encontro-game">
+    <div class="encontro-header">
+      <p class="encontro-instruction">As palavras precisam de esforço. Arraste cada uma para o lugar.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-toque')">TOQUE PARA CONTINUAR</p>
+    <div class="encontro-dialogue-area">
+      <div class="encontro-line lia" id="line-1"></div>
+      <div class="encontro-line bento" id="line-2"></div>
+      <div class="encontro-line lia" id="line-3"></div>
+    </div>
+    <div class="encontro-words-area" id="encontro-words"></div>
   </div>
 
-  <!-- 13. TOQUE -->
-  <div class="scene cutscene" id="scene-toque">
+  <div class="scene cutscene" id="scene-toque" data-next="scene-end">
     <div class="cutscene-text">
       <p class="cutscene-narration">A pulseira larga prateada dela. O relógio de couro dele. As duas mãos, finalmente, no mesmo lugar.</p>
     </div>
-    <p class="continue-hint" onclick="goToScene('scene-end')">TOQUE PARA CONTINUAR</p>
+    <p class="continue-hint" onclick="goToScene(&#39;scene-end&#39;)">TOQUE PARA CONTINUAR</p>
   </div>
 
-  <!-- 14. FIM -->
   <div class="scene" id="scene-end">
     <div class="end-content">
       <p class="demo-note">FIM DA DEMONSTRAÇÃO</p>
       <h2>Convergir</h2>
       <p>Para chegar até você, eu atravessei o fim do mundo.</p>
-      <p style="font-style: normal; font-size: 11px; opacity: 0.7; letter-spacing: 0.1em;">A primeira fase é jogável. As demais foram apresentadas em prévia narrativa. O protótipo completo está documentado em Figma.</p>
       <button class="start-button" onclick="restartGame()">JOGAR NOVAMENTE</button>
     </div>
-    <div class="footer-credit">CONVERGIR · DEMO · 2026</div>
+    <div class="easter-egg" id="easter-egg">
+      <p>Algumas histórias atravessam mais que distância.</p>
+      <p class="signature">FM 88.7 · 2026</p>
+    </div>
   </div>
 
 </div>
 
 <script>
-  function goToScene(sceneId) {
-    document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+/* CONVERGIR — Obra original. Autoria registrada no comentário do topo deste documento. */
+
+// ============================================================================
+// MOTOR DE ÁUDIO — Web Audio API (drones procedurais)
+// ============================================================================
+const AudioEngine = (function() {
+  let ctx = null;
+  let masterGain = null;
+  let isMuted = false;
+  let isStarted = false;
+  let activeVoices = [];
+  let currentMood = null;
+  let breathInterval = null;
+  let noiseSource = null;
+
+  function init() {
+    if (ctx) return;
+    try {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = isMuted ? 0 : 0.35;
+      masterGain.connect(ctx.destination);
+      isStarted = true;
+    } catch (e) {
+      console.warn('Web Audio não suportado:', e);
+    }
+  }
+
+  // Cria uma "voz" (oscilador + envelope + filtro) que toca uma frequência sustentada
+  function createVoice(freq, type, gainTarget, attackTime, filterFreq) {
+    if (!ctx) return null;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    osc.type = type || 'sine';
+    osc.frequency.value = freq;
+
+    filter.type = 'lowpass';
+    filter.frequency.value = filterFreq || 1200;
+    filter.Q.value = 1;
+
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(gainTarget, ctx.currentTime + (attackTime || 3));
+
+    // Detune levemente para "respirar"
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    lfo.frequency.value = 0.1 + Math.random() * 0.15;
+    lfoGain.gain.value = 2;
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.detune);
+    lfo.start();
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+    osc.start();
+
+    return { osc, gain, filter, lfo, gainTarget };
+  }
+
+  function fadeOutVoice(voice, releaseTime) {
+    if (!voice || !ctx) return;
+    const now = ctx.currentTime;
+    voice.gain.gain.cancelScheduledValues(now);
+    voice.gain.gain.setValueAtTime(voice.gain.gain.value, now);
+    voice.gain.gain.linearRampToValueAtTime(0, now + (releaseTime || 3));
     setTimeout(() => {
-      document.getElementById(sceneId).classList.add('active');
-    }, 100);
+      try { voice.osc.stop(); voice.lfo.stop(); } catch(e) {}
+    }, (releaseTime || 3) * 1000 + 100);
   }
 
-  function startGameplay() {
-    goToScene('scene-gameplay');
+  function clearAllVoices(releaseTime) {
+    activeVoices.forEach(v => fadeOutVoice(v, releaseTime || 3));
+    activeVoices = [];
+    if (breathInterval) { clearInterval(breathInterval); breathInterval = null; }
+    if (noiseSource) {
+      try {
+        noiseSource.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+        noiseSource.gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 2);
+        setTimeout(() => { try { noiseSource.source.stop(); } catch(e) {} }, 2200);
+      } catch(e) {}
+      noiseSource = null;
+    }
+  }
+
+  // Gera ruído branco filtrado
+  function createNoise(gainTarget, filterFreq, attackTime) {
+    if (!ctx) return null;
+    const bufferSize = ctx.sampleRate * 2;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.loop = true;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = filterFreq || 600;
+    filter.Q.value = 0.8;
+
+    const gainNode = ctx.createGain();
+    gainNode.gain.value = 0;
+    gainNode.gain.linearRampToValueAtTime(gainTarget, ctx.currentTime + (attackTime || 2));
+
+    source.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(masterGain);
+    source.start();
+
+    return { source, filter, gainNode };
+  }
+
+  // Define o "clima" sonoro da cena
+  function setMood(mood) {
+    if (!isStarted || currentMood === mood) return;
+    currentMood = mood;
+
+    const fadeOut = 4;
+    clearAllVoices(fadeOut);
+
     setTimeout(() => {
-      const tutorial = document.getElementById('tutorial');
-      tutorial.style.display = 'block';
-      tutorial.style.opacity = '1';
-      tutorial.addEventListener('click', () => {
-        tutorial.style.opacity = '0';
-        setTimeout(() => tutorial.style.display = 'none', 600);
-      }, { once: true });
-    }, 200);
+      if (currentMood !== mood) return; // mood mudou de novo, ignora
+
+      switch (mood) {
+        case 'title':
+          // Drone solitário em A2 (110Hz)
+          activeVoices.push(createVoice(110, 'sine', 0.5, 4, 800));
+          activeVoices.push(createVoice(110 * 1.5, 'sine', 0.15, 5, 1200)); // quinta sutil
+          break;
+
+        case 'intro':
+          // Adiciona oitava abaixo, sensação de mundo
+          activeVoices.push(createVoice(110, 'sine', 0.45, 4, 800));
+          activeVoices.push(createVoice(55, 'sine', 0.3, 5, 400)); // sub
+          activeVoices.push(createVoice(110 * 1.5, 'sine', 0.18, 4, 1200));
+          break;
+
+        case 'characters':
+          // Mais aberto, soma harmônico
+          activeVoices.push(createVoice(110, 'sine', 0.4, 3, 1000));
+          activeVoices.push(createVoice(165, 'sine', 0.25, 4, 1500)); // E3
+          activeVoices.push(createVoice(220, 'sine', 0.12, 5, 1800)); // A3 oitava
+          break;
+
+        case 'gameplay-disconnected':
+          // Dois drones em frequências DIFERENTES (Lia e Bento desafinados)
+          activeVoices.push(createVoice(110, 'sine', 0.35, 3, 800));   // Lia (A)
+          activeVoices.push(createVoice(123.47, 'sine', 0.35, 3, 800)); // Bento (B desafinado)
+          break;
+
+        case 'gameplay-connected':
+          // Convergem na mesma nota
+          activeVoices.push(createVoice(110, 'sine', 0.4, 2, 1200));
+          activeVoices.push(createVoice(110, 'sine', 0.4, 2, 1200));
+          activeVoices.push(createVoice(165, 'sine', 0.25, 3, 1500));
+          activeVoices.push(createVoice(220, 'sine', 0.18, 3, 1800));
+          break;
+
+        case 'connection':
+          // Quente, harmônico completo
+          activeVoices.push(createVoice(110, 'sine', 0.4, 3, 1000));
+          activeVoices.push(createVoice(165, 'sine', 0.3, 4, 1500));
+          activeVoices.push(createVoice(220, 'sine', 0.2, 5, 1800));
+          activeVoices.push(createVoice(82.5, 'sine', 0.25, 4, 500)); // sub
+          break;
+
+        case 'fusos':
+          // Pulso lento sincronizado com respiração (4s)
+          activeVoices.push(createVoice(110, 'sine', 0.3, 3, 700));
+          activeVoices.push(createVoice(82.5, 'sine', 0.2, 4, 400));
+          // LFO de gain para criar pulso de respiração
+          if (breathInterval) clearInterval(breathInterval);
+          let breathPhase = true;
+          breathInterval = setInterval(() => {
+            if (!ctx || activeVoices.length === 0) return;
+            const targetGain = breathPhase ? 0.45 : 0.2;
+            activeVoices.forEach(v => {
+              if (v && v.gain) {
+                const now = ctx.currentTime;
+                v.gain.gain.cancelScheduledValues(now);
+                v.gain.gain.setValueAtTime(v.gain.gain.value, now);
+                v.gain.gain.linearRampToValueAtTime(targetGain * 0.6, now + 4);
+              }
+            });
+            breathPhase = !breathPhase;
+          }, 4000);
+          break;
+
+        case 'ruido':
+          // Drone instável + ruído branco filtrado
+          activeVoices.push(createVoice(110, 'sine', 0.3, 3, 800));
+          activeVoices.push(createVoice(116, 'sine', 0.2, 3, 800)); // batimento dissonante
+          activeVoices.push(createVoice(165, 'sine', 0.18, 4, 1200));
+          noiseSource = createNoise(0.08, 800, 3);
+          break;
+
+        case 'travessia':
+          // Drone sustentado, longa caminhada
+          activeVoices.push(createVoice(110, 'sine', 0.35, 4, 700));
+          activeVoices.push(createVoice(82.5, 'sine', 0.25, 5, 400));
+          activeVoices.push(createVoice(220, 'sine', 0.12, 6, 1200));
+          break;
+
+        case 'convergencia':
+          // Acorde maior se forma (A maior: A C# E)
+          activeVoices.push(createVoice(110, 'sine', 0.35, 3, 1000));
+          activeVoices.push(createVoice(138.59, 'sine', 0.25, 4, 1200)); // C#
+          activeVoices.push(createVoice(165, 'sine', 0.25, 4, 1300));    // E
+          activeVoices.push(createVoice(220, 'sine', 0.18, 5, 1600));
+          break;
+
+        case 'encontro':
+          // Acorde completo, mais luminoso
+          activeVoices.push(createVoice(110, 'sine', 0.35, 3, 1200));
+          activeVoices.push(createVoice(138.59, 'sine', 0.3, 3, 1400));
+          activeVoices.push(createVoice(165, 'sine', 0.3, 3, 1500));
+          activeVoices.push(createVoice(220, 'sine', 0.22, 4, 1800));
+          activeVoices.push(createVoice(330, 'sine', 0.12, 5, 2200)); // E oitava acima
+          break;
+
+        case 'toque':
+          // Resolução, quase silêncio
+          activeVoices.push(createVoice(110, 'sine', 0.3, 4, 800));
+          activeVoices.push(createVoice(165, 'sine', 0.2, 5, 1200));
+          break;
+
+        case 'end':
+          // Acorde final, sustentado e suave
+          activeVoices.push(createVoice(110, 'sine', 0.3, 4, 1000));
+          activeVoices.push(createVoice(165, 'sine', 0.22, 5, 1300));
+          activeVoices.push(createVoice(220, 'sine', 0.15, 6, 1600));
+          activeVoices.push(createVoice(330, 'sine', 0.08, 8, 2000));
+          break;
+      }
+    }, fadeOut * 200); // espera fade out parcial antes de iniciar nova mood
   }
 
-  function restartGame() {
-    angleLia = -120;
-    angleBento = 120;
-    updateDial('lia', angleLia);
-    updateDial('bento', angleBento);
-    document.getElementById('connection-line').classList.remove('active');
-    connected = false;
-    goToScene('scene-title');
+  function toggleMute() {
+    isMuted = !isMuted;
+    if (masterGain && ctx) {
+      const now = ctx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.35, now + 0.4);
+    }
+    return isMuted;
   }
 
-  const TARGET_FREQ = 88.7;
-  const TOLERANCE = 0.4;
+  return { init, setMood, toggleMute, isMuted: () => isMuted, isStarted: () => isStarted };
+})();
 
-  let angleLia = -120;
-  let angleBento = 120;
-  let connected = false;
-
-  function angleToFreq(angle) {
-    return 86.0 + ((angle + 120) / 240) * 6.0;
+// Inicializa áudio no primeiro toque (requisito de browsers modernos)
+function startAudioOnInteraction() {
+  if (!AudioEngine.isStarted()) {
+    AudioEngine.init();
+    AudioEngine.setMood('title');
   }
+}
+document.addEventListener('click', startAudioOnInteraction, { once: true });
+document.addEventListener('touchstart', startAudioOnInteraction, { once: true });
 
-  function updateDial(who, angle) {
-    const pointer = document.getElementById('pointer-' + who);
-    const freqEl = document.getElementById('freq-' + who);
-    const signalEl = document.getElementById('signal-' + who);
+// Botão de mute
+document.getElementById('audio-toggle').addEventListener('click', function(e) {
+  e.stopPropagation();
+  if (!AudioEngine.isStarted()) AudioEngine.init();
+  const muted = AudioEngine.toggleMute();
+  document.getElementById('icon-sound-on').style.display = muted ? 'none' : 'block';
+  document.getElementById('icon-sound-off').style.display = muted ? 'block' : 'none';
+});
 
-    pointer.style.transform = 'translate(-50%, -100%) rotate(' + angle + 'deg)';
+// Permite avançar cutscenes ao tocar em qualquer lugar da tela
+document.querySelectorAll('.scene.cutscene, #scene-characters').forEach(scene => {
+  scene.addEventListener('click', function(e) {
+    // Ignora cliques em botões ou links dentro da cena
+    if (e.target.closest('button') || e.target.closest('a')) return;
+    const next = this.dataset.next;
+    const action = this.dataset.action;
+    if (next) goToScene(next);
+    else if (action && typeof window[action] === 'function') window[action]();
+  });
+});
 
-    const freq = angleToFreq(angle);
-    freqEl.textContent = 'FM ' + freq.toFixed(1);
+// Mapeamento de cena → clima sonoro
+const SCENE_MOODS = {
+  'scene-title': 'title',
+  'scene-intro-lia': 'intro',
+  'scene-intro-bento': 'intro',
+  'scene-characters': 'characters',
+  'scene-gameplay': 'gameplay-disconnected',
+  'scene-connection': 'connection',
+  'scene-map': 'connection',
+  'scene-fusos-intro': 'connection',
+  'scene-fusos-game': 'fusos',
+  'scene-ruido-intro': 'fusos',
+  'scene-ruido-game': 'ruido',
+  'scene-travessia-intro': 'ruido',
+  'scene-travessia-game': 'travessia',
+  'scene-convergencia': 'convergencia',
+  'scene-encontro-game': 'encontro',
+  'scene-toque': 'toque',
+  'scene-end': 'end'
+};
 
-    const distance = Math.abs(freq - TARGET_FREQ);
-    const maxDistance = 3.0;
-    const signalStrength = Math.max(0, 1 - (distance / maxDistance));
-    signalEl.style.width = (signalStrength * 100) + '%';
+function goToScene(sceneId) {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  setTimeout(() => {
+    document.getElementById(sceneId).classList.add('active');
 
-    checkConnection();
-  }
+    // Muda clima sonoro
+    if (SCENE_MOODS[sceneId] && AudioEngine.isStarted()) {
+      AudioEngine.setMood(SCENE_MOODS[sceneId]);
+    }
 
-  function checkConnection() {
-    const freqLia = angleToFreq(angleLia);
-    const freqBento = angleToFreq(angleBento);
-
-    const liaAligned = Math.abs(freqLia - TARGET_FREQ) < TOLERANCE;
-    const bentoAligned = Math.abs(freqBento - TARGET_FREQ) < TOLERANCE;
-
-    const line = document.getElementById('connection-line');
-
-    if (liaAligned && bentoAligned && !connected) {
-      connected = true;
-      line.classList.add('active');
+    if (sceneId === 'scene-end') {
       setTimeout(() => {
-        goToScene('scene-connection');
-      }, 1800);
-    } else if (!liaAligned || !bentoAligned) {
-      line.classList.remove('active');
+        const egg = document.getElementById('easter-egg');
+        if (egg) egg.classList.add('visible');
+      }, 8000);
     }
+  }, 100);
+}
+
+function restartGame() {
+  angleLia = -120; angleBento = 120;
+  updateDial('lia', angleLia); updateDial('bento', angleBento);
+  document.getElementById('connection-line').classList.remove('active');
+  connected = false;
+  const egg = document.getElementById('easter-egg');
+  if (egg) egg.classList.remove('visible');
+  goToScene('scene-title');
+}
+
+// FASE 1 — SINTONIA
+const TARGET_FREQ = 88.7;
+const TOLERANCE = 0.4;
+let angleLia = -120, angleBento = 120, connected = false;
+
+function startGameplay() {
+  goToScene('scene-gameplay');
+  setTimeout(() => {
+    const tutorial = document.getElementById('tutorial');
+    tutorial.style.display = 'block';
+    tutorial.style.opacity = '1';
+    tutorial.addEventListener('click', () => {
+      tutorial.style.opacity = '0';
+      setTimeout(() => tutorial.style.display = 'none', 600);
+    }, { once: true });
+  }, 200);
+}
+
+function angleToFreq(a) { return 86.0 + ((a + 120) / 240) * 6.0; }
+
+function updateDial(who, angle) {
+  const pointer = document.getElementById('pointer-' + who);
+  const freqEl = document.getElementById('freq-' + who);
+  const signalEl = document.getElementById('signal-' + who);
+  pointer.style.transform = 'translate(-50%, -100%) rotate(' + angle + 'deg)';
+  const freq = angleToFreq(angle);
+  freqEl.textContent = 'FM ' + freq.toFixed(1);
+  const distance = Math.abs(freq - TARGET_FREQ);
+  signalEl.style.width = (Math.max(0, 1 - (distance / 3.0)) * 100) + '%';
+  checkConnection();
+}
+
+function checkConnection() {
+  const liaAligned = Math.abs(angleToFreq(angleLia) - TARGET_FREQ) < TOLERANCE;
+  const bentoAligned = Math.abs(angleToFreq(angleBento) - TARGET_FREQ) < TOLERANCE;
+  const line = document.getElementById('connection-line');
+  if (liaAligned && bentoAligned && !connected) {
+    connected = true;
+    line.classList.add('active');
+    if (AudioEngine.isStarted()) AudioEngine.setMood('gameplay-connected');
+    setTimeout(() => goToScene('scene-connection'), 1800);
+  } else if (!liaAligned || !bentoAligned) {
+    line.classList.remove('active');
+  }
+}
+
+function setupDial(who) {
+  const dial = document.getElementById('dial-' + who);
+  let isDragging = false, startAngle = 0, startPointerAngle = 0;
+  function getAngleFromCenter(x, y) {
+    const r = dial.getBoundingClientRect();
+    return Math.atan2(y - (r.top + r.height/2), x - (r.left + r.width/2)) * 180/Math.PI + 90;
+  }
+  function clamp(a) { return Math.max(-120, Math.min(120, a)); }
+  function onStart(x, y) {
+    isDragging = true;
+    startPointerAngle = getAngleFromCenter(x, y);
+    startAngle = who === 'lia' ? angleLia : angleBento;
+  }
+  function onMove(x, y) {
+    if (!isDragging) return;
+    let delta = getAngleFromCenter(x, y) - startPointerAngle;
+    if (delta > 180) delta -= 360;
+    if (delta < -180) delta += 360;
+    const newAngle = clamp(startAngle + delta);
+    if (who === 'lia') angleLia = newAngle; else angleBento = newAngle;
+    updateDial(who, newAngle);
+  }
+  function onEnd() { isDragging = false; }
+  dial.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
+  document.addEventListener('mouseup', onEnd);
+  dial.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: false });
+  document.addEventListener('touchmove', e => { if (!isDragging) return; e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); }, { passive: false });
+  document.addEventListener('touchend', onEnd);
+}
+setupDial('lia'); setupDial('bento');
+updateDial('lia', angleLia); updateDial('bento', angleBento);
+
+// FASE 2 — FUSOS
+let fusosTimer = null, breathTimer = null;
+function startFusos() {
+  goToScene('scene-fusos-game');
+  let s = 10;
+  const counter = document.getElementById('fusos-counter');
+  const breathCircle = document.getElementById('breath-circle');
+  const breathText = document.getElementById('breath-text');
+  const instruction = document.getElementById('fusos-instruction');
+  breathCircle.classList.remove('expanding');
+  counter.textContent = '00:' + s.toString().padStart(2, '0');
+  instruction.textContent = 'Lia mandou a mensagem. Agora ela espera Bento acordar.';
+  let expanding = true;
+  function breathCycle() {
+    if (expanding) { breathCircle.classList.add('expanding'); breathText.textContent = 'INSPIRE'; }
+    else { breathCircle.classList.remove('expanding'); breathText.textContent = 'EXPIRE'; }
+    expanding = !expanding;
+  }
+  breathCycle();
+  breathTimer = setInterval(breathCycle, 4000);
+  fusosTimer = setInterval(() => {
+    s--;
+    counter.textContent = '00:' + s.toString().padStart(2, '0');
+    if (s <= 0) {
+      clearInterval(fusosTimer); clearInterval(breathTimer);
+      breathText.textContent = 'BENTO ACORDOU';
+      instruction.textContent = 'A resposta chegou.';
+      setTimeout(() => goToScene('scene-ruido-intro'), 2400);
+    }
+  }, 1000);
+}
+
+// FASE 3 — RUÍDO
+const RUIDO_PHRASE = 'TEM ALGUEM AI';
+const RUIDO_VISIBLE = '_E_ A__U__ _I';
+let ruidoSlots = [], lastTouchPos = null, stillTime = 0, stillCheckInterval = null;
+const captureRadius = 90;
+
+function startRuido() {
+  goToScene('scene-ruido-game');
+  const messageEl = document.getElementById('ruido-message');
+  const lettersArea = document.getElementById('ruido-letters-area');
+  messageEl.innerHTML = ''; lettersArea.innerHTML = '';
+  ruidoSlots = [];
+
+  const visibleChars = RUIDO_VISIBLE.split('');
+  const phraseChars = RUIDO_PHRASE.split('');
+  visibleChars.forEach((char, idx) => {
+    if (char === ' ') {
+      messageEl.innerHTML += '<span style="display:inline-block; width: 12px;"></span>';
+    } else if (char === '_') {
+      const slot = document.createElement('span');
+      slot.className = 'ruido-slot';
+      slot.dataset.target = phraseChars[idx];
+      slot.textContent = '\u00A0';
+      messageEl.appendChild(slot);
+      ruidoSlots.push({ el: slot, target: phraseChars[idx], filled: false });
+    } else {
+      const span = document.createElement('span');
+      span.style.color = 'rgba(244, 232, 216, 0.5)';
+      span.textContent = char;
+      messageEl.appendChild(span);
+    }
+  });
+
+  const correctLetters = ruidoSlots.map(s => s.target);
+  const noiseLetters = ['X', 'Z', 'Q', 'K'];
+  const allLetters = [...correctLetters, ...noiseLetters];
+  for (let i = allLetters.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allLetters[i], allLetters[j]] = [allLetters[j], allLetters[i]];
   }
 
-  function setupDial(who) {
-    const dial = document.getElementById('dial-' + who);
-    let isDragging = false;
-    let startAngle = 0;
-    let startPointerAngle = 0;
+  setTimeout(() => {
+    const areaRect = lettersArea.getBoundingClientRect();
+    const areaW = areaRect.width;
+    const areaH = areaRect.height;
 
-    function getAngleFromCenter(clientX, clientY) {
-      const rect = dial.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = clientX - cx;
-      const dy = clientY - cy;
-      return Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-    }
-
-    function clampAngle(angle) {
-      if (angle > 120) angle = 120;
-      if (angle < -120) angle = -120;
-      return angle;
-    }
-
-    function onStart(clientX, clientY) {
-      isDragging = true;
-      const currentAngle = who === 'lia' ? angleLia : angleBento;
-      startPointerAngle = getAngleFromCenter(clientX, clientY);
-      startAngle = currentAngle;
-    }
-
-    function onMove(clientX, clientY) {
-      if (!isDragging) return;
-      const newPointerAngle = getAngleFromCenter(clientX, clientY);
-      let delta = newPointerAngle - startPointerAngle;
-      if (delta > 180) delta -= 360;
-      if (delta < -180) delta += 360;
-
-      let newAngle = clampAngle(startAngle + delta);
-
-      if (who === 'lia') angleLia = newAngle;
-      else angleBento = newAngle;
-      updateDial(who, newAngle);
-    }
-
-    function onEnd() { isDragging = false; }
-
-    dial.addEventListener('mousedown', e => {
-      e.preventDefault();
-      onStart(e.clientX, e.clientY);
+    allLetters.forEach((letter) => {
+      const el = document.createElement('div');
+      el.className = 'floating-letter';
+      el.textContent = letter;
+      el.dataset.letter = letter;
+      const padding = 30;
+      const x = padding + Math.random() * (areaW - padding * 2 - 48);
+      const y = padding + Math.random() * (areaH - padding * 2 - 48);
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      lettersArea.appendChild(el);
     });
-    document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
-    document.addEventListener('mouseup', onEnd);
 
-    dial.addEventListener('touchstart', e => {
-      e.preventDefault();
-      const t = e.touches[0];
-      onStart(t.clientX, t.clientY);
-    }, { passive: false });
-    document.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const t = e.touches[0];
-      onMove(t.clientX, t.clientY);
-    }, { passive: false });
-    document.addEventListener('touchend', onEnd);
+    setupRuidoInteraction();
+  }, 200);
+}
+
+function setupRuidoInteraction() {
+  const lettersArea = document.getElementById('ruido-letters-area');
+
+  function getPos(e) {
+    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
   }
 
-  setupDial('lia');
-  setupDial('bento');
-  updateDial('lia', angleLia);
-  updateDial('bento', angleBento);
+  function onTouch(e) {
+    e.preventDefault();
+    const pos = getPos(e);
+    if (lastTouchPos) {
+      const dx = pos.x - lastTouchPos.x;
+      const dy = pos.y - lastTouchPos.y;
+      const moved = Math.sqrt(dx*dx + dy*dy);
+      if (moved > 5) {
+        stillTime = 0;
+        document.querySelectorAll('.floating-letter:not(.captured)').forEach(letter => {
+          const rect = letter.getBoundingClientRect();
+          const lcx = rect.left + rect.width/2;
+          const lcy = rect.top + rect.height/2;
+          const dist = Math.sqrt((pos.x - lcx)**2 + (pos.y - lcy)**2);
+          if (dist < captureRadius) {
+            const fleeX = (lcx - pos.x) * 1.2;
+            const fleeY = (lcy - pos.y) * 1.2;
+            letter.classList.add('fleeing');
+            const cl = parseFloat(letter.style.left);
+            const ct = parseFloat(letter.style.top);
+            const ar = lettersArea.getBoundingClientRect();
+            letter.style.left = Math.max(10, Math.min(ar.width - 58, cl + fleeX)) + 'px';
+            letter.style.top = Math.max(10, Math.min(ar.height - 58, ct + fleeY)) + 'px';
+            setTimeout(() => letter.classList.remove('fleeing'), 300);
+          }
+        });
+      }
+    }
+    lastTouchPos = pos;
+  }
+
+  function onEnd() { lastTouchPos = null; stillTime = 0; }
+
+  lettersArea.addEventListener('touchstart', onTouch, { passive: false });
+  lettersArea.addEventListener('touchmove', onTouch, { passive: false });
+  lettersArea.addEventListener('touchend', onEnd);
+  lettersArea.addEventListener('mousedown', onTouch);
+  lettersArea.addEventListener('mousemove', onTouch);
+  lettersArea.addEventListener('mouseup', onEnd);
+  lettersArea.addEventListener('mouseleave', onEnd);
+
+  if (stillCheckInterval) clearInterval(stillCheckInterval);
+  stillCheckInterval = setInterval(() => {
+    if (!lastTouchPos) return;
+    stillTime += 100;
+    if (stillTime >= 700) {
+      let closest = null, minDist = captureRadius;
+      document.querySelectorAll('.floating-letter:not(.captured)').forEach(letter => {
+        const rect = letter.getBoundingClientRect();
+        const lcx = rect.left + rect.width/2;
+        const lcy = rect.top + rect.height/2;
+        const dist = Math.sqrt((lastTouchPos.x - lcx)**2 + (lastTouchPos.y - lcy)**2);
+        if (dist < minDist) { minDist = dist; closest = letter; }
+      });
+      if (closest) { captureLetter(closest); stillTime = 0; }
+    }
+  }, 100);
+}
+
+function captureLetter(letterEl) {
+  const letter = letterEl.dataset.letter;
+  const target = ruidoSlots.find(s => !s.filled && s.target === letter);
+  if (target) {
+    target.filled = true;
+    target.el.textContent = letter;
+    target.el.classList.add('filled');
+    letterEl.classList.add('captured');
+    if (ruidoSlots.every(s => s.filled)) {
+      if (stillCheckInterval) { clearInterval(stillCheckInterval); stillCheckInterval = null; }
+      setTimeout(() => goToScene('scene-travessia-intro'), 1800);
+    }
+  } else {
+    letterEl.style.opacity = '0.3';
+    letterEl.style.pointerEvents = 'none';
+    setTimeout(() => letterEl.classList.add('captured'), 600);
+  }
+}
+
+// FASE 4 — TRAVESSIA
+const TRAVESSIA_TOTAL_KM = 1547;
+const TRAVESSIA_DURATION_MS = 35000;
+const TRAVESSIA_THOUGHTS = [
+  '"Quantos quilômetros são uma decisão?"',
+  '"O cerrado parece o mesmo em todo lugar."',
+  '"Bento sabia o caminho de cor. Eu não."',
+  '"Nada pesa mais que o silêncio dele em mim."',
+  '"Falta menos do que parece."'
+];
+let travessiaElapsed = 0, travessiaActive = false, travessiaInterval = null, currentThoughtIdx = -1;
+
+function startTravessia() {
+  goToScene('scene-travessia-game');
+  travessiaElapsed = 0; currentThoughtIdx = -1; travessiaActive = false;
+  document.getElementById('travessia-bar').style.width = '0%';
+  document.getElementById('travessia-km').textContent = '0 / 1.547 KM';
+  document.getElementById('travessia-thought').classList.remove('visible');
+  setupTravessiaTouch();
+}
+
+function setupTravessiaTouch() {
+  const zone = document.getElementById('travessia-touch');
+  function onStart(e) {
+    e.preventDefault();
+    travessiaActive = true;
+    zone.classList.add('active');
+    if (!travessiaInterval) travessiaInterval = setInterval(travessiaTick, 50);
+  }
+  function onEnd() { travessiaActive = false; zone.classList.remove('active'); }
+  zone.addEventListener('touchstart', onStart, { passive: false });
+  zone.addEventListener('touchend', onEnd);
+  zone.addEventListener('touchcancel', onEnd);
+  zone.addEventListener('mousedown', onStart);
+  zone.addEventListener('mouseup', onEnd);
+  zone.addEventListener('mouseleave', onEnd);
+}
+
+function travessiaTick() {
+  if (travessiaActive) {
+    travessiaElapsed += 50;
+    const progress = Math.min(1, travessiaElapsed / TRAVESSIA_DURATION_MS);
+    const km = Math.floor(progress * TRAVESSIA_TOTAL_KM);
+    document.getElementById('travessia-bar').style.width = (progress * 100) + '%';
+    document.getElementById('travessia-km').textContent = km.toLocaleString('pt-BR') + ' / 1.547 KM';
+
+    const thoughtProgress = Math.floor((travessiaElapsed / 1000) / 6);
+    if (thoughtProgress !== currentThoughtIdx && thoughtProgress < TRAVESSIA_THOUGHTS.length) {
+      currentThoughtIdx = thoughtProgress;
+      const t = document.getElementById('travessia-thought');
+      t.classList.remove('visible');
+      setTimeout(() => {
+        t.textContent = TRAVESSIA_THOUGHTS[currentThoughtIdx];
+        t.classList.add('visible');
+      }, 400);
+    }
+
+    if (progress >= 1) {
+      clearInterval(travessiaInterval);
+      travessiaInterval = null;
+      const t = document.getElementById('travessia-thought');
+      t.classList.remove('visible');
+      setTimeout(() => {
+        t.textContent = '"Cheguei."';
+        t.classList.add('visible');
+      }, 600);
+      setTimeout(() => goToScene('scene-convergencia'), 3500);
+    }
+  }
+}
+
+// FASE 5 — ENCONTRO
+const ENCONTRO_LINES = [
+  { speaker: 'lia', words: ['Você', 'é', 'menor', 'do que', 'eu', 'imaginei.'] },
+  { speaker: 'bento', words: ['Você', 'é', 'mais', 'velho.'] },
+  { speaker: 'lia', words: ['Você', 'é', 'tudo.'] }
+];
+let encontroLineIndex = 0, encontroSlots = [];
+
+function startEncontro() {
+  goToScene('scene-encontro-game');
+  encontroLineIndex = 0;
+  ['line-1', 'line-2', 'line-3'].forEach(id => document.getElementById(id).innerHTML = '');
+  setTimeout(buildEncontroLine, 400);
+}
+
+function buildEncontroLine() {
+  if (encontroLineIndex >= ENCONTRO_LINES.length) {
+    setTimeout(() => goToScene('scene-toque'), 2400);
+    return;
+  }
+  const line = ENCONTRO_LINES[encontroLineIndex];
+  const lineEl = document.getElementById('line-' + (encontroLineIndex + 1));
+  lineEl.innerHTML = '— ';
+  encontroSlots = [];
+  line.words.forEach((word, idx) => {
+    const slot = document.createElement('span');
+    slot.className = 'encontro-slot';
+    slot.dataset.expected = word;
+    slot.innerHTML = '&nbsp;&nbsp;&nbsp;';
+    lineEl.appendChild(slot);
+    if (idx < line.words.length - 1) lineEl.appendChild(document.createTextNode(' '));
+    encontroSlots.push({ el: slot, expected: word, filled: false });
+  });
+
+  const wordsArea = document.getElementById('encontro-words');
+  wordsArea.innerHTML = '';
+  const shuffled = [...line.words];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  setTimeout(() => {
+    const areaRect = wordsArea.getBoundingClientRect();
+    const areaW = areaRect.width || window.innerWidth - 48;
+    const areaH = areaRect.height || 140;
+    const cols = Math.min(3, shuffled.length);
+    const rows = Math.ceil(shuffled.length / cols);
+    shuffled.forEach((word, idx) => {
+      const el = document.createElement('div');
+      el.className = 'draggable-word';
+      el.textContent = word;
+      el.dataset.word = word;
+      const col = idx % cols;
+      const row = Math.floor(idx / cols);
+      const cellW = areaW / cols;
+      const cellH = areaH / rows;
+      el.style.left = (col * cellW + Math.random() * 20) + 'px';
+      el.style.top = (row * cellH + Math.random() * 10) + 'px';
+      setupDraggableWord(el);
+      wordsArea.appendChild(el);
+    });
+  }, 100);
+}
+
+function setupDraggableWord(el) {
+  let isDragging = false, startX = 0, startY = 0;
+  function onStart(x, y) {
+    isDragging = true; startX = x; startY = y;
+    el.style.zIndex = '100';
+  }
+  function onMove(x, y) {
+    if (!isDragging) return;
+    el.style.transform = `translate(${x - startX}px, ${y - startY}px)`;
+  }
+  function onEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    el.style.zIndex = '';
+    const word = el.dataset.word;
+    const target = encontroSlots.find(s => !s.filled && s.expected === word);
+    if (target) {
+      const sr = target.el.getBoundingClientRect();
+      const er = el.getBoundingClientRect();
+      const dist = Math.sqrt((er.left + er.width/2 - sr.left - sr.width/2)**2 + (er.top + er.height/2 - sr.top - sr.height/2)**2);
+      if (dist < 90) {
+        target.filled = true;
+        target.el.textContent = word;
+        target.el.classList.add('filled');
+        el.classList.add('captured');
+        if (encontroSlots.every(s => s.filled)) {
+          encontroLineIndex++;
+          setTimeout(buildEncontroLine, 1400);
+        }
+        return;
+      }
+    }
+    el.style.transition = 'transform 0.4s ease';
+    el.style.transform = 'translate(0, 0)';
+    setTimeout(() => { el.style.transition = ''; }, 400);
+  }
+  el.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX, e.clientY); });
+  el.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: false });
+  document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
+  document.addEventListener('touchmove', e => { if (isDragging) { e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); } }, { passive: false });
+  document.addEventListener('mouseup', onEnd);
+  document.addEventListener('touchend', onEnd);
+}
 </script>
 
-</body>
-</html>
+
+</body></html>
