@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/jessi/Downloads/index_8.html -->
+<!-- saved from url=(0045)file:///C:/Users/jessi/Downloads/index_9.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -100,6 +100,79 @@
   .ruido-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; margin-bottom: 8px; }
   .ruido-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
   .ruido-message { font-family: 'Courier New', monospace; font-size: clamp(20px, 5.5vw, 28px); letter-spacing: 0.15em; text-align: center; line-height: 1.8; margin: 32px 0; min-height: 120px; }
+
+  /* Espectro de áudio (Fase 3) */
+  .spectrum-container {
+    position: relative;
+    width: 100%;
+    height: clamp(180px, 30vh, 240px);
+    margin: 20px 0;
+    border-top: 0.5px solid rgba(244, 232, 216, 0.15);
+    border-bottom: 0.5px solid rgba(244, 232, 216, 0.15);
+    background: rgba(15, 20, 25, 0.4);
+  }
+  .spectrum-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .spectrum-touch-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    touch-action: none;
+    z-index: 5;
+  }
+  .spectrum-zone {
+    transition: opacity 0.4s ease;
+  }
+  .spectrum-zone.captured {
+    opacity: 0;
+  }
+  .spectrum-zone-glow {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: zoneBreathe 2.4s ease-in-out infinite;
+  }
+  @keyframes zoneBreathe {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.85; }
+  }
+  .spectrum-messages {
+    width: 100%;
+    max-width: 540px;
+    padding: 0 12px;
+  }
+  .spectrum-message {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(14px, 3.8vw, 16px);
+    line-height: 1.6;
+    color: #BFD0F0;
+    text-align: left;
+    padding: 6px 0;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    min-height: 24px;
+  }
+  .spectrum-message.revealed {
+    opacity: 0.95;
+    transform: translateY(0);
+  }
+  .spectrum-message::before {
+    content: "— ";
+    opacity: 0.6;
+  }
+  .spectrum-message.empty::before {
+    content: "";
+  }
   .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
   .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
   .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
@@ -369,11 +442,22 @@
 
   <div class="scene" id="scene-ruido-game">
     <div class="ruido-header">
-      <p class="ruido-instruction">A mensagem do Bento chegou quebrada. Pegue as letras certas.</p>
-      <p class="ruido-hint">SEGURE PARADO · A LETRA VEM ATÉ VOCÊ</p>
+      <p class="ruido-instruction">Sintonize a transmissão. Deslize sobre a onda para captar os trechos limpos.</p>
+      <p class="ruido-hint">DESLIZE LENTAMENTE · DA ESQUERDA PARA A DIREITA</p>
     </div>
-    <div class="ruido-message" id="ruido-message"></div>
-    <div class="ruido-letters-area" id="ruido-letters-area"></div>
+    <div class="spectrum-container" id="spectrum-container">
+      <svg class="spectrum-svg" id="spectrum-svg" viewBox="0 0 800 200" preserveAspectRatio="none">
+        <path id="spectrum-wave" d="" stroke="rgba(244, 232, 216, 0.3)" stroke-width="1.5" fill="none"></path>
+        <g id="spectrum-zones"></g>
+        <circle id="spectrum-cursor" cx="-50" cy="100" r="6" fill="#F4E8D8" opacity="0"></circle>
+      </svg>
+      <div class="spectrum-touch-area" id="spectrum-touch-area"></div>
+    </div>
+    <div class="spectrum-messages" id="spectrum-messages">
+      <p class="spectrum-message" data-idx="0"></p>
+      <p class="spectrum-message" data-idx="1"></p>
+      <p class="spectrum-message" data-idx="2"></p>
+    </div>
   </div>
 
   <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
@@ -1065,186 +1149,208 @@ function startFusos() {
   }, 1000);
 }
 
-// FASE 3 — RUÍDO (sintonizar letras instáveis)
-// Mecânica: cada letra correta aparece tremendo (sinal instável).
-// Toque e segure pra estabilizar. Letras de ruído se desfazem ao serem seguradas.
-const RUIDO_PHRASE = 'TEM ALGUEM AI';
-const RUIDO_VISIBLE = '_E_ A__U__ _I';
-let ruidoSlots = [];
-const STABILIZATION_TIME = 1200; // ms para estabilizar uma letra
-const NOISE_DECAY_TIME = 800;    // ms para letra de ruído sumir
+// FASE 3 — RUÍDO (espectro de áudio — sintonizar trechos limpos)
+// Mecânica: onda sonora distorcida atravessa a tela. Em 3 zonas a onda fica
+// "limpa" e brilha. O jogador desliza o dedo da esquerda para direita.
+// Ao passar com o dedo por uma zona limpa, a frase do Bento é revelada.
+const SPECTRUM_MESSAGES = [
+  'Estou vivo. A floresta me protegeu.',
+  'Penso em você todos os dias ao amanhecer.',
+  'Vou atravessar. Espera por mim.'
+];
+let spectrumZones = [];
+let spectrumWavePoints = [];
+let spectrumAnimFrame = null;
+let spectrumStartTime = 0;
+let spectrumIsTouching = false;
+let spectrumCapturedCount = 0;
 
 function startRuido() {
   goToScene('scene-ruido-game');
-  const messageEl = document.getElementById('ruido-message');
-  const lettersArea = document.getElementById('ruido-letters-area');
-  messageEl.innerHTML = '';
-  lettersArea.innerHTML = '';
-  ruidoSlots = [];
 
-  // Atualiza a instrução
-  const instrEl = document.querySelector('#scene-ruido-game .ruido-instruction');
-  const hintEl = document.querySelector('#scene-ruido-game .ruido-hint');
-  if (instrEl) instrEl.textContent = 'A mensagem do Bento chega trêmula. Toque e segure cada letra pra sintonizar.';
-  if (hintEl) hintEl.textContent = 'SEGURE PARA ESTABILIZAR · LETRAS FALSAS SE DESFAZEM';
+  spectrumZones = [];
+  spectrumCapturedCount = 0;
+  spectrumStartTime = Date.now();
+  spectrumIsTouching = false;
 
-  // Constrói os slots da frase
-  const visibleChars = RUIDO_VISIBLE.split('');
-  const phraseChars = RUIDO_PHRASE.split('');
-  visibleChars.forEach((char, idx) => {
-    if (char === ' ') {
-      messageEl.innerHTML += '<span style="display:inline-block; width: 12px;"></span>';
-    } else if (char === '_') {
-      const slot = document.createElement('span');
-      slot.className = 'ruido-slot';
-      slot.dataset.target = phraseChars[idx];
-      slot.textContent = '\u00A0';
-      messageEl.appendChild(slot);
-      ruidoSlots.push({ el: slot, target: phraseChars[idx], filled: false });
-    } else {
-      const span = document.createElement('span');
-      span.style.color = 'rgba(244, 232, 216, 0.5)';
-      span.textContent = char;
-      messageEl.appendChild(span);
-    }
+  // Limpa mensagens
+  document.querySelectorAll('.spectrum-message').forEach(el => {
+    el.classList.remove('revealed');
+    el.classList.add('empty');
+    el.textContent = '';
   });
 
-  // Cria letras corretas + ruídos
-  const correctLetters = ruidoSlots.map(s => s.target);
-  const noiseLetters = ['X', 'Z', 'Q', 'K'];
-  const allLetters = [...correctLetters.map(l => ({ letter: l, isCorrect: true })),
-                      ...noiseLetters.map(l => ({ letter: l, isCorrect: false }))];
-  // embaralha
-  for (let i = allLetters.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [allLetters[i], allLetters[j]] = [allLetters[j], allLetters[i]];
-  }
+  // Define as 3 zonas limpas em posições espalhadas (em coordenadas SVG 0-800)
+  const zonePositions = [180, 400, 620];
+  const zonesGroup = document.getElementById('spectrum-zones');
+  zonesGroup.innerHTML = '';
 
-  setTimeout(() => {
-    const areaRect = lettersArea.getBoundingClientRect();
-    const areaW = areaRect.width;
-    const areaH = areaRect.height;
+  zonePositions.forEach((x, idx) => {
+    // Cria gradiente de glow para a zona
+    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    glow.setAttribute('x', x - 35);
+    glow.setAttribute('y', 30);
+    glow.setAttribute('width', 70);
+    glow.setAttribute('height', 140);
+    glow.setAttribute('fill', 'rgba(244, 232, 216, 0.08)');
+    glow.setAttribute('class', 'spectrum-zone spectrum-zone-glow');
+    glow.dataset.idx = idx;
+    glow.dataset.x = x;
+    zonesGroup.appendChild(glow);
 
-    allLetters.forEach((item) => {
-      const el = document.createElement('div');
-      el.className = 'floating-letter unstable';
-      el.textContent = item.letter;
-      el.dataset.letter = item.letter;
-      el.dataset.correct = item.isCorrect ? 'true' : 'false';
-      const padding = 20;
-      const x = padding + Math.random() * (areaW - padding * 2 - 48);
-      const y = padding + Math.random() * (areaH - padding * 2 - 48);
-      el.style.left = x + 'px';
-      el.style.top = y + 'px';
+    // Linha central da zona
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x);
+    line.setAttribute('y1', 30);
+    line.setAttribute('x2', x);
+    line.setAttribute('y2', 170);
+    line.setAttribute('stroke', 'rgba(244, 232, 216, 0.35)');
+    line.setAttribute('stroke-width', '0.5');
+    line.setAttribute('stroke-dasharray', '3 3');
+    line.setAttribute('class', 'spectrum-zone');
+    line.dataset.idx = idx;
+    zonesGroup.appendChild(line);
 
-      // Camada interna pra animação de tremor
-      const inner = document.createElement('span');
-      inner.className = 'letter-inner';
-      inner.textContent = item.letter;
-      el.textContent = '';
-      el.appendChild(inner);
+    spectrumZones.push({ x: x, idx: idx, captured: false });
+  });
 
-      // Barra de progresso de estabilização
-      const progress = document.createElement('div');
-      progress.className = 'letter-progress';
-      el.appendChild(progress);
+  // Inicia animação da onda
+  if (spectrumAnimFrame) cancelAnimationFrame(spectrumAnimFrame);
+  animateSpectrum();
 
-      lettersArea.appendChild(el);
-      setupLetterStabilization(el);
-    });
-  }, 200);
+  // Setup de interação
+  setupSpectrumTouch();
 }
 
-function setupLetterStabilization(el) {
-  let holdStart = null;
-  let holdInterval = null;
-  let isHolding = false;
-  const progressBar = el.querySelector('.letter-progress');
-  const isCorrect = el.dataset.correct === 'true';
+function animateSpectrum() {
+  const wavePath = document.getElementById('spectrum-wave');
+  if (!wavePath) return;
 
-  function startHold(e) {
-    e.preventDefault();
-    if (el.classList.contains('captured') || el.classList.contains('dissolving')) return;
-    isHolding = true;
-    holdStart = Date.now();
-    el.classList.add('stabilizing');
+  const time = (Date.now() - spectrumStartTime) / 1000;
+  const points = [];
+  const numPoints = 80;
 
-    holdInterval = setInterval(() => {
-      const elapsed = Date.now() - holdStart;
+  for (let i = 0; i <= numPoints; i++) {
+    const x = (i / numPoints) * 800;
+    let y = 100;
 
-      if (isCorrect) {
-        // Letra correta: estabiliza progressivamente
-        const progress = Math.min(1, elapsed / STABILIZATION_TIME);
-        progressBar.style.width = (progress * 100) + '%';
-
-        if (progress >= 1) {
-          // Estabilizada! Captura
-          clearInterval(holdInterval);
-          stabilizeLetter(el);
-        }
-      } else {
-        // Letra de ruído: dissolve progressivamente
-        const progress = Math.min(1, elapsed / NOISE_DECAY_TIME);
-        el.style.opacity = (1 - progress * 0.85).toString();
-        progressBar.style.width = (progress * 100) + '%';
-        progressBar.style.background = 'rgba(150, 50, 50, 0.6)';
-
-        if (progress >= 1) {
-          clearInterval(holdInterval);
-          dissolveNoiseLetter(el);
-        }
+    // Verifica se está perto de uma zona limpa
+    let nearZone = false;
+    let zoneCleanliness = 0;
+    spectrumZones.forEach(zone => {
+      const dist = Math.abs(x - zone.x);
+      if (dist < 35) {
+        nearZone = true;
+        zoneCleanliness = Math.max(zoneCleanliness, (1 - dist / 35) * (zone.captured ? 0.3 : 1));
       }
-    }, 30);
+    });
+
+    // Onda base distorcida (ruído)
+    const noise1 = Math.sin(x * 0.05 + time * 3.2) * 25;
+    const noise2 = Math.sin(x * 0.12 + time * 5.7) * 18;
+    const noise3 = Math.sin(x * 0.31 + time * 8.3) * 12;
+    const noise4 = (Math.random() - 0.5) * 14;
+
+    const baseDistortion = noise1 + noise2 + noise3 + noise4;
+
+    // Onda limpa (pequena, suave)
+    const cleanWave = Math.sin(x * 0.03 + time * 1.2) * 8;
+
+    // Mistura: quanto mais perto da zona limpa, mais a onda fica "limpa"
+    y = 100 + baseDistortion * (1 - zoneCleanliness * 0.85) + cleanWave * zoneCleanliness;
+
+    points.push((i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1));
   }
 
-  function endHold() {
-    if (!isHolding) return;
-    isHolding = false;
-    if (holdInterval) {
-      clearInterval(holdInterval);
-      holdInterval = null;
-    }
-    if (!el.classList.contains('captured') && !el.classList.contains('dissolving')) {
-      el.classList.remove('stabilizing');
-      progressBar.style.width = '0%';
-      progressBar.style.background = '';
-      if (!isCorrect) el.style.opacity = '1';
-    }
-  }
+  wavePath.setAttribute('d', points.join(' '));
 
-  el.addEventListener('mousedown', startHold);
-  el.addEventListener('touchstart', startHold, { passive: false });
-  el.addEventListener('mouseup', endHold);
-  el.addEventListener('mouseleave', endHold);
-  el.addEventListener('touchend', endHold);
-  el.addEventListener('touchcancel', endHold);
+  spectrumAnimFrame = requestAnimationFrame(animateSpectrum);
 }
 
-function stabilizeLetter(letterEl) {
-  const letter = letterEl.dataset.letter;
-  const target = ruidoSlots.find(s => !s.filled && s.target === letter);
+function setupSpectrumTouch() {
+  const touchArea = document.getElementById('spectrum-touch-area');
+  const cursor = document.getElementById('spectrum-cursor');
+  const svg = document.getElementById('spectrum-svg');
 
-  if (target) {
-    target.filled = true;
-    target.el.textContent = letter;
-    target.el.classList.add('filled');
-    letterEl.classList.add('captured');
-
-    if (ruidoSlots.every(s => s.filled)) {
-      setTimeout(() => goToScene('scene-travessia-intro'), 1800);
-    }
-  } else {
-    // Letra correta mas sem slot disponível (já preenchido por outra igual)
-    letterEl.classList.add('captured');
+  function getSvgX(clientX, clientY) {
+    const rect = svg.getBoundingClientRect();
+    const relX = (clientX - rect.left) / rect.width;
+    return relX * 800;
   }
+
+  function getSvgY(clientX, clientY) {
+    const rect = svg.getBoundingClientRect();
+    const relY = (clientY - rect.top) / rect.height;
+    return relY * 200;
+  }
+
+  function moveCursor(clientX, clientY) {
+    const svgX = getSvgX(clientX, clientY);
+    const svgY = getSvgY(clientX, clientY);
+    cursor.setAttribute('cx', svgX);
+    cursor.setAttribute('cy', svgY);
+    cursor.setAttribute('opacity', spectrumIsTouching ? '1' : '0');
+
+    // Verifica se cursor está dentro de alguma zona
+    spectrumZones.forEach(zone => {
+      if (zone.captured) return;
+      const dist = Math.abs(svgX - zone.x);
+      if (dist < 30) {
+        captureZone(zone);
+      }
+    });
+  }
+
+  function onStart(e) {
+    e.preventDefault();
+    spectrumIsTouching = true;
+    const t = e.touches ? e.touches[0] : e;
+    moveCursor(t.clientX, t.clientY);
+  }
+  function onMove(e) {
+    if (!spectrumIsTouching) return;
+    e.preventDefault();
+    const t = e.touches ? e.touches[0] : e;
+    moveCursor(t.clientX, t.clientY);
+  }
+  function onEnd(e) {
+    spectrumIsTouching = false;
+    cursor.setAttribute('opacity', '0');
+  }
+
+  touchArea.addEventListener('mousedown', onStart);
+  touchArea.addEventListener('touchstart', onStart, { passive: false });
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('mouseup', onEnd);
+  document.addEventListener('touchend', onEnd);
 }
 
-function dissolveNoiseLetter(letterEl) {
-  letterEl.classList.add('dissolving');
-  setTimeout(() => {
-    letterEl.style.pointerEvents = 'none';
-    letterEl.style.opacity = '0';
-  }, 100);
+function captureZone(zone) {
+  if (zone.captured) return;
+  zone.captured = true;
+  spectrumCapturedCount++;
+
+  // Esconde elementos visuais da zona
+  document.querySelectorAll('.spectrum-zone[data-idx="' + zone.idx + '"]').forEach(el => {
+    el.classList.add('captured');
+  });
+
+  // Revela a mensagem correspondente
+  const msgEl = document.querySelector('.spectrum-message[data-idx="' + zone.idx + '"]');
+  if (msgEl) {
+    msgEl.textContent = SPECTRUM_MESSAGES[zone.idx];
+    msgEl.classList.remove('empty');
+    msgEl.classList.add('revealed');
+  }
+
+  // Se completou todas, avança
+  if (spectrumCapturedCount >= 3) {
+    setTimeout(() => {
+      if (spectrumAnimFrame) cancelAnimationFrame(spectrumAnimFrame);
+      goToScene('scene-travessia-intro');
+    }, 3000);
+  }
 }
 
 // FASE 4 — TRAVESSIA
