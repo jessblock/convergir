@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_11.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_12.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -101,79 +101,146 @@
   .ruido-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
   .ruido-message { font-family: 'Courier New', monospace; font-size: clamp(20px, 5.5vw, 28px); letter-spacing: 0.15em; text-align: center; line-height: 1.8; margin: 32px 0; min-height: 120px; }
 
-  /* Espectro de áudio (Fase 3) */
-  .spectrum-container {
-    position: relative;
-    width: 100%;
-    height: clamp(180px, 30vh, 240px);
-    margin: 20px 0;
-    border-top: 0.5px solid rgba(244, 232, 216, 0.15);
-    border-bottom: 0.5px solid rgba(244, 232, 216, 0.15);
-    background: rgba(15, 20, 25, 0.4);
+  /* MORSE — Fase 3 */
+  #scene-ruido-game { padding: 24px 20px; justify-content: space-between; }
+  .morse-header { text-align: center; margin-top: 8px; }
+  .morse-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.55; opacity: 0.9; margin-bottom: 8px; }
+  .morse-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.25em; opacity: 0.6; }
+
+  .morse-target-word {
+    text-align: center;
+    margin: 10px 0 4px;
+    font-family: Georgia, serif;
+    font-size: clamp(13px, 3.4vw, 15px);
+    letter-spacing: 0.4em;
+    opacity: 0.65;
+    text-transform: uppercase;
   }
-  .spectrum-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-  .spectrum-touch-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    touch-action: none;
-    z-index: 5;
-  }
-  .spectrum-zone {
-    transition: opacity 0.4s ease;
-  }
-  .spectrum-zone.captured {
-    opacity: 0;
-  }
-  .spectrum-zone-glow {
-    transform-origin: center;
-    transform-box: fill-box;
-    animation: zoneBreathe 2.4s ease-in-out infinite;
-  }
-  @keyframes zoneBreathe {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.85; }
-  }
-  .spectrum-messages {
+
+  .morse-pattern {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px;
+    margin: 6px auto 20px;
     width: 100%;
     max-width: 540px;
-    padding: 0 12px;
+    background: rgba(15, 20, 25, 0.55);
+    border: 0.5px solid rgba(244, 232, 216, 0.12);
+    backdrop-filter: blur(6px);
   }
-  .spectrum-message {
+
+  .morse-letter-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    min-width: 36px;
+  }
+  .morse-letter-block.completed { opacity: 0.4; }
+  .morse-letter-block.active {
+    background: rgba(244, 232, 216, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .morse-letter-char {
+    font-family: Georgia, serif;
+    font-size: clamp(15px, 4vw, 18px);
+    color: #F4E8D8;
+    letter-spacing: 0.05em;
+  }
+
+  .morse-letter-symbols {
+    display: flex;
+    gap: 3px;
+    margin-top: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(13px, 3.4vw, 15px);
+    color: rgba(244, 232, 216, 0.7);
+    letter-spacing: 0.05em;
+    min-height: 18px;
+    align-items: center;
+  }
+
+  .morse-symbol {
+    transition: color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.4;
+  }
+  .morse-symbol.lit {
+    color: #F4E8D8;
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(244, 232, 216, 0.7);
+  }
+
+  .morse-revealed {
+    text-align: center;
     font-family: Georgia, serif;
     font-style: italic;
-    font-size: clamp(14px, 3.8vw, 16px);
-    line-height: 1.6;
+    font-size: clamp(15px, 4vw, 18px);
     color: #BFD0F0;
-    text-align: left;
-    padding: 6px 0;
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
     transition: opacity 1.2s ease, transform 1.2s ease;
-    min-height: 24px;
+    min-height: 28px;
+    padding: 8px 12px;
   }
-  .spectrum-message.revealed {
+  .morse-revealed.visible {
     opacity: 0.95;
     transform: translateY(0);
   }
-  .spectrum-message::before {
-    content: "— ";
-    opacity: 0.6;
+  .morse-revealed::before { content: "— "; opacity: 0.6; }
+
+  .morse-key {
+    width: 100%;
+    max-width: 460px;
+    margin: 16px auto 8px;
+    height: 96px;
+    background: rgba(15, 20, 25, 0.6);
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    color: #F4E8D8;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 2.6vw, 12px);
+    letter-spacing: 0.4em;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .spectrum-message.empty::before {
-    content: "";
+  .morse-key:active,
+  .morse-key.pressing {
+    background: rgba(244, 232, 216, 0.18);
+    border-color: rgba(244, 232, 216, 0.85);
+    transform: scale(0.99);
   }
-  .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
+  .morse-key-label {
+    position: relative;
+    z-index: 2;
+  }
+  .morse-key-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(244, 232, 216, 0.25) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .morse-key.pressing .morse-key-pulse {
+    opacity: 1;
+  }
+
+    .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
   .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
   .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
   .floating-letter { position: absolute; width: 52px; height: 52px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease, transform 0.6s ease, background 0.3s ease; user-select: none; overflow: hidden; }
@@ -441,23 +508,21 @@
   </div>
 
   <div class="scene" id="scene-ruido-game">
-    <div class="ruido-header">
-      <p class="ruido-instruction">Sintonize a transmissão. Deslize sobre a onda para captar os trechos limpos.</p>
-      <p class="ruido-hint">DESLIZE LENTAMENTE · DA ESQUERDA PARA A DIREITA</p>
+    <div class="morse-header">
+      <p class="morse-instruction" id="morse-instruction">Bento está transmitindo. Reproduza o sinal pra confirmar que recebeu.</p>
+      <p class="morse-hint">TOQUE CURTO = · &nbsp;&nbsp; TOQUE LONGO = —</p>
     </div>
-    <div class="spectrum-container" id="spectrum-container">
-      <svg class="spectrum-svg" id="spectrum-svg" viewBox="0 0 800 200" preserveAspectRatio="none">
-        <path id="spectrum-wave" d="" stroke="rgba(244, 232, 216, 0.3)" stroke-width="1.5" fill="none"></path>
-        <g id="spectrum-zones"></g>
-        <circle id="spectrum-cursor" cx="-50" cy="100" r="6" fill="#F4E8D8" opacity="0"></circle>
-      </svg>
-      <div class="spectrum-touch-area" id="spectrum-touch-area"></div>
-    </div>
-    <div class="spectrum-messages" id="spectrum-messages">
-      <p class="spectrum-message" data-idx="0"></p>
-      <p class="spectrum-message" data-idx="1"></p>
-      <p class="spectrum-message" data-idx="2"></p>
-    </div>
+
+    <div class="morse-target-word" id="morse-target-word"></div>
+
+    <div class="morse-pattern" id="morse-pattern"></div>
+
+    <div class="morse-revealed" id="morse-revealed"></div>
+
+    <button class="morse-key" id="morse-key">
+      <span class="morse-key-label">CHAVE TELEGRÁFICA</span>
+      <span class="morse-key-pulse" id="morse-key-pulse"></span>
+    </button>
   </div>
 
   <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
@@ -531,7 +596,9 @@
 // ============================================================================
 // LOG SILENCIOSO (apenas console)
 // ============================================================================
-function debug(msg) { console.log('[CONVERGIR]', msg); }
+function debug(msg) {
+  console.log('[CONVERGIR]', msg);
+}
 
 debug('script carregado');
 
@@ -1001,7 +1068,11 @@ let currentSceneId = 'scene-title';
 
 function goToScene(sceneId) {
   // Evita transições duplicadas ou para a mesma cena
-  if (isTransitioning || sceneId === currentSceneId) return;
+  if (isTransitioning || sceneId === currentSceneId) {
+    debug('goToScene IGNORADO: ' + sceneId + ' (transit=' + isTransitioning + ', curr=' + currentSceneId + ')');
+    return;
+  }
+  debug('goToScene: ' + sceneId);
   isTransitioning = true;
   currentSceneId = sceneId;
 
@@ -1149,208 +1220,228 @@ function startFusos() {
   }, 1000);
 }
 
-// FASE 3 — RUÍDO (espectro de áudio — sintonizar trechos limpos)
-// Mecânica: onda sonora distorcida atravessa a tela. Em 3 zonas a onda fica
-// "limpa" e brilha. O jogador desliza o dedo da esquerda para direita.
-// Ao passar com o dedo por uma zona limpa, a frase do Bento é revelada.
-const SPECTRUM_MESSAGES = [
-  'Estou vivo. A floresta me protegeu.',
-  'Penso em você todos os dias ao amanhecer.',
-  'Vou atravessar. Espera por mim.'
+// FASE 3 — RUÍDO (Morse — chave telegráfica)
+// Mecânica: Bento envia palavras em Morse. O jogador toca a chave
+// (curto = ponto, longo = traço) seguindo o padrão visível na tela.
+// Cada palavra completa revela uma frase narrativa.
+
+const MORSE_CODE = {
+  'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',   'E': '.',
+  'F': '..-.',  'G': '--.',   'H': '....',  'I': '..',    'J': '.---',
+  'K': '-.-',   'L': '.-..',  'M': '--',    'N': '-.',    'O': '---',
+  'P': '.--.',  'Q': '--.-',  'R': '.-.',   'S': '...',   'T': '-',
+  'U': '..-',   'V': '...-',  'W': '.--',   'X': '-..-',  'Y': '-.--',
+  'Z': '--..'
+};
+
+const MORSE_WORDS = [
+  { word: 'VIVO',   message: 'Estou vivo. A floresta me protegeu.' },
+  { word: 'ESPERA', message: 'Pensa em mim ao amanhecer.' },
+  { word: 'CHEGO',  message: 'Vou atravessar. Espera por mim.' }
 ];
-let spectrumZones = [];
-let spectrumWavePoints = [];
-let spectrumAnimFrame = null;
-let spectrumStartTime = 0;
-let spectrumIsTouching = false;
-let spectrumCapturedCount = 0;
+
+// Tempo limite (ms) entre toque curto e longo
+const MORSE_DOT_MAX = 250; // até 250ms = ponto
+// Acima de 250ms = traço
+
+let morseState = null;
 
 function startRuido() {
   goToScene('scene-ruido-game');
-
-  spectrumZones = [];
-  spectrumCapturedCount = 0;
-  spectrumStartTime = Date.now();
-  spectrumIsTouching = false;
-
-  // Limpa mensagens
-  document.querySelectorAll('.spectrum-message').forEach(el => {
-    el.classList.remove('revealed');
-    el.classList.add('empty');
-    el.textContent = '';
-  });
-
-  // Define as 3 zonas limpas em posições espalhadas (em coordenadas SVG 0-800)
-  const zonePositions = [180, 400, 620];
-  const zonesGroup = document.getElementById('spectrum-zones');
-  zonesGroup.innerHTML = '';
-
-  zonePositions.forEach((x, idx) => {
-    // Cria gradiente de glow para a zona
-    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    glow.setAttribute('x', x - 35);
-    glow.setAttribute('y', 30);
-    glow.setAttribute('width', 70);
-    glow.setAttribute('height', 140);
-    glow.setAttribute('fill', 'rgba(244, 232, 216, 0.08)');
-    glow.setAttribute('class', 'spectrum-zone spectrum-zone-glow');
-    glow.dataset.idx = idx;
-    glow.dataset.x = x;
-    zonesGroup.appendChild(glow);
-
-    // Linha central da zona
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', x);
-    line.setAttribute('y1', 30);
-    line.setAttribute('x2', x);
-    line.setAttribute('y2', 170);
-    line.setAttribute('stroke', 'rgba(244, 232, 216, 0.35)');
-    line.setAttribute('stroke-width', '0.5');
-    line.setAttribute('stroke-dasharray', '3 3');
-    line.setAttribute('class', 'spectrum-zone');
-    line.dataset.idx = idx;
-    zonesGroup.appendChild(line);
-
-    spectrumZones.push({ x: x, idx: idx, captured: false });
-  });
-
-  // Inicia animação da onda
-  if (spectrumAnimFrame) cancelAnimationFrame(spectrumAnimFrame);
-  animateSpectrum();
-
-  // Setup de interação
-  setupSpectrumTouch();
+  setTimeout(() => initMorse(), 300);
 }
 
-function animateSpectrum() {
-  const wavePath = document.getElementById('spectrum-wave');
-  if (!wavePath) return;
-
-  const time = (Date.now() - spectrumStartTime) / 1000;
-  const points = [];
-  const numPoints = 80;
-
-  for (let i = 0; i <= numPoints; i++) {
-    const x = (i / numPoints) * 800;
-    let y = 100;
-
-    // Verifica se está perto de uma zona limpa
-    let nearZone = false;
-    let zoneCleanliness = 0;
-    spectrumZones.forEach(zone => {
-      const dist = Math.abs(x - zone.x);
-      if (dist < 35) {
-        nearZone = true;
-        zoneCleanliness = Math.max(zoneCleanliness, (1 - dist / 35) * (zone.captured ? 0.3 : 1));
-      }
-    });
-
-    // Onda base distorcida (ruído)
-    const noise1 = Math.sin(x * 0.05 + time * 3.2) * 25;
-    const noise2 = Math.sin(x * 0.12 + time * 5.7) * 18;
-    const noise3 = Math.sin(x * 0.31 + time * 8.3) * 12;
-    const noise4 = (Math.random() - 0.5) * 14;
-
-    const baseDistortion = noise1 + noise2 + noise3 + noise4;
-
-    // Onda limpa (pequena, suave)
-    const cleanWave = Math.sin(x * 0.03 + time * 1.2) * 8;
-
-    // Mistura: quanto mais perto da zona limpa, mais a onda fica "limpa"
-    y = 100 + baseDistortion * (1 - zoneCleanliness * 0.85) + cleanWave * zoneCleanliness;
-
-    points.push((i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1));
-  }
-
-  wavePath.setAttribute('d', points.join(' '));
-
-  spectrumAnimFrame = requestAnimationFrame(animateSpectrum);
+function initMorse() {
+  morseState = {
+    wordIndex: 0,
+    currentLetterIdx: 0,
+    currentSymbolIdx: 0,
+    pressStart: null,
+    isPressing: false
+  };
+  loadMorseWord();
+  setupMorseKey();
 }
 
-function setupSpectrumTouch() {
-  const touchArea = document.getElementById('spectrum-touch-area');
-  const cursor = document.getElementById('spectrum-cursor');
-  const svg = document.getElementById('spectrum-svg');
-
-  function getSvgX(clientX, clientY) {
-    const rect = svg.getBoundingClientRect();
-    const relX = (clientX - rect.left) / rect.width;
-    return relX * 800;
-  }
-
-  function getSvgY(clientX, clientY) {
-    const rect = svg.getBoundingClientRect();
-    const relY = (clientY - rect.top) / rect.height;
-    return relY * 200;
-  }
-
-  function moveCursor(clientX, clientY) {
-    const svgX = getSvgX(clientX, clientY);
-    const svgY = getSvgY(clientX, clientY);
-    cursor.setAttribute('cx', svgX);
-    cursor.setAttribute('cy', svgY);
-    cursor.setAttribute('opacity', spectrumIsTouching ? '1' : '0');
-
-    // Verifica se cursor está dentro de alguma zona
-    spectrumZones.forEach(zone => {
-      if (zone.captured) return;
-      const dist = Math.abs(svgX - zone.x);
-      if (dist < 30) {
-        captureZone(zone);
-      }
-    });
-  }
-
-  function onStart(e) {
-    e.preventDefault();
-    spectrumIsTouching = true;
-    const t = e.touches ? e.touches[0] : e;
-    moveCursor(t.clientX, t.clientY);
-  }
-  function onMove(e) {
-    if (!spectrumIsTouching) return;
-    e.preventDefault();
-    const t = e.touches ? e.touches[0] : e;
-    moveCursor(t.clientX, t.clientY);
-  }
-  function onEnd(e) {
-    spectrumIsTouching = false;
-    cursor.setAttribute('opacity', '0');
-  }
-
-  touchArea.addEventListener('mousedown', onStart);
-  touchArea.addEventListener('touchstart', onStart, { passive: false });
-  document.addEventListener('mousemove', onMove);
-  document.addEventListener('touchmove', onMove, { passive: false });
-  document.addEventListener('mouseup', onEnd);
-  document.addEventListener('touchend', onEnd);
-}
-
-function captureZone(zone) {
-  if (zone.captured) return;
-  zone.captured = true;
-  spectrumCapturedCount++;
-
-  // Esconde elementos visuais da zona
-  document.querySelectorAll('.spectrum-zone[data-idx="' + zone.idx + '"]').forEach(el => {
-    el.classList.add('captured');
-  });
-
-  // Revela a mensagem correspondente
-  const msgEl = document.querySelector('.spectrum-message[data-idx="' + zone.idx + '"]');
-  if (msgEl) {
-    msgEl.textContent = SPECTRUM_MESSAGES[zone.idx];
-    msgEl.classList.remove('empty');
-    msgEl.classList.add('revealed');
-  }
-
-  // Se completou todas, avança
-  if (spectrumCapturedCount >= 3) {
+function loadMorseWord() {
+  if (!morseState) return;
+  if (morseState.wordIndex >= MORSE_WORDS.length) {
+    // Fim da fase
     setTimeout(() => {
-      if (spectrumAnimFrame) cancelAnimationFrame(spectrumAnimFrame);
+      morseState = null;
       goToScene('scene-travessia-intro');
-    }, 3000);
+    }, 2400);
+    return;
   }
+
+  const wordData = MORSE_WORDS[morseState.wordIndex];
+  const word = wordData.word;
+  morseState.currentLetterIdx = 0;
+  morseState.currentSymbolIdx = 0;
+  morseState.letters = [];
+
+  // Atualiza o título da palavra-alvo
+  const targetEl = document.getElementById('morse-target-word');
+  if (targetEl) {
+    targetEl.textContent = 'Transmissão ' + (morseState.wordIndex + 1) + ' de ' + MORSE_WORDS.length;
+  }
+
+  // Limpa frase revelada
+  const revealedEl = document.getElementById('morse-revealed');
+  if (revealedEl) {
+    revealedEl.classList.remove('visible');
+    revealedEl.textContent = '';
+  }
+
+  // Constrói o padrão visual
+  const patternEl = document.getElementById('morse-pattern');
+  patternEl.innerHTML = '';
+
+  for (let i = 0; i < word.length; i++) {
+    const letter = word[i];
+    const symbols = MORSE_CODE[letter] || '';
+
+    const block = document.createElement('div');
+    block.className = 'morse-letter-block';
+    if (i === 0) block.classList.add('active');
+    block.dataset.idx = i;
+
+    const charEl = document.createElement('div');
+    charEl.className = 'morse-letter-char';
+    charEl.textContent = letter;
+    block.appendChild(charEl);
+
+    const symbolsEl = document.createElement('div');
+    symbolsEl.className = 'morse-letter-symbols';
+    const symbolSpans = [];
+    for (let j = 0; j < symbols.length; j++) {
+      const s = document.createElement('span');
+      s.className = 'morse-symbol';
+      s.textContent = symbols[j] === '.' ? '·' : '—';
+      s.dataset.expected = symbols[j];
+      symbolsEl.appendChild(s);
+      symbolSpans.push(s);
+    }
+    block.appendChild(symbolsEl);
+
+    patternEl.appendChild(block);
+
+    morseState.letters.push({
+      char: letter,
+      symbols: symbols,
+      symbolElements: symbolSpans,
+      blockEl: block,
+      currentIdx: 0,
+      completed: false
+    });
+  }
+}
+
+function setupMorseKey() {
+  const key = document.getElementById('morse-key');
+  if (!key) return;
+
+  // Remove listeners antigos clonando o nó
+  const newKey = key.cloneNode(true);
+  key.parentNode.replaceChild(newKey, key);
+
+  function onPressStart(e) {
+    e.preventDefault();
+    if (!morseState || morseState.isPressing) return;
+    morseState.isPressing = true;
+    morseState.pressStart = Date.now();
+    newKey.classList.add('pressing');
+  }
+
+  function onPressEnd(e) {
+    if (!morseState || !morseState.isPressing) return;
+    e.preventDefault();
+    const duration = Date.now() - morseState.pressStart;
+    morseState.isPressing = false;
+    morseState.pressStart = null;
+    newKey.classList.remove('pressing');
+
+    const symbol = duration < MORSE_DOT_MAX ? '.' : '-';
+    processMorseInput(symbol);
+  }
+
+  newKey.addEventListener('mousedown', onPressStart);
+  newKey.addEventListener('touchstart', onPressStart, { passive: false });
+  newKey.addEventListener('mouseup', onPressEnd);
+  newKey.addEventListener('mouseleave', onPressEnd);
+  newKey.addEventListener('touchend', onPressEnd);
+  newKey.addEventListener('touchcancel', onPressEnd);
+}
+
+function processMorseInput(symbol) {
+  if (!morseState) return;
+  const letter = morseState.letters[morseState.currentLetterIdx];
+  if (!letter || letter.completed) return;
+
+  const expected = letter.symbols[letter.currentIdx];
+
+  if (symbol === expected) {
+    // Acertou o símbolo
+    letter.symbolElements[letter.currentIdx].classList.add('lit');
+    letter.currentIdx++;
+
+    // Completou a letra?
+    if (letter.currentIdx >= letter.symbols.length) {
+      letter.completed = true;
+      letter.blockEl.classList.add('completed');
+      letter.blockEl.classList.remove('active');
+
+      // Próxima letra
+      morseState.currentLetterIdx++;
+      const next = morseState.letters[morseState.currentLetterIdx];
+      if (next) {
+        next.blockEl.classList.add('active');
+      } else {
+        // Palavra completa!
+        completeMorseWord();
+      }
+    }
+  } else {
+    // Errou: pisca o bloco em vermelho e reseta a letra atual
+    letter.blockEl.style.background = 'rgba(150, 50, 50, 0.25)';
+    setTimeout(() => {
+      if (letter.blockEl) letter.blockEl.style.background = '';
+    }, 400);
+    // Reseta o progresso da letra
+    letter.symbolElements.forEach(s => s.classList.remove('lit'));
+    letter.currentIdx = 0;
+  }
+}
+
+function completeMorseWord() {
+  if (!morseState) return;
+  const wordData = MORSE_WORDS[morseState.wordIndex];
+
+  const revealedEl = document.getElementById('morse-revealed');
+  if (revealedEl) {
+    revealedEl.textContent = wordData.message;
+    revealedEl.classList.add('visible');
+  }
+
+  // Atualiza instrução
+  const instructionEl = document.getElementById('morse-instruction');
+  if (instructionEl) {
+    if (morseState.wordIndex < MORSE_WORDS.length - 1) {
+      setTimeout(() => {
+        if (instructionEl) instructionEl.textContent = 'Outra transmissão chegando...';
+      }, 1800);
+    }
+  }
+
+  // Avança pra próxima palavra após pausa
+  setTimeout(() => {
+    if (!morseState) return;
+    morseState.wordIndex++;
+    if (instructionEl && morseState.wordIndex < MORSE_WORDS.length) {
+      instructionEl.textContent = 'Bento está transmitindo. Reproduza o sinal pra confirmar que recebeu.';
+    }
+    loadMorseWord();
+  }, 3200);
 }
 
 // FASE 4 — TRAVESSIA
