@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/jessi/Downloads/index_7.html -->
+<!-- saved from url=(0045)file:///C:/Users/jessi/Downloads/index_8.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -11,25 +11,6 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #0F1419; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #F4E8D8; -webkit-font-smoothing: antialiased; }
   body { height: 100dvh; }
-  
-  /* Em desktop, limita o jogo numa "moldura" mobile centralizada */
-  @media (min-width: 768px) {
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #050709;
-    }
-    #game {
-      width: min(100vw, 480px) !important;
-      height: min(100dvh, 900px);
-      max-height: 100dvh;
-      box-shadow: 0 0 80px rgba(0,0,0,0.8);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-  }
-  
   #game { position: relative; width: 100vw; height: 100dvh; overflow: hidden; }
   .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 1.4s ease, visibility 0s linear 1.4s; display: flex; flex-direction: column; align-items: center; justify-content: center; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #0F1419; }
   .scene.active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 1.4s ease, visibility 0s linear 0s; }
@@ -122,10 +103,21 @@
   .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
   .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
   .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
-  .floating-letter { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: grab; touch-action: none; backdrop-filter: blur(4px); transition: transform 0.6s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.4s ease; user-select: none; }
-  .floating-letter.fleeing { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .floating-letter { position: absolute; width: 52px; height: 52px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease, transform 0.6s ease, background 0.3s ease; user-select: none; overflow: hidden; }
+  .floating-letter .letter-inner { display: inline-block; position: relative; z-index: 2; transition: filter 0.3s ease; }
+  .floating-letter.unstable .letter-inner { animation: letterShake 0.15s linear infinite; filter: blur(0.4px); opacity: 0.85; }
+  .floating-letter.stabilizing { background: rgba(15, 20, 25, 0.9); border-color: rgba(244, 232, 216, 0.9); transform: scale(1.08); }
+  .floating-letter.stabilizing .letter-inner { animation: none; filter: blur(0); opacity: 1; }
   .floating-letter.captured { opacity: 0; pointer-events: none; transform: scale(0.5); }
-  .floating-letter.attracted { transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), top 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .floating-letter.dissolving { opacity: 0 !important; transform: scale(0.6) rotate(20deg); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .letter-progress { position: absolute; bottom: 0; left: 0; height: 3px; width: 0%; background: rgba(244, 232, 216, 0.9); transition: width 0.05s linear; z-index: 1; }
+  @keyframes letterShake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(0.8px, -0.5px); }
+    50% { transform: translate(-0.5px, 0.8px); }
+    75% { transform: translate(-0.8px, -0.5px); }
+    100% { transform: translate(0.5px, 0.8px); }
+  }
 
   /* FASE 4: TRAVESSIA */
   .travessia-header { text-align: center; margin-top: 16px; }
@@ -1073,19 +1065,30 @@ function startFusos() {
   }, 1000);
 }
 
-// FASE 3 — RUÍDO
+// FASE 3 — RUÍDO (sintonizar letras instáveis)
+// Mecânica: cada letra correta aparece tremendo (sinal instável).
+// Toque e segure pra estabilizar. Letras de ruído se desfazem ao serem seguradas.
 const RUIDO_PHRASE = 'TEM ALGUEM AI';
 const RUIDO_VISIBLE = '_E_ A__U__ _I';
-let ruidoSlots = [], lastTouchPos = null, stillTime = 0, stillCheckInterval = null;
-const captureRadius = 90;
+let ruidoSlots = [];
+const STABILIZATION_TIME = 1200; // ms para estabilizar uma letra
+const NOISE_DECAY_TIME = 800;    // ms para letra de ruído sumir
 
 function startRuido() {
   goToScene('scene-ruido-game');
   const messageEl = document.getElementById('ruido-message');
   const lettersArea = document.getElementById('ruido-letters-area');
-  messageEl.innerHTML = ''; lettersArea.innerHTML = '';
+  messageEl.innerHTML = '';
+  lettersArea.innerHTML = '';
   ruidoSlots = [];
 
+  // Atualiza a instrução
+  const instrEl = document.querySelector('#scene-ruido-game .ruido-instruction');
+  const hintEl = document.querySelector('#scene-ruido-game .ruido-hint');
+  if (instrEl) instrEl.textContent = 'A mensagem do Bento chega trêmula. Toque e segure cada letra pra sintonizar.';
+  if (hintEl) hintEl.textContent = 'SEGURE PARA ESTABILIZAR · LETRAS FALSAS SE DESFAZEM';
+
+  // Constrói os slots da frase
   const visibleChars = RUIDO_VISIBLE.split('');
   const phraseChars = RUIDO_PHRASE.split('');
   visibleChars.forEach((char, idx) => {
@@ -1106,9 +1109,12 @@ function startRuido() {
     }
   });
 
+  // Cria letras corretas + ruídos
   const correctLetters = ruidoSlots.map(s => s.target);
   const noiseLetters = ['X', 'Z', 'Q', 'K'];
-  const allLetters = [...correctLetters, ...noiseLetters];
+  const allLetters = [...correctLetters.map(l => ({ letter: l, isCorrect: true })),
+                      ...noiseLetters.map(l => ({ letter: l, isCorrect: false }))];
+  // embaralha
   for (let i = allLetters.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [allLetters[i], allLetters[j]] = [allLetters[j], allLetters[i]];
@@ -1119,107 +1125,126 @@ function startRuido() {
     const areaW = areaRect.width;
     const areaH = areaRect.height;
 
-    allLetters.forEach((letter) => {
+    allLetters.forEach((item) => {
       const el = document.createElement('div');
-      el.className = 'floating-letter';
-      el.textContent = letter;
-      el.dataset.letter = letter;
-      const padding = 30;
+      el.className = 'floating-letter unstable';
+      el.textContent = item.letter;
+      el.dataset.letter = item.letter;
+      el.dataset.correct = item.isCorrect ? 'true' : 'false';
+      const padding = 20;
       const x = padding + Math.random() * (areaW - padding * 2 - 48);
       const y = padding + Math.random() * (areaH - padding * 2 - 48);
       el.style.left = x + 'px';
       el.style.top = y + 'px';
-      lettersArea.appendChild(el);
-    });
 
-    setupRuidoInteraction();
+      // Camada interna pra animação de tremor
+      const inner = document.createElement('span');
+      inner.className = 'letter-inner';
+      inner.textContent = item.letter;
+      el.textContent = '';
+      el.appendChild(inner);
+
+      // Barra de progresso de estabilização
+      const progress = document.createElement('div');
+      progress.className = 'letter-progress';
+      el.appendChild(progress);
+
+      lettersArea.appendChild(el);
+      setupLetterStabilization(el);
+    });
   }, 200);
 }
 
-function setupRuidoInteraction() {
-  const lettersArea = document.getElementById('ruido-letters-area');
+function setupLetterStabilization(el) {
+  let holdStart = null;
+  let holdInterval = null;
+  let isHolding = false;
+  const progressBar = el.querySelector('.letter-progress');
+  const isCorrect = el.dataset.correct === 'true';
 
-  function getPos(e) {
-    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    return { x: e.clientX, y: e.clientY };
-  }
-
-  function onTouch(e) {
+  function startHold(e) {
     e.preventDefault();
-    const pos = getPos(e);
-    if (lastTouchPos) {
-      const dx = pos.x - lastTouchPos.x;
-      const dy = pos.y - lastTouchPos.y;
-      const moved = Math.sqrt(dx*dx + dy*dy);
-      if (moved > 5) {
-        stillTime = 0;
-        document.querySelectorAll('.floating-letter:not(.captured)').forEach(letter => {
-          const rect = letter.getBoundingClientRect();
-          const lcx = rect.left + rect.width/2;
-          const lcy = rect.top + rect.height/2;
-          const dist = Math.sqrt((pos.x - lcx)**2 + (pos.y - lcy)**2);
-          if (dist < captureRadius) {
-            const fleeX = (lcx - pos.x) * 1.2;
-            const fleeY = (lcy - pos.y) * 1.2;
-            letter.classList.add('fleeing');
-            const cl = parseFloat(letter.style.left);
-            const ct = parseFloat(letter.style.top);
-            const ar = lettersArea.getBoundingClientRect();
-            letter.style.left = Math.max(10, Math.min(ar.width - 58, cl + fleeX)) + 'px';
-            letter.style.top = Math.max(10, Math.min(ar.height - 58, ct + fleeY)) + 'px';
-            setTimeout(() => letter.classList.remove('fleeing'), 300);
-          }
-        });
+    if (el.classList.contains('captured') || el.classList.contains('dissolving')) return;
+    isHolding = true;
+    holdStart = Date.now();
+    el.classList.add('stabilizing');
+
+    holdInterval = setInterval(() => {
+      const elapsed = Date.now() - holdStart;
+
+      if (isCorrect) {
+        // Letra correta: estabiliza progressivamente
+        const progress = Math.min(1, elapsed / STABILIZATION_TIME);
+        progressBar.style.width = (progress * 100) + '%';
+
+        if (progress >= 1) {
+          // Estabilizada! Captura
+          clearInterval(holdInterval);
+          stabilizeLetter(el);
+        }
+      } else {
+        // Letra de ruído: dissolve progressivamente
+        const progress = Math.min(1, elapsed / NOISE_DECAY_TIME);
+        el.style.opacity = (1 - progress * 0.85).toString();
+        progressBar.style.width = (progress * 100) + '%';
+        progressBar.style.background = 'rgba(150, 50, 50, 0.6)';
+
+        if (progress >= 1) {
+          clearInterval(holdInterval);
+          dissolveNoiseLetter(el);
+        }
       }
-    }
-    lastTouchPos = pos;
+    }, 30);
   }
 
-  function onEnd() { lastTouchPos = null; stillTime = 0; }
-
-  lettersArea.addEventListener('touchstart', onTouch, { passive: false });
-  lettersArea.addEventListener('touchmove', onTouch, { passive: false });
-  lettersArea.addEventListener('touchend', onEnd);
-  lettersArea.addEventListener('mousedown', onTouch);
-  lettersArea.addEventListener('mousemove', onTouch);
-  lettersArea.addEventListener('mouseup', onEnd);
-  lettersArea.addEventListener('mouseleave', onEnd);
-
-  if (stillCheckInterval) clearInterval(stillCheckInterval);
-  stillCheckInterval = setInterval(() => {
-    if (!lastTouchPos) return;
-    stillTime += 100;
-    if (stillTime >= 700) {
-      let closest = null, minDist = captureRadius;
-      document.querySelectorAll('.floating-letter:not(.captured)').forEach(letter => {
-        const rect = letter.getBoundingClientRect();
-        const lcx = rect.left + rect.width/2;
-        const lcy = rect.top + rect.height/2;
-        const dist = Math.sqrt((lastTouchPos.x - lcx)**2 + (lastTouchPos.y - lcy)**2);
-        if (dist < minDist) { minDist = dist; closest = letter; }
-      });
-      if (closest) { captureLetter(closest); stillTime = 0; }
+  function endHold() {
+    if (!isHolding) return;
+    isHolding = false;
+    if (holdInterval) {
+      clearInterval(holdInterval);
+      holdInterval = null;
     }
-  }, 100);
+    if (!el.classList.contains('captured') && !el.classList.contains('dissolving')) {
+      el.classList.remove('stabilizing');
+      progressBar.style.width = '0%';
+      progressBar.style.background = '';
+      if (!isCorrect) el.style.opacity = '1';
+    }
+  }
+
+  el.addEventListener('mousedown', startHold);
+  el.addEventListener('touchstart', startHold, { passive: false });
+  el.addEventListener('mouseup', endHold);
+  el.addEventListener('mouseleave', endHold);
+  el.addEventListener('touchend', endHold);
+  el.addEventListener('touchcancel', endHold);
 }
 
-function captureLetter(letterEl) {
+function stabilizeLetter(letterEl) {
   const letter = letterEl.dataset.letter;
   const target = ruidoSlots.find(s => !s.filled && s.target === letter);
+
   if (target) {
     target.filled = true;
     target.el.textContent = letter;
     target.el.classList.add('filled');
     letterEl.classList.add('captured');
+
     if (ruidoSlots.every(s => s.filled)) {
-      if (stillCheckInterval) { clearInterval(stillCheckInterval); stillCheckInterval = null; }
       setTimeout(() => goToScene('scene-travessia-intro'), 1800);
     }
   } else {
-    letterEl.style.opacity = '0.3';
-    letterEl.style.pointerEvents = 'none';
-    setTimeout(() => letterEl.classList.add('captured'), 600);
+    // Letra correta mas sem slot disponível (já preenchido por outra igual)
+    letterEl.classList.add('captured');
   }
+}
+
+function dissolveNoiseLetter(letterEl) {
+  letterEl.classList.add('dissolving');
+  setTimeout(() => {
+    letterEl.style.pointerEvents = 'none';
+    letterEl.style.opacity = '0';
+  }, 100);
 }
 
 // FASE 4 — TRAVESSIA
