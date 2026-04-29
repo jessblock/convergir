@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Convergir — Um encontro no fim do mundo</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0F1419;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #F4E8D8;
+  }
+
+  #game {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0F1419;
+  }
+
+  .scene.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* TELA DE TÍTULO */
+  #scene-title {
+    background-image: linear-gradient(135deg, rgba(15,20,25,0.55) 0%, rgba(15,20,25,0.7) 100%), url('assets/title.png');
+  }
+
+  .title-content {
+    text-align: center;
+    padding: 0 32px;
+    background: rgba(15, 20, 25, 0.35);
+    padding: 40px 32px;
+    backdrop-filter: blur(2px);
+  }
+
+  #scene-title h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 58px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #F4E8D8;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: #F4E8D8;
+    opacity: 0.75;
+    margin-bottom: 8px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: #F4E8D8;
+    opacity: 0.4;
+    margin: 24px auto;
+  }
+
+  .phase-label {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: #F4E8D8;
+    opacity: 0.6;
+    margin-top: 32px;
+  }
+
+  .start-button {
+    margin-top: 48px;
+    padding: 14px 48px;
+    background: rgba(15, 20, 25, 0.5);
+    border: 0.7px solid #F4E8D8;
+    color: #F4E8D8;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .start-button:hover, .start-button:active {
+    background: rgba(244, 232, 216, 0.15);
+  }
+
+  /* CUTSCENES */
+  .cutscene {
+    padding: 32px;
+  }
+
+  .cutscene-text {
+    max-width: 580px;
+    text-align: center;
+    background: rgba(15, 20, 25, 0.6);
+    padding: 32px 36px;
+    backdrop-filter: blur(3px);
+  }
+
+  .cutscene-location {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+
+  .cutscene-narration {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #F4E8D8;
+    opacity: 0.95;
+  }
+
+  .continue-hint {
+    position: absolute;
+    bottom: 32px;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+    animation: blink 2s ease-in-out infinite;
+    cursor: pointer;
+    padding: 16px 32px;
+    z-index: 5;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Cenas com imagens específicas */
+  #scene-intro-lia {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/lia-uberlandia.png');
+  }
+  #scene-intro-bento {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/bento-sinop.png');
+  }
+  #scene-characters {
+    background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%);
+  }
+  #scene-connection {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.8) 100%), url('assets/connection.png');
+  }
+  #scene-map {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.8) 100%), url('assets/map.png');
+  }
+  #scene-fusos {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.85) 100%), url('assets/fusos.png');
+  }
+  #scene-ruido {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.8) 100%), url('assets/ruido.png');
+  }
+  #scene-travessia {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/travessia.png');
+  }
+  #scene-convergencia {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.7) 100%), url('assets/convergencia.png');
+  }
+  #scene-encontro {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.7) 100%), url('assets/encontro.png');
+  }
+  #scene-toque {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.2) 0%, rgba(15,20,25,0.75) 100%), url('assets/toque.png');
+  }
+  #scene-end {
+    background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.75) 100%), url('assets/end.png');
+  }
+
+  /* TELA DE PERSONAGENS */
+  .characters-container {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    padding: 24px;
+    flex-wrap: wrap;
+  }
+
+  .character-card {
+    flex: 1;
+    min-width: 240px;
+    max-width: 320px;
+    text-align: center;
+    background: rgba(15, 20, 25, 0.5);
+    padding: 20px;
+    backdrop-filter: blur(2px);
+  }
+
+  .character-portrait {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background-size: cover;
+    background-position: center top;
+    border: 0.5px solid rgba(244, 232, 216, 0.2);
+    margin-bottom: 16px;
+  }
+
+  .character-portrait.lia {
+    background-image: url('assets/lia-portrait.png');
+  }
+  .character-portrait.bento {
+    background-image: url('assets/bento-portrait.png');
+  }
+
+  .character-card h3 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .character-card .age-loc {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    opacity: 0.7;
+    margin-bottom: 12px;
+  }
+
+  .character-card .description {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  /* GAMEPLAY */
+  #scene-gameplay {
+    flex-direction: row;
+  }
+
+  .side {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .side-lia {
+    background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.7) 0%, rgba(61, 31, 76, 0.85) 100%), url('assets/lia-night.png');
+    background-color: #5C1A2B;
+  }
+
+  .side-bento {
+    background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.7) 0%, rgba(42, 74, 61, 0.85) 100%), url('assets/bento-dawn.png');
+    background-color: #1A2B4C;
+  }
+
+  .side-divider {
+    width: 1px;
+    height: 100%;
+    background: rgba(244, 232, 216, 0.2);
+    z-index: 3;
+  }
+
+  .character-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+
+  .character-name {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .character-location {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+    margin-bottom: 28px;
+  }
+
+  .radio-dial {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 1px solid rgba(244, 232, 216, 0.5);
+    position: relative;
+    margin: 12px 0;
+    cursor: grab;
+    touch-action: none;
+    background: rgba(15, 20, 25, 0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .radio-dial:active {
+    cursor: grabbing;
+  }
+
+  .dial-pointer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 65px;
+    background: #F4E8D8;
+    transform-origin: center bottom;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .dial-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #F4E8D8;
+    pointer-events: none;
+  }
+
+  .frequency-display {
+    margin-top: 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+  }
+
+  .signal-strength {
+    margin-top: 20px;
+    width: 180px;
+    height: 4px;
+    background: rgba(244, 232, 216, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .signal-bar {
+    height: 100%;
+    width: 0%;
+    background: #F4E8D8;
+    transition: width 0.2s ease;
+  }
+
+  .signal-label {
+    margin-top: 6px;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+  }
+
+  #tutorial {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 20, 25, 0.94);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    padding: 24px 32px;
+    text-align: center;
+    z-index: 10;
+    max-width: 320px;
+    transition: opacity 0.6s ease;
+    cursor: pointer;
+  }
+
+  #tutorial p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  #tutorial small {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+  }
+
+  #connection-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F4E8D8, transparent);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.6s ease;
+    box-shadow: 0 0 20px #F4E8D8;
+  }
+
+  #connection-line.active {
+    opacity: 0.95;
+    animation: pulseConnection 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseConnection {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* DIÁLOGOS */
+  .dialogue {
+    text-align: left;
+    margin: 20px 0;
+  }
+
+  .dialogue-line {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .dialogue-line.lia { color: #E8B5C4; }
+  .dialogue-line.bento {
+    color: #B5C4E8;
+    padding-left: 32px;
+  }
+
+  /* TELA FINAL */
+  .end-content {
+    text-align: center;
+    max-width: 540px;
+    background: rgba(15, 20, 25, 0.55);
+    padding: 36px 32px;
+    backdrop-filter: blur(3px);
+  }
+
+  .end-content h2 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  .end-content p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0.9;
+    margin-bottom: 20px;
+  }
+
+  .demo-note {
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    margin-bottom: 24px;
+  }
+
+  /* RESPONSIVO */
+  @media (max-width: 768px) {
+    #scene-title h1 { font-size: 38px; }
+    .cutscene-narration { font-size: 14px; }
+    .cutscene-text { padding: 24px 20px; }
+    .radio-dial { width: 130px; height: 130px; }
+    .dial-pointer { height: 50px; }
+    .signal-strength { width: 130px; }
+    .character-name { font-size: 18px; }
+    .end-content h2 { font-size: 22px; }
+    .end-content p { font-size: 12px; }
+    .side { padding: 16px; }
+    .character-location { margin-bottom: 16px; }
+    .characters-container { flex-direction: column; gap: 16px; }
+    .character-card { max-width: 280px; }
+    .character-portrait { aspect-ratio: 4/5; }
+    .dialogue-line { font-size: 14px; }
+  }
+
+  .footer-credit {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 3;
+  }
+</style>
+</head>
+<body>
+
+<div id="game">
+
+  <!-- 1. TÍTULO -->
+  <div class="scene active" id="scene-title">
+    <div class="title-content">
+      <p class="subtitle">UM ENCONTRO NO FIM DO MUNDO</p>
+      <div class="divider"></div>
+      <h1>CONVERGIR</h1>
+      <div class="divider"></div>
+      <p class="phase-label">DEMO — FASE 01: O SINAL</p>
+      <button class="start-button" onclick="goToScene('scene-intro-lia')">INICIAR</button>
+    </div>
+    <div class="footer-credit">UM JOGO DE JESS · 2026</div>
+  </div>
+
+  <!-- 2. INTRO LIA -->
+  <div class="scene cutscene" id="scene-intro-lia">
+    <div class="cutscene-text">
+      <p class="cutscene-location">UBERLÂNDIA, MG · ANO 7 DO SILÊNCIO</p>
+      <p class="cutscene-narration">A internet caiu há sete anos. As cidades pararam. Lia ficou. Continuou aprendendo no escuro, do jeito que sempre soube fazer.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-intro-bento')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 3. INTRO BENTO -->
+  <div class="scene cutscene" id="scene-intro-bento">
+    <div class="cutscene-text">
+      <p class="cutscene-location">SINOP, MT · A 1.547 KM DALI</p>
+      <p class="cutscene-narration">Bento construiu uma rede improvisada de antenas na borda da floresta. Não esperava nada. Só o gesto de tentar.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-characters')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 4. PERSONAGENS -->
+  <div class="scene" id="scene-characters">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <p class="subtitle">PERSONAGENS</p>
+    </div>
+    <div class="characters-container">
+      <div class="character-card">
+        <div class="character-portrait lia"></div>
+        <h3>Lia</h3>
+        <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
+        <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada. Acostumada à própria solidão.</p>
+      </div>
+      <div class="character-card">
+        <div class="character-portrait bento"></div>
+        <h3>Bento</h3>
+        <p class="age-loc">50 ANOS · SINOP, MT</p>
+        <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
+      </div>
+    </div>
+    <p class="continue-hint" onclick="startGameplay()">TOQUE PARA SINTONIZAR</p>
+  </div>
+
+  <!-- 5. GAMEPLAY -->
+  <div class="scene" id="scene-gameplay">
+
+    <div id="tutorial">
+      <p>Arraste os dois dials para sintonizar a mesma frequência ao mesmo tempo.</p>
+      <small>FREQUÊNCIA ALVO: 88.7</small>
+    </div>
+
+    <div id="connection-line"></div>
+
+    <div class="side side-lia">
+      <p class="character-label">LIA</p>
+      <p class="character-name">Uberlândia</p>
+      <p class="character-location">CERRADO · NOITE</p>
+
+      <div class="radio-dial" id="dial-lia">
+        <div class="dial-pointer" id="pointer-lia"></div>
+        <div class="dial-center"></div>
+      </div>
+
+      <div class="frequency-display" id="freq-lia">FM 86.0</div>
+
+      <div class="signal-strength">
+        <div class="signal-bar" id="signal-lia"></div>
+      </div>
+      <p class="signal-label">SINAL</p>
+    </div>
+
+    <div class="side-divider"></div>
+
+    <div class="side side-bento">
+      <p class="character-label">BENTO</p>
+      <p class="character-name">Sinop</p>
+      <p class="character-location">FLORESTA · ALVORADA</p>
+
+      <div class="radio-dial" id="dial-bento">
+        <div class="dial-pointer" id="pointer-bento"></div>
+        <div class="dial-center"></div>
+      </div>
+
+      <div class="frequency-display" id="freq-bento">FM 91.0</div>
+
+      <div class="signal-strength">
+        <div class="signal-bar" id="signal-bento"></div>
+      </div>
+      <p class="signal-label">SINAL</p>
+    </div>
+
+  </div>
+
+  <!-- 6. CONEXÃO -->
+  <div class="scene cutscene" id="scene-connection">
+    <div class="cutscene-text">
+      <div class="dialogue">
+        <p class="dialogue-line lia">— Tem alguém aí?</p>
+        <p class="dialogue-line bento">— Tem. Tem alguém aqui.</p>
+      </div>
+      <p class="cutscene-narration" style="margin-top: 24px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-map')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 7. MAPA -->
+  <div class="scene cutscene" id="scene-map">
+    <div class="cutscene-text">
+      <p class="cutscene-location">ENTRE DOIS PONTOS DO BRASIL</p>
+      <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria por mais quatro fases.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-fusos')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 8. FUSOS (prévia) -->
+  <div class="scene cutscene" id="scene-fusos">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 02 · OS FUSOS</p>
+      <p class="cutscene-narration">Ela vivia de noite. Ele de dia. O encontro só cabia no fio fino entre os dois. Aprenderam a esperar.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-ruido')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 9. RUÍDO (prévia) -->
+  <div class="scene cutscene" id="scene-ruido">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 03 · O RUÍDO</p>
+      <p class="cutscene-narration">A comunicação falhou. Cada um interpretou o silêncio à sua maneira. Foi preciso escolher acreditar antes de ter certeza.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-travessia')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 10. TRAVESSIA (prévia) -->
+  <div class="scene cutscene" id="scene-travessia">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 04 · A TRAVESSIA</p>
+      <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado foi um ato de amor que custou tudo.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-convergencia')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 11. CONVERGÊNCIA -->
+  <div class="scene cutscene" id="scene-convergencia">
+    <div class="cutscene-text">
+      <p class="cutscene-location">FASE 05 · A CONVERGÊNCIA</p>
+      <p class="cutscene-narration">Em algum ponto rural de Goiás, no fim de uma tarde dourada, dois caminhos finalmente se cruzaram no mesmo plano.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-encontro')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 12. ENCONTRO -->
+  <div class="scene cutscene" id="scene-encontro">
+    <div class="cutscene-text">
+      <div class="dialogue">
+        <p class="dialogue-line lia">— Você é menor do que eu imaginei.</p>
+        <p class="dialogue-line bento">— Você é mais velho.</p>
+        <p class="dialogue-line lia">— Você é tudo.</p>
+      </div>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-toque')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 13. TOQUE -->
+  <div class="scene cutscene" id="scene-toque">
+    <div class="cutscene-text">
+      <p class="cutscene-narration">A pulseira larga prateada dela. O relógio de couro dele. As duas mãos, finalmente, no mesmo lugar.</p>
+    </div>
+    <p class="continue-hint" onclick="goToScene('scene-end')">TOQUE PARA CONTINUAR</p>
+  </div>
+
+  <!-- 14. FIM -->
+  <div class="scene" id="scene-end">
+    <div class="end-content">
+      <p class="demo-note">FIM DA DEMONSTRAÇÃO</p>
+      <h2>Convergir</h2>
+      <p>Para chegar até você, eu atravessei o fim do mundo.</p>
+      <p style="font-style: normal; font-size: 11px; opacity: 0.7; letter-spacing: 0.1em;">A primeira fase é jogável. As demais foram apresentadas em prévia narrativa. O protótipo completo está documentado em Figma.</p>
+      <button class="start-button" onclick="restartGame()">JOGAR NOVAMENTE</button>
+    </div>
+    <div class="footer-credit">CONVERGIR · DEMO · 2026</div>
+  </div>
+
+</div>
+
+<script>
+  function goToScene(sceneId) {
+    document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+    setTimeout(() => {
+      document.getElementById(sceneId).classList.add('active');
+    }, 100);
+  }
+
+  function startGameplay() {
+    goToScene('scene-gameplay');
+    setTimeout(() => {
+      const tutorial = document.getElementById('tutorial');
+      tutorial.style.display = 'block';
+      tutorial.style.opacity = '1';
+      tutorial.addEventListener('click', () => {
+        tutorial.style.opacity = '0';
+        setTimeout(() => tutorial.style.display = 'none', 600);
+      }, { once: true });
+    }, 200);
+  }
+
+  function restartGame() {
+    angleLia = -120;
+    angleBento = 120;
+    updateDial('lia', angleLia);
+    updateDial('bento', angleBento);
+    document.getElementById('connection-line').classList.remove('active');
+    connected = false;
+    goToScene('scene-title');
+  }
+
+  const TARGET_FREQ = 88.7;
+  const TOLERANCE = 0.4;
+
+  let angleLia = -120;
+  let angleBento = 120;
+  let connected = false;
+
+  function angleToFreq(angle) {
+    return 86.0 + ((angle + 120) / 240) * 6.0;
+  }
+
+  function updateDial(who, angle) {
+    const pointer = document.getElementById('pointer-' + who);
+    const freqEl = document.getElementById('freq-' + who);
+    const signalEl = document.getElementById('signal-' + who);
+
+    pointer.style.transform = 'translate(-50%, -100%) rotate(' + angle + 'deg)';
+
+    const freq = angleToFreq(angle);
+    freqEl.textContent = 'FM ' + freq.toFixed(1);
+
+    const distance = Math.abs(freq - TARGET_FREQ);
+    const maxDistance = 3.0;
+    const signalStrength = Math.max(0, 1 - (distance / maxDistance));
+    signalEl.style.width = (signalStrength * 100) + '%';
+
+    checkConnection();
+  }
+
+  function checkConnection() {
+    const freqLia = angleToFreq(angleLia);
+    const freqBento = angleToFreq(angleBento);
+
+    const liaAligned = Math.abs(freqLia - TARGET_FREQ) < TOLERANCE;
+    const bentoAligned = Math.abs(freqBento - TARGET_FREQ) < TOLERANCE;
+
+    const line = document.getElementById('connection-line');
+
+    if (liaAligned && bentoAligned && !connected) {
+      connected = true;
+      line.classList.add('active');
+      setTimeout(() => {
+        goToScene('scene-connection');
+      }, 1800);
+    } else if (!liaAligned || !bentoAligned) {
+      line.classList.remove('active');
+    }
+  }
+
+  function setupDial(who) {
+    const dial = document.getElementById('dial-' + who);
+    let isDragging = false;
+    let startAngle = 0;
+    let startPointerAngle = 0;
+
+    function getAngleFromCenter(clientX, clientY) {
+      const rect = dial.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = clientX - cx;
+      const dy = clientY - cy;
+      return Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    }
+
+    function clampAngle(angle) {
+      if (angle > 120) angle = 120;
+      if (angle < -120) angle = -120;
+      return angle;
+    }
+
+    function onStart(clientX, clientY) {
+      isDragging = true;
+      const currentAngle = who === 'lia' ? angleLia : angleBento;
+      startPointerAngle = getAngleFromCenter(clientX, clientY);
+      startAngle = currentAngle;
+    }
+
+    function onMove(clientX, clientY) {
+      if (!isDragging) return;
+      const newPointerAngle = getAngleFromCenter(clientX, clientY);
+      let delta = newPointerAngle - startPointerAngle;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+
+      let newAngle = clampAngle(startAngle + delta);
+
+      if (who === 'lia') angleLia = newAngle;
+      else angleBento = newAngle;
+      updateDial(who, newAngle);
+    }
+
+    function onEnd() { isDragging = false; }
+
+    dial.addEventListener('mousedown', e => {
+      e.preventDefault();
+      onStart(e.clientX, e.clientY);
+    });
+    document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
+    document.addEventListener('mouseup', onEnd);
+
+    dial.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      onStart(t.clientX, t.clientY);
+    }, { passive: false });
+    document.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const t = e.touches[0];
+      onMove(t.clientX, t.clientY);
+    }, { passive: false });
+    document.addEventListener('touchend', onEnd);
+  }
+
+  setupDial('lia');
+  setupDial('bento');
+  updateDial('lia', angleLia);
+  updateDial('bento', angleBento);
+</script>
+
+</body>
+</html>
