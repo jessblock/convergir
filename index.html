@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_35.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_50.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;%3E%3Crect width=&#39;100&#39; height=&#39;100&#39; fill=&#39;%230F1419&#39;/%3E%3Ctext x=&#39;50&#39; y=&#39;65&#39; font-size=&#39;60&#39; text-anchor=&#39;middle&#39; fill=&#39;%23F4E8D8&#39; font-family=&#39;Georgia&#39;%3EC%3C/text%3E%3C/svg%3E">
 <meta name="author" content="J.B. — JBLK Design">
 <meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
 <title>Convergir — Um encontro no fim do mundo</title>
@@ -39,7 +40,7 @@
 
   #scene-intro-lia { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/lia-uberlandia.png'); }
   #scene-intro-bento { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/bento-sinop.png'); }
-  #scene-characters { background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%); }
+  #scene-characters { background: radial-gradient(ellipse at top, #1a1014 0%, #0F1419 60%, #050709 100%); }
   #scene-connection { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.88) 100%), url('assets/connection.png'); }
   #scene-map { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/map.png'); }
   #scene-fusos-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.9) 100%), url('assets/fusos.png'); }
@@ -57,7 +58,10 @@
   #scene-characters { padding: 32px 20px; justify-content: center; }
   .characters-header { text-align: center; margin-bottom: 24px; }
   .characters-container { display: flex; gap: 16px; align-items: stretch; justify-content: center; width: 100%; max-width: 900px; }
-  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.45); padding: 14px 12px 16px; backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .character-card { flex: 1; text-align: center; background: linear-gradient(180deg, rgba(15, 20, 25, 0.7) 0%, rgba(15, 20, 25, 0.5) 100%); padding: 14px 12px 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; min-width: 0; border: 0.5px solid rgba(244, 232, 216, 0.15); position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(244, 232, 216, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.4), 0 6px 24px rgba(0, 0, 0, 0.5); }
+  .character-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; opacity: 0.6; }
+  .character-card:nth-child(1)::before { background: linear-gradient(180deg, transparent 0%, #5C1A2B 30%, #5C1A2B 70%, transparent 100%); }
+  .character-card:nth-child(2)::before { background: linear-gradient(180deg, transparent 0%, #1A2B4C 30%, #1A2B4C 70%, transparent 100%); }
   .character-portrait { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center top; border: 0.5px solid rgba(244, 232, 216, 0.2); margin-bottom: 14px; }
   .character-portrait.lia { background-image: url('assets/lia-portrait.png'); }
   .character-portrait.bento { background-image: url('assets/bento-portrait.png'); }
@@ -68,8 +72,19 @@
   /* FASE 1: SINTONIA */
   #scene-gameplay { flex-direction: row; padding: 0; }
   .side { flex: 1; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px; background-size: cover; background-position: center; min-width: 0; }
-  .side-lia { background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.78) 0%, rgba(61, 31, 76, 0.9) 100%), url('assets/lia-night.png'); }
-  .side-bento { background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.78) 0%, rgba(42, 74, 61, 0.9) 100%), url('assets/bento-dawn.png'); }
+  /* Imagens da Fase 1 dessaturadas + tom unificado pra combinar com paleta sóbria do jogo */
+  .side-lia {
+    background-image:
+      linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+      url('assets/lia-night.png');
+    filter: saturate(0.55) contrast(1.05) brightness(0.85);
+  }
+  .side-bento {
+    background-image:
+      linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+      url('assets/bento-dawn.png');
+    filter: saturate(0.55) contrast(1.05) brightness(0.85);
+  }
   .side-divider { width: 1px; height: 100%; background: rgba(244, 232, 216, 0.25); z-index: 3; }
   .character-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.85; margin-bottom: 4px; }
   .character-name { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); margin-bottom: 4px; }
@@ -95,7 +110,7 @@
   .breath-circle-container { width: clamp(160px, 42vw, 220px); height: clamp(160px, 42vw, 220px); margin: 0 auto 32px; position: relative; display: flex; align-items: center; justify-content: center; }
   .breath-circle { width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.4); background: radial-gradient(circle, rgba(244, 232, 216, 0.06) 0%, transparent 70%); transform: scale(0.7); transition: transform 4s cubic-bezier(0.4, 0, 0.6, 1); }
   .breath-circle.expanding { transform: scale(1); }
-  .breath-text { position: absolute; font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; opacity: 0.7; transition: opacity 0.6s ease; text-align: center; line-height: 1.6; }
+  .breath-text { position: absolute; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.4em; opacity: 0.95; transition: opacity 0.6s ease; text-align: center; line-height: 1.6; color: #F4E8D8; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 0, 0, 0.6); font-weight: 500; }
   .fusos-counter { font-family: 'Courier New', monospace; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.2em; opacity: 0.5; margin-top: 24px; }
 
   /* FASE 3: RUÍDO */
@@ -147,13 +162,17 @@
     justify-content: center;
     gap: clamp(14px, 3vw, 24px);
     padding: 24px 32px;
-    background: rgba(15, 20, 25, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    background: rgba(8, 12, 16, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.7px solid rgba(244, 232, 216, 0.35);
     z-index: 20;
     transition: opacity 0.4s ease;
     border-radius: 2px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+      0 6px 24px rgba(0, 0, 0, 0.6);
   }
 
   .morse-letter-block {
@@ -165,37 +184,43 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
     min-width: 32px;
   }
-  .morse-letter-block.completed { opacity: 0.35; }
+  .morse-letter-block.completed { opacity: 0.5; }
   .morse-letter-block.active {
     transform: translateY(-2px);
   }
 
   .morse-letter-char {
     font-family: Georgia, serif;
-    font-size: clamp(18px, 4.6vw, 22px);
-    color: #F4E8D8;
+    font-size: clamp(20px, 5vw, 24px);
+    color: #FFFFFF;
     letter-spacing: 0.05em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 500;
   }
 
   .morse-letter-symbols {
     display: flex;
     gap: 4px;
     font-family: 'Courier New', monospace;
-    font-size: clamp(14px, 3.6vw, 16px);
-    color: rgba(244, 232, 216, 0.5);
+    font-size: clamp(15px, 3.8vw, 17px);
+    color: rgba(244, 232, 216, 0.85);
     letter-spacing: 0.08em;
     min-height: 22px;
     align-items: center;
+    font-weight: 600;
   }
 
   .morse-symbol {
     transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
-    opacity: 0.4;
+    opacity: 0.7;
+    color: rgba(244, 232, 216, 0.85);
   }
   .morse-symbol.lit {
-    color: #F4E8D8;
+    color: #FFFFFF;
     opacity: 1;
-    text-shadow: 0 0 10px rgba(244, 232, 216, 0.85);
+    text-shadow:
+      0 0 8px rgba(244, 232, 216, 1),
+      0 0 16px rgba(244, 232, 216, 0.7);
   }
 
   .morse-revealed-floating {
@@ -209,19 +234,23 @@
     font-family: Georgia, serif;
     font-style: italic;
     font-size: clamp(15px, 4vw, 18px);
-    color: #BFD0F0;
-    background: rgba(15, 20, 25, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    color: #E8F0FF;
+    background: rgba(8, 12, 16, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 14px 22px;
     opacity: 0;
     transition: opacity 1.2s ease, transform 1.2s ease;
     z-index: 25;
     pointer-events: none;
-    border: 0.5px solid rgba(244, 232, 216, 0.1);
+    border: 0.7px solid rgba(244, 232, 216, 0.3);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 6px 24px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   }
   .morse-revealed-floating.visible {
-    opacity: 0.95;
+    opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
   .morse-revealed-floating::before { content: "— "; opacity: 0.6; }
@@ -229,7 +258,7 @@
   .morse-tap-hint {
     margin-top: 16px;
     text-align: center;
-    font-size: clamp(10px, 2.4vw, 11px);
+    font-size: clamp(11px, 2.8vw, 12px);
     letter-spacing: 0.3em;
     opacity: 0.55;
     z-index: 20;
@@ -240,7 +269,7 @@
     animation: tapHintPulse 2.4s ease-in-out infinite;
   }
   .morse-tap-hint span:first-child {
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: 0;
     opacity: 0.7;
   }
@@ -286,18 +315,21 @@
     font-style: italic;
     font-size: clamp(18px, 5vw, 24px);
     line-height: 1.5;
-    color: #F4E8D8;
+    color: #FFFFFF;
     opacity: 0;
     transition: opacity 1.5s ease, transform 1.5s ease;
     padding: 24px 32px;
     max-width: 90%;
     width: auto;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 0, 0, 0.7);
+    text-shadow:
+      0 2px 12px rgba(0, 0, 0, 1),
+      0 4px 24px rgba(0, 0, 0, 0.95),
+      0 0 40px rgba(0, 0, 0, 0.9);
     pointer-events: none;
     z-index: 15;
   }
   .travessia-thought.visible {
-    opacity: 0.95;
+    opacity: 1;
     transform: translate(-50%, -50%);
   }
   .travessia-progress-area { width: 100%; max-width: 480px; margin: 0 auto; }
@@ -313,8 +345,8 @@
   .encontro-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.6; opacity: 0.85; }
   .encontro-dialogue-area { width: 100%; max-width: 580px; margin: 0 auto; background: rgba(15, 20, 25, 0.7); padding: 24px; backdrop-filter: blur(4px); min-height: 160px; }
   .encontro-line { margin-bottom: 12px; min-height: 24px; font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.6; }
-  .encontro-line.lia { color: #F0BFD0; }
-  .encontro-line.bento { color: #BFD0F0; padding-left: 24px; }
+  .encontro-line.lia { color: #FFD0DD; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); }
+  .encontro-line.bento { color: #D0DDFF; padding-left: 24px; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); }
   .encontro-words-area {
     position: relative;
     width: 100%;
@@ -403,8 +435,8 @@
   /* DIÁLOGOS */
   .dialogue { text-align: left; margin: 16px 0 4px; }
   .dialogue-line { font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.55; margin-bottom: 8px; }
-  .dialogue-line.lia { color: #F0BFD0; }
-  .dialogue-line.bento { color: #BFD0F0; padding-left: 24px; }
+  .dialogue-line.lia { color: #FFD0DD; }
+  .dialogue-line.bento { color: #D0DDFF; padding-left: 24px; }
 
   /* TELA FINAL */
   .end-content { text-align: center; max-width: 540px; background: rgba(15, 20, 25, 0.7); padding: 32px 28px; backdrop-filter: blur(6px); border: 0.5px solid rgba(244, 232, 216, 0.1); }
@@ -415,65 +447,1054 @@
 
   /* EASTER EGG */
   .easter-egg { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); text-align: center; opacity: 0; transition: opacity 3s ease; pointer-events: none; width: 90%; max-width: 400px; }
-  .easter-egg.visible { opacity: 1; }
+  .easter-egg.visible { opacity: 1; pointer-events: auto; }
   .easter-egg p { font-family: Georgia, serif; font-style: italic; font-size: clamp(11px, 2.8vw, 13px); line-height: 1.6; opacity: 0.7; margin-bottom: 12px; }
   .easter-egg .signature { font-family: 'Courier New', monospace; font-size: clamp(9px, 2.2vw, 10px); letter-spacing: 0.4em; opacity: 0.45; }
+
+  /* Trigger do easter egg — discreto, mas clicável */
+  .frequency-clickable {
+    cursor: pointer;
+    transition: opacity 0.3s ease, text-shadow 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .frequency-clickable:hover {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(244, 232, 216, 0.4);
+  }
+  .frequency-clickable.pulse {
+    animation: freqPulse 0.4s ease;
+  }
+  @keyframes freqPulse {
+    0% { text-shadow: 0 0 0 rgba(244, 232, 216, 0); }
+    50% { text-shadow: 0 0 16px rgba(244, 232, 216, 0.9); opacity: 1; }
+    100% { text-shadow: 0 0 0 rgba(244, 232, 216, 0); }
+  }
+
+  /* ===== MODAL DE CRÉDITOS ===== */
+  .credits-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 7, 9, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .credits-modal.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease, visibility 0s linear 0s;
+  }
+
+  .credits-content {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: linear-gradient(180deg, rgba(15, 20, 25, 0.95) 0%, rgba(8, 12, 16, 0.98) 100%);
+    border: 0.7px solid rgba(244, 232, 216, 0.3);
+    padding: 40px 36px 32px;
+    text-align: center;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 20px 80px rgba(0, 0, 0, 0.8),
+      0 0 60px rgba(244, 232, 216, 0.04);
+    transform: scale(0.94) translateY(12px);
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    /* Texturazinha de grão na borda */
+    background-image:
+      linear-gradient(180deg, rgba(15, 20, 25, 0.95) 0%, rgba(8, 12, 16, 0.98) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.91  0 0 0 0 0.85  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .credits-modal.open .credits-content {
+    transform: scale(1) translateY(0);
+  }
+
+  /* Cantos HUD do modal */
+  .credits-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 0.7px solid rgba(244, 232, 216, 0.7);
+    pointer-events: none;
+  }
+  .credits-corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .credits-corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+  .credits-corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+  .credits-corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+  /* Botão fechar */
+  .credits-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    background: rgba(15, 20, 25, 0.6);
+    color: rgba(244, 232, 216, 0.7);
+    font-family: Georgia, serif;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .credits-close:hover {
+    color: #FFFFFF;
+    border-color: rgba(244, 232, 216, 0.7);
+    background: rgba(244, 232, 216, 0.1);
+  }
+
+  /* Header */
+  .credits-header { margin-bottom: 26px; }
+  .credits-frequency {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: rgba(244, 232, 216, 0.6);
+    margin: 0 0 14px 0;
+    padding-left: 0.5em;
+  }
+  .credits-title {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+  .credits-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: rgba(244, 232, 216, 0.55);
+    margin: 0;
+  }
+
+  /* Sections */
+  .credits-section { margin-bottom: 16px; }
+  .credits-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: rgba(244, 232, 216, 0.5);
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+  }
+  .credits-name {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: #F4E8D8;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  .credits-tools {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    line-height: 1.7;
+    color: rgba(244, 232, 216, 0.75);
+    letter-spacing: 0.08em;
+  }
+
+  .credits-divider {
+    width: 60px;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(244, 232, 216, 0.4) 50%, transparent 100%);
+    margin: 22px auto;
+  }
+
+  .credits-quote {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(244, 232, 216, 0.85);
+    margin: 0 0 22px 0;
+    padding: 0 8px;
+  }
+
+  .credits-dedication {
+    font-family: Georgia, serif;
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(244, 232, 216, 0.95);
+    margin: 0 0 22px 0;
+    letter-spacing: 0.02em;
+  }
+
+  .credits-year {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: rgba(244, 232, 216, 0.4);
+    margin: 0;
+  }
+
+  @media (max-height: 700px) {
+    .credits-content {
+      padding: 28px 28px 24px;
+    }
+    .credits-title { font-size: 26px; }
+    .credits-name { font-size: 14px; }
+    .credits-section { margin-bottom: 12px; }
+    .credits-divider { margin: 16px auto; }
+    .credits-header { margin-bottom: 20px; }
+    .credits-quote { font-size: 13px; margin-bottom: 16px; }
+  }
 
   /* BOTÃO DE ÁUDIO */
   .audio-toggle {
     position: fixed;
-    top: 16px;
+    bottom: 16px;
     right: 16px;
-    width: 40px;
-    height: 40px;
+    top: auto;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(15, 20, 25, 0.6);
-    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
     color: #F4E8D8;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition: all 0.3s ease;
-    opacity: 0.7;
+    opacity: 0.5;
     font-size: 16px;
     padding: 0;
   }
-  .audio-toggle:hover, .audio-toggle:active { opacity: 1; background: rgba(244, 232, 216, 0.15); }
-  .audio-toggle svg { width: 18px; height: 18px; }
+  .audio-toggle:hover, .audio-toggle:active { opacity: 0.9; background: rgba(244, 232, 216, 0.18); }
+  .audio-toggle svg { width: 16px; height: 16px; }
 
-  /* MOBILE */
+  /* Em mobile portrait, deixa o botão ainda mais discreto e fora do caminho */
   @media (max-width: 640px) and (orientation: portrait) {
-    /* Layout em 3 regiões: imagem 55% / texto 25% / UI 20% */
-    /* Aplica nas cenas de gameplay */
-    #scene-gameplay,
-    #scene-fusos-game,
-    #scene-ruido-game,
-    #scene-travessia-game,
-    #scene-encontro-game {
-      background-size: 100% 55% !important;
-      background-position: top center !important;
-      background-repeat: no-repeat !important;
-      background-color: #0F1419;
-      justify-content: flex-end !important;
-      padding-bottom: 24px;
+    .audio-toggle {
+      width: 32px;
+      height: 32px;
+      bottom: 12px;
+      right: 12px;
+      opacity: 0.4;
+    }
+    .audio-toggle svg { width: 14px; height: 14px; }
+  }
+
+  /* ===================================================================
+     DESKTOP — Posicionamento de legendas por cena
+     Cada cena tem o personagem/foco em uma posição diferente.
+     Legenda vai pra área "vazia" de cada imagem.
+     Aplicado em telas >= 769px (desktop e tablet horizontal).
+     =================================================================== */
+  @media (min-width: 769px) {
+
+    /* ===================================================================
+       DESKTOP — Tela de título com imagem alinhada pelo topo
+       =================================================================== */
+    /* Apenas a capa (scene-title) usa center top pra preservar o foco visual
+       no terço superior da imagem. As demais cenas mantêm cover/center
+       padrão pra não alterar a composição. */
+    #scene-title {
+      background-position: center top !important;
+      background-size: cover !important;
     }
 
-    /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean */
-    #scene-intro-lia { background-image: url('assets/lia-uberlandia.png') !important; }
-    #scene-intro-bento { background-image: url('assets/bento-sinop.png') !important; }
-    #scene-connection { background-image: url('assets/connection.png') !important; }
-    #scene-map { background-image: url('assets/map.png') !important; }
-    #scene-fusos-intro { background-image: url('assets/fusos.png') !important; }
-    #scene-ruido-intro { background-image: url('assets/ruido.png') !important; }
-    #scene-travessia-intro { background-image: url('assets/travessia.png') !important; }
-    #scene-convergencia { background-image: url('assets/convergencia.png') !important; }
-    #scene-toque { background-image: url('assets/toque.png') !important; }
+    /* ===================================================================
+       Posicionamento uniforme: legenda sempre embaixo
+       =================================================================== */
+    /* Padrão geral: legenda com largura limitada e fundo polido */
+    .cutscene .cutscene-text {
+      width: auto;
+      max-width: 480px;
+      min-width: 360px;
+      position: absolute;
+      background: rgba(15, 20, 25, 0.88) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(244, 232, 216, 0.2);
+      box-shadow:
+        inset 0 1px 0 rgba(244, 232, 216, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.6);
+      padding: 22px 26px;
+    }
 
-    /* Cutscenes também: imagem 60% topo, texto 40% baixo */
+    /* INTRO LIA — Lia centro-baixo (lendo). Topo direito (céu) vazio */
+    #scene-intro-lia {
+      justify-content: flex-start !important;
+      align-items: flex-end !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-intro-lia .cutscene-text {
+      top: 5vh;
+      right: 5vw;
+    }
+
+    /* INTRO BENTO — Bento centro-esquerda. Lado direito (floresta) tem espaço */
+    #scene-intro-bento {
+      justify-content: flex-start !important;
+      align-items: flex-end !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-intro-bento .cutscene-text {
+      top: 5vh;
+      right: 5vw;
+    }
+
+    /* CONNECTION — rostos dominam a tela. Legenda fina embaixo (espaço seguro) */
+    #scene-connection {
+      justify-content: flex-end !important;
+      align-items: center !important;
+      padding-bottom: 8vh !important;
+    }
+    #scene-connection .cutscene-text {
+      position: absolute;
+      bottom: 7vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 600px;
+      width: calc(100% - 80px);
+    }
+
+    /* MAP — convergência iluminada centro. Cantos vazios. Canto inferior esquerdo */
+    #scene-map {
+      justify-content: flex-end !important;
+      align-items: flex-start !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-map .cutscene-text {
+      bottom: 7vh;
+      left: 5vw;
+      max-width: 440px;
+    }
+
+    /* FUSOS INTRO — Bento no centro/direita. Lado esquerdo (parede) vazio */
+    #scene-fusos-intro {
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-fusos-intro .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* RUÍDO INTRO — silhuetas embaixo. Topo (onda no centro). Topo central */
+    #scene-ruido-intro {
+      justify-content: flex-start !important;
+      align-items: center !important;
+      padding-top: 4vh !important;
+    }
+    #scene-ruido-intro .cutscene-text {
+      top: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 580px;
+    }
+
+    /* TRAVESSIA INTRO — Lia silhueta centro. Topo (céu) vazio. Canto sup esq */
+    #scene-travessia-intro {
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-travessia-intro .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* CONVERGÊNCIA — Lia esquerda + Bento direita + trigo embaixo. Topo central */
+    #scene-convergencia {
+      justify-content: flex-start !important;
+      align-items: center !important;
+      padding-top: 5vh !important;
+    }
+    #scene-convergencia .cutscene-text {
+      top: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 600px;
+    }
+
+    /* TOQUE — mãos centro. Cantos superiores têm espaço. Canto sup esq */
+    #scene-toque {
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+      padding: 5vh 5vw !important;
+    }
+    #scene-toque .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* Continue-hint sempre embaixo */
+    .cutscene .continue-hint {
+      bottom: 2vh !important;
+      z-index: 11;
+    }
+
+    /* Em telas com altura limitada, comprime a legenda */
+    @media (max-height: 800px) {
+      .cutscene .cutscene-text {
+        padding: 16px 20px;
+        max-width: 420px;
+      }
+      .cutscene-narration {
+        font-size: 15px !important;
+        line-height: 1.55 !important;
+      }
+      .cutscene-location {
+        margin-bottom: 10px !important;
+        font-size: 9px !important;
+      }
+    }
+    @media (max-height: 700px) {
+      .cutscene .cutscene-text {
+        padding: 14px 18px;
+        max-width: 380px;
+      }
+      .cutscene-narration {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+      }
+    }
+    @media (max-height: 600px) {
+      .cutscene .cutscene-text {
+        padding: 12px 16px;
+        max-width: 360px;
+      }
+      .cutscene-narration {
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+      }
+      .cutscene-location {
+        margin-bottom: 6px !important;
+      }
+    }
+
+    /* ===================================================================
+       TELA DE PERSONAGENS - cards adaptáveis à altura disponível
+       =================================================================== */
+    #scene-characters {
+      padding: 24px 20px !important;
+      justify-content: center !important;
+      overflow-y: auto;
+    }
+    .characters-container {
+      max-width: 880px;
+      margin: 0 auto;
+      align-items: stretch;
+    }
+    /* Limita altura do portrait pra caber na tela */
+    .character-portrait {
+      max-height: 38vh;
+      width: auto;
+      max-width: 100%;
+      aspect-ratio: 3/4;
+      margin: 0 auto 12px;
+    }
+    .character-card {
+      max-height: 88vh;
+      overflow: hidden;
+    }
+    /* Em altura limitada (laptops 14"-15"), ajusta tudo */
+    @media (max-height: 800px) {
+      #scene-characters { padding: 16px 20px !important; }
+      .characters-header { margin-bottom: 10px; }
+      .characters-header h2 { font-size: 22px !important; }
+      .characters-header .subtitle { font-size: 10px !important; margin-bottom: 4px !important; }
+      .character-portrait {
+        max-height: 32vh;
+        margin-bottom: 10px;
+      }
+      .character-card { padding: 12px 14px 14px; }
+      .character-card h3 { font-size: 19px; margin-bottom: 2px; }
+      .character-card .age-loc { margin-bottom: 7px; font-size: 9px; }
+      .character-card .description { font-size: 12px; line-height: 1.5; }
+    }
+    /* Laptops 13" / Chromebook */
+    @media (max-height: 700px) {
+      #scene-characters { padding: 12px 18px !important; }
+      .characters-header { margin-bottom: 8px; }
+      .characters-header h2 { font-size: 19px !important; }
+      .character-portrait {
+        max-height: 26vh;
+        margin-bottom: 8px;
+      }
+      .character-card { padding: 10px 12px 12px; }
+      .character-card h3 { font-size: 17px; }
+      .character-card .age-loc { font-size: 8.5px; margin-bottom: 6px; }
+      .character-card .description { font-size: 11.5px; line-height: 1.45; }
+    }
+    /* Telas muito baixas */
+    @media (max-height: 600px) {
+      #scene-characters { padding: 8px 16px !important; }
+      .characters-header { margin-bottom: 6px; }
+      .characters-header h2 { font-size: 17px !important; }
+      .character-portrait {
+        max-height: 22vh;
+        margin-bottom: 6px;
+      }
+      .character-card { padding: 8px 10px 10px; }
+      .character-card h3 { font-size: 16px; margin-bottom: 1px; }
+      .character-card .description { font-size: 11px; line-height: 1.4; }
+    }
+
+    /* ===================================================================
+       TRAVESSIA - evitar sobreposição entre instrução, pensamento e km
+       =================================================================== */
+    /* Estratégia de zonas claras no desktop:
+       - Topo (0-12vh): instruction-overlay
+       - Centro (35-65vh): travessia-thought (pensamentos da Lia)
+       - Embaixo (75-100vh): km + barra + touch-zone */
+    #scene-travessia-game {
+      justify-content: flex-end !important;
+      padding: 24px 24px 6vh !important;
+      text-align: center;
+    }
+    #scene-travessia-game .instruction-overlay {
+      top: 24px !important;
+      max-width: 460px !important;
+    }
+    #scene-travessia-game .travessia-thought {
+      top: 50% !important;
+    }
+    #scene-travessia-game .travessia-progress-area {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding-top: 0;
+      text-align: center;
+    }
+    /* KM com painel próprio, destacado da instrução do topo */
+    #scene-travessia-game .travessia-km {
+      background: rgba(15, 20, 25, 0.85) !important;
+      border: 0.5px solid rgba(244, 232, 216, 0.3) !important;
+      padding: 8px 18px !important;
+      margin-bottom: 14px !important;
+      display: inline-block;
+      box-shadow:
+        inset 0 1px 0 rgba(244, 232, 216, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.4) !important;
+      font-size: 13px !important;
+      letter-spacing: 0.18em !important;
+      opacity: 1 !important;
+      color: #FFFFFF !important;
+    }
+    #scene-travessia-game .travessia-progress {
+      margin-bottom: 18px;
+    }
+    /* Em altura limitada, comprime mais */
+    @media (max-height: 720px) {
+      #scene-travessia-game {
+        padding: 16px 24px 5vh !important;
+      }
+      #scene-travessia-game .instruction-overlay {
+        top: 16px !important;
+        padding: 10px 16px !important;
+      }
+      #scene-travessia-game .instruction-overlay p {
+        font-size: 13px !important;
+      }
+      #scene-travessia-game .travessia-thought {
+        font-size: clamp(16px, 3.6vw, 20px) !important;
+      }
+      .travessia-touch-zone {
+        height: 60px !important;
+      }
+      #scene-travessia-game .travessia-km {
+        padding: 6px 14px !important;
+        margin-bottom: 10px !important;
+        font-size: 12px !important;
+      }
+      #scene-travessia-game .travessia-progress {
+        margin-bottom: 14px !important;
+      }
+    }
+    @media (max-height: 600px) {
+      #scene-travessia-game {
+        padding: 12px 20px 4vh !important;
+      }
+      #scene-travessia-game .instruction-overlay {
+        top: 10px !important;
+        padding: 8px 14px !important;
+      }
+      .travessia-touch-zone {
+        height: 50px !important;
+      }
+      #scene-travessia-game .travessia-km {
+        padding: 5px 12px !important;
+        margin-bottom: 8px !important;
+        font-size: 11px !important;
+      }
+      #scene-travessia-game .travessia-progress {
+        margin-bottom: 10px !important;
+      }
+    }
+  }
+
+  /* ===================================================================
+     GAME UI — sistema de painéis e elementos com peso de jogo
+     =================================================================== */
+
+  /* Frame com cantos chanfrados (HUD style) */
+  .game-frame {
+    position: relative;
+    background: rgba(15, 20, 25, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(244, 232, 216, 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.05),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+      0 4px 20px rgba(0, 0, 0, 0.5);
+    clip-path: polygon(
+      0 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  /* Ornamentos nos cantos do frame */
+  .game-corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 0.7px solid rgba(244, 232, 216, 0.65);
+    pointer-events: none;
+  }
+  .game-corner.tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+  .game-corner.tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+  .game-corner.bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+  .game-corner.br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+  /* Botão estilizado de jogo */
+  .game-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.08) 0%, rgba(15, 20, 25, 0.6) 100%);
+    border: 0.7px solid rgba(244, 232, 216, 0.6);
+    color: #F4E8D8;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .game-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(244, 232, 216, 0.15), transparent);
+    transition: left 0.6s ease;
+  }
+  .game-button:hover::before, .game-button:active::before {
+    left: 100%;
+  }
+  .game-button:hover, .game-button:active {
+    border-color: rgba(244, 232, 216, 0.9);
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.15) 0%, rgba(15, 20, 25, 0.6) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.2),
+      0 0 16px rgba(244, 232, 216, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+  }
+
+  /* Etiqueta de status (pequena tag tipo HUD) */
+  .game-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #F4E8D8;
+    opacity: 0.85;
+  }
+  .game-tag::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(244, 232, 216, 0.7);
+    box-shadow: 0 0 6px rgba(244, 232, 216, 0.6);
+    animation: tagPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes tagPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Barra de progresso estilo HUD */
+  .game-progress {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    overflow: hidden;
+  }
+  .game-progress::before {
+    content: '';
+    position: absolute;
+    top: 1px; left: 1px; right: 1px; bottom: 1px;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 4px,
+        rgba(244, 232, 216, 0.04) 4px,
+        rgba(244, 232, 216, 0.04) 5px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .game-progress .game-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg,
+      rgba(244, 232, 216, 0.6) 0%,
+      rgba(244, 232, 216, 0.85) 100%);
+    box-shadow: 0 0 10px rgba(244, 232, 216, 0.5);
+    transition: width 0.4s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Marcadores em forma de hash no início e fim de barras */
+  .game-hash-mark {
+    color: rgba(244, 232, 216, 0.3);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  /* Aplicação automática nos elementos de gameplay */
+
+  /* Tutorial da Fase 1 com peso de jogo */
+  #tutorial {
+    background: rgba(15, 20, 25, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.7);
+    clip-path: polygon(
+      0 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  /* Frequency display com peso */
+  .frequency-display {
+    background: rgba(15, 20, 25, 0.6);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    padding: 4px 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 0 12px rgba(244, 232, 216, 0.1);
+  }
+
+  /* Signal strength com hash marks */
+  .signal-strength {
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+  }
+  .signal-strength::before, .signal-strength::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 1px;
+    background: rgba(244, 232, 216, 0.4);
+  }
+  .signal-strength::before { left: -6px; }
+  .signal-strength::after { right: -6px; }
+
+  /* Radio dial mais elaborado */
+  .radio-dial {
+    background:
+      radial-gradient(circle at center, rgba(15, 20, 25, 0.3) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    box-shadow:
+      inset 0 0 24px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  .radio-dial::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border-radius: 50%;
+    border: 0.5px dashed rgba(244, 232, 216, 0.2);
+    pointer-events: none;
+  }
+  .radio-dial::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(244, 232, 216, 0.6);
+    box-shadow: 0 0 8px rgba(244, 232, 216, 0.5);
+    pointer-events: none;
+  }
+
+  /* Encontro: dialogue area com peso de jogo */
+  .encontro-dialogue-area {
+    background: rgba(15, 20, 25, 0.85) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .encontro-words-area {
+    background: rgba(15, 20, 25, 0.5);
+    border: 0.5px dashed rgba(244, 232, 216, 0.2);
+  }
+
+  /* Duo-word com peso de jogo */
+  .duo-word {
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.1) 0%, rgba(15, 20, 25, 0.6) 100%) !important;
+    border: 0.7px solid rgba(244, 232, 216, 0.5) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.25s ease;
+  }
+  .duo-word:hover, .duo-word:active {
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.2) 0%, rgba(15, 20, 25, 0.6) 100%) !important;
+    border-color: rgba(244, 232, 216, 0.85) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.2),
+      0 0 12px rgba(244, 232, 216, 0.2),
+      0 4px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* Morse pattern com peso */
+  .morse-pattern-floating {
+    background: rgba(8, 12, 16, 0.92) !important;
+    border: 0.7px solid rgba(244, 232, 216, 0.35) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+      0 6px 24px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  /* Morse counter como HUD tag */
+  .morse-counter {
+    background: rgba(15, 20, 25, 0.85) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.3em;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Travessia progress: peso de barra de jogo */
+  .travessia-progress {
+    background: rgba(15, 20, 25, 0.8) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.4);
+    height: 5px !important;
+    position: relative;
+  }
+  .travessia-progress::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 8px,
+        rgba(244, 232, 216, 0.04) 8px,
+        rgba(244, 232, 216, 0.04) 9px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .travessia-progress .travessia-bar {
+    box-shadow: 0 0 10px rgba(244, 232, 216, 0.5);
+  }
+
+  /* Travessia touch zone com peso */
+  .travessia-touch-zone {
+    background: linear-gradient(180deg, rgba(15, 20, 25, 0.4) 0%, rgba(15, 20, 25, 0.8) 100%) !important;
+    border: 0.5px dashed rgba(244, 232, 216, 0.35);
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+  .travessia-touch-zone.active {
+    border-style: solid;
+    border-color: rgba(244, 232, 216, 0.8);
+    box-shadow:
+      inset 0 0 24px rgba(244, 232, 216, 0.1),
+      0 0 16px rgba(244, 232, 216, 0.15);
+  }
+
+  /* Fusos: container com peso */
+  .fusos-container {
+    background: rgba(15, 20, 25, 0.4);
+    border: 0.5px solid rgba(244, 232, 216, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 0 rgba(244, 232, 216, 0.05);
+  }
+
+  /* Fusos counter como HUD */
+  .fusos-counter {
+    background: rgba(15, 20, 25, 0.85);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    padding: 4px 12px !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+  }
+
+  /* Continue-hint mais polido */
+  .continue-hint {
+    padding: 10px 22px !important;
+    background: rgba(15, 20, 25, 0.4);
+    border: 0.5px solid rgba(244, 232, 216, 0.2);
+    border-radius: 0;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.05),
+      0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Start button (título) com peso de jogo */
+  .start-button {
+    position: relative;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.08) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    border: 0.7px solid rgba(244, 232, 216, 0.7) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.12),
+      0 4px 16px rgba(0, 0, 0, 0.5),
+      0 0 24px rgba(244, 232, 216, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .start-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(244, 232, 216, 0.18), transparent);
+    transition: left 0.8s ease;
+  }
+  .start-button:hover::before, .start-button:active::before {
+    left: 100%;
+  }
+  .start-button:hover, .start-button:active {
+    border-color: rgba(244, 232, 216, 0.95) !important;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.15) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.22),
+      0 4px 20px rgba(0, 0, 0, 0.6),
+      0 0 32px rgba(244, 232, 216, 0.18);
+  }
+
+  /* End screen content com peso */
+  .end-content {
+    background: rgba(15, 20, 25, 0.65) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      0 8px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ===================================================================
+     MOBILE PORTRAIT — Layout em Grid (3 áreas fixas)
+     - Header: 10vh (texto curto, instrução)
+     - Imagem: 55vh (com contain, proporção preservada)
+     - UI: resto (mecânicas, botões, controles)
+     =================================================================== */
+  @media (max-width: 640px) and (orientation: portrait) {
+
+    /* ===== TEXTURA E ATMOSFERA NO FUNDO ESCURO =====
+       Aplicada via box-shadow inset em vez de background-image
+       (assim não conflita com as imagens de fundo das cenas) */
+    /* Removido o background-image: noise SVG porque conflitava com imagens reais */
+
+    /* Linha decorativa entre imagem e UI */
+    .scene-divider-line {
+      width: calc(100% - 64px);
+      max-width: 280px;
+      margin: 6px auto 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-shrink: 0;
+      opacity: 0.45;
+      pointer-events: none;
+      order: 0;  /* fica entre imagem (order -1) e UI */
+    }
+    .scene-divider-line::before,
+    .scene-divider-line::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 232, 216, 0.6) 50%, transparent 100%);
+    }
+    .scene-divider-line .ornament {
+      font-size: 9px;
+      color: rgba(244, 232, 216, 0.7);
+      letter-spacing: 0.6em;
+    }
+
+    /* ===== FIM TEXTURA E ATMOSFERA ===== */
+
+    /* Cenas de gameplay e cutscenes recebem grid */
     #scene-intro-lia,
     #scene-intro-bento,
     #scene-connection,
@@ -482,203 +1503,514 @@
     #scene-ruido-intro,
     #scene-travessia-intro,
     #scene-convergencia,
-    #scene-toque {
-      background-size: 100% 60% !important;
-      background-position: top center !important;
-      background-repeat: no-repeat !important;
-      background-color: #0F1419 !important;
-      justify-content: flex-end !important;
-      padding-bottom: 14vh !important;
+    #scene-toque,
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      padding: 0 !important;
+      /* Reset total de background do scene principal —
+         imagem aparece exclusivamente via ::before */
+      background: #0F1419 !important;
+      background-image: none !important;
+      background-size: auto !important;
+      gap: 0 !important;
     }
 
-    /* Cutscene-text não tem mais fundo escuro (porque o fundo já é escuro) */
-    #scene-intro-lia .cutscene-text,
-    #scene-intro-bento .cutscene-text,
-    #scene-connection .cutscene-text,
-    #scene-map .cutscene-text,
-    #scene-fusos-intro .cutscene-text,
-    #scene-ruido-intro .cutscene-text,
-    #scene-travessia-intro .cutscene-text,
-    #scene-convergencia .cutscene-text,
-    #scene-toque .cutscene-text {
+    /* Slot da imagem - 55vh, sempre */
+    .scene-image {
+      width: 100%;
+      height: 55vh;
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #0F1419;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header de instrução — sempre 10vh em cima */
+    .scene-header {
+      width: 100%;
+      min-height: 10vh;
+      max-height: 14vh;
+      padding: 12px 18px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 5;
+    }
+    .scene-header p {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: clamp(15px, 4vw, 17px);
+      line-height: 1.45;
+      color: #F4E8D8;
+      margin: 0 0 5px 0;
+      max-width: 100%;
+    }
+    .scene-header .hint-line {
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(11px, 2.8vw, 12px);
+      letter-spacing: 0.22em;
+      opacity: 0.65;
+      margin: 0;
+    }
+
+    /* Área de UI/mecânica - resto da tela */
+    .scene-ui {
+      flex: 1;
+      width: 100%;
+      padding: 16px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+      z-index: 5;
+    }
+
+    /* CUTSCENES: usam .scene-image + .scene-ui pra texto */
+    /* (HTML structure assume: cutscene tem .scene-image e .scene-ui) */
+    .cutscene .scene-ui {
+      justify-content: center;
+      padding: 16px 24px 14vh;
+    }
+
+    /* Texto narrativo das cutscenes */
+    .cutscene .scene-ui .narration {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: clamp(16px, 4.4vw, 19px);
+      line-height: 1.6;
+      color: #F4E8D8;
+      text-align: center;
+      max-width: 100%;
+      margin-bottom: 14px;
+    }
+    .cutscene .scene-ui .location {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: clamp(11px, 2.8vw, 12px);
+      letter-spacing: 0.32em;
+      opacity: 0.75;
+      margin-bottom: 16px;
+    }
+    .cutscene .scene-ui .dialogue {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 14px;
+    }
+    .cutscene .scene-ui .dialogue-line {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: clamp(16px, 4.2vw, 18px);
+      line-height: 1.6;
+      margin-bottom: 9px;
+    }
+
+    /* Esconde o cutscene-text antigo, vamos usar o novo wrapper */
+    .cutscene .cutscene-text {
       background: transparent !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
       border: none !important;
-      padding: 12px 20px !important;
-    }
-
-    /* Adiciona um gradiente de transição entre imagem e área inferior nas cutscenes */
-    #scene-intro-lia::after,
-    #scene-intro-bento::after,
-    #scene-connection::after,
-    #scene-map::after,
-    #scene-fusos-intro::after,
-    #scene-ruido-intro::after,
-    #scene-travessia-intro::after,
-    #scene-convergencia::after,
-    #scene-toque::after {
-      content: '';
-      position: absolute;
-      top: 45%;
-      left: 0;
+      padding: 0 !important;
       width: 100%;
-      height: 25%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 70%);
-      pointer-events: none;
-      z-index: 1;
+      max-width: 100%;
     }
 
-    /* Adiciona um gradiente de transição entre imagem e área inferior nas gameplay */
-    #scene-gameplay::before,
+    /* Continue hint nas cutscenes - centralizado embaixo */
+    .cutscene .continue-hint {
+      bottom: 4vh !important;
+      z-index: 10;
+    }
+
+    /* Backgrounds de cada imagem aplicados ao .scene-image quando presente */
+    /* Pra não quebrar HTML antigo, aplicamos via fallback ::before */
+    #scene-intro-lia::before { background-image: url('assets/lia-uberlandia.png'); }
+    #scene-intro-bento::before { background-image: url('assets/bento-sinop.png'); }
+    #scene-connection::before { background-image: url('assets/connection.png'); }
+    #scene-map::before { background-image: url('assets/map.png'); }
+    #scene-fusos-intro::before { background-image: url('assets/fusos.png'); }
+    #scene-ruido-intro::before { background-image: url('assets/ruido.png'); }
+    #scene-travessia-intro::before { background-image: url('assets/travessia.png'); }
+    #scene-convergencia::before { background-image: url('assets/convergencia.png'); }
+    #scene-toque::before { background-image: url('assets/toque.png'); }
+    #scene-fusos-game::before { background-image: url('assets/fusos.png'); }
+    #scene-ruido-game::before { background-image: url('assets/ruido.png'); }
+    #scene-travessia-game::before { background-image: url('assets/travessia.png'); }
+    #scene-encontro-game::before { background-image: url('assets/encontro.png'); }
+
+    #scene-intro-lia::before,
+    #scene-intro-bento::before,
+    #scene-connection::before,
+    #scene-map::before,
+    #scene-fusos-intro::before,
+    #scene-ruido-intro::before,
+    #scene-travessia-intro::before,
+    #scene-convergencia::before,
+    #scene-toque::before,
     #scene-fusos-game::before,
     #scene-ruido-game::before,
     #scene-travessia-game::before,
     #scene-encontro-game::before {
       content: '';
-      position: absolute;
-      top: 40%;
-      left: 0;
+      display: block;
       width: 100%;
-      height: 30%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 60%);
-      pointer-events: none;
-      z-index: 1;
+      height: 55vh;
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      flex-shrink: 0;
+      order: -1;
     }
 
-    /* Garante que conteúdo das cutscenes fique acima do gradiente */
-    #scene-intro-lia .cutscene-text,
-    #scene-intro-bento .cutscene-text,
-    #scene-connection .cutscene-text,
-    #scene-map .cutscene-text,
-    #scene-fusos-intro .cutscene-text,
-    #scene-ruido-intro .cutscene-text,
-    #scene-travessia-intro .cutscene-text,
-    #scene-convergencia .cutscene-text,
-    #scene-toque .cutscene-text {
-      position: relative;
-      z-index: 5;
+    /* Imagem do Encontro reduzida (UI complexa precisa de mais espaço) */
+    #scene-encontro-game::before {
+      height: 38vh !important;
+    }
+    /* Imagem do Ruído também precisa ser menor (instrução + padrão + frase + hint) */
+    #scene-ruido-game::before {
+      height: 42vh !important;
     }
 
-    /* Garante que conteúdo da gameplay fique abaixo dos 55% iniciais */
-    #scene-fusos-game .fusos-container,
-    #scene-travessia-game .travessia-progress-area,
-    #scene-encontro-game .encontro-dialogue-area,
-    #scene-encontro-game .encontro-words-area {
-      position: relative;
-      z-index: 5;
+    /* Cutscene - texto vai no flex container abaixo da imagem */
+    .cutscene {
+      justify-content: flex-start !important;
+      padding: 0 !important;
+    }
+    .cutscene .cutscene-text {
+      margin-top: 16px;
+      padding: 0 24px !important;
     }
 
-    /* TRAVESSIA: pensamentos no centro da imagem (parte de cima) */
+    /* Esconde overlay de instrução antigo (vamos usar novos containers) */
+    .instruction-overlay {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      padding: 12px 18px !important;
+      flex-shrink: 0;
+      order: -2;  /* aparece ANTES da imagem (em cima) */
+      min-height: auto !important;
+    }
+    .instruction-overlay p {
+      font-size: clamp(15px, 4vw, 16px) !important;
+      line-height: 1.45 !important;
+    }
+    .instruction-overlay .hint-line {
+      font-size: clamp(11px, 2.8vw, 12px) !important;
+    }
+
+    /* ===== FUSOS GAMEPLAY ===== */
+    #scene-fusos-game .fusos-container {
+      flex: 1;
+      width: 100%;
+      padding: 12px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 !important;
+    }
+    #scene-fusos-game .fusos-instruction {
+      font-size: clamp(12px, 3.2vw, 14px) !important;
+      margin-bottom: 16px !important;
+      text-align: center;
+    }
+    #scene-fusos-game .breath-circle-container {
+      width: clamp(180px, 50vw, 220px) !important;
+      height: clamp(180px, 50vw, 220px) !important;
+      margin: 8px auto 18px !important;
+    }
+    #scene-fusos-game .breath-text {
+      font-size: clamp(13px, 3.4vw, 15px) !important;
+      letter-spacing: 0.35em !important;
+    }
+    #scene-fusos-game .fusos-counter {
+      margin-top: 14px !important;
+      font-size: clamp(13px, 3.2vw, 14px) !important;
+    }
+
+    /* ===== RUÍDO/MORSE GAMEPLAY ===== */
+    #scene-ruido-game .morse-counter {
+      position: absolute !important;
+      top: 12px !important;
+      right: 12px !important;
+      z-index: 30;
+    }
+    #scene-ruido-game .morse-pattern-floating {
+      width: calc(100% - 32px);
+      max-width: 100%;
+      margin: 14px auto 10px;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex-shrink: 0;
+      /* Contraste máximo no painel pra garantir leitura */
+      background: rgba(8, 12, 16, 0.95) !important;
+      border: 0.7px solid rgba(244, 232, 216, 0.4) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(244, 232, 216, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.7),
+        0 8px 28px rgba(0, 0, 0, 0.7) !important;
+    }
+    /* Letras grandes (V, I, V, O) — branco puro com sombra */
+    #scene-ruido-game .morse-letter-char {
+      color: #FFFFFF !important;
+      font-weight: 600 !important;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9) !important;
+      font-size: clamp(22px, 5.5vw, 26px) !important;
+    }
+    /* Símbolos morse (· e —) — não acesos visíveis, acesos brilhantes */
+    #scene-ruido-game .morse-symbol {
+      opacity: 0.85 !important;
+      color: rgba(244, 232, 216, 0.95) !important;
+      font-weight: 700 !important;
+    }
+    #scene-ruido-game .morse-symbol.lit {
+      opacity: 1 !important;
+      color: #FFFFFF !important;
+      text-shadow:
+        0 0 8px rgba(244, 232, 216, 1),
+        0 0 16px rgba(244, 232, 216, 0.8) !important;
+    }
+    /* Letras já completadas com opacidade visível (não invisíveis) */
+    #scene-ruido-game .morse-letter-block.completed {
+      opacity: 0.6 !important;
+    }
+    #scene-ruido-game .morse-tap-hint {
+      margin-top: 12px !important;
+      flex-shrink: 0;
+    }
+    #scene-ruido-game .morse-revealed-floating {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 14px auto 0 !important;
+      padding: 13px 20px !important;
+      font-size: clamp(16px, 4.2vw, 19px) !important;
+      /* Contraste reforçado pra leitura */
+      background: rgba(8, 12, 16, 0.95) !important;
+      color: #FFFFFF !important;
+      border: 0.7px solid rgba(244, 232, 216, 0.35) !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(244, 232, 216, 0.08),
+        0 6px 24px rgba(0, 0, 0, 0.6) !important;
+    }
+    #scene-ruido-game .morse-revealed-floating.visible {
+      transform: none !important;
+    }
+
+    /* ===== TRAVESSIA GAMEPLAY ===== */
     #scene-travessia-game .travessia-thought {
-      top: 27% !important;
-      font-size: clamp(15px, 4.5vw, 18px) !important;
-      max-width: 90% !important;
+      position: absolute !important;
+      top: 30vh !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: calc(100% - 32px) !important;
+      max-width: 100% !important;
+      font-size: clamp(16px, 4.4vw, 19px) !important;
+      padding: 8px 16px !important;
+      z-index: 10;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.7);
     }
-
-    /* TRAVESSIA: progresso e botão na parte de baixo */
+    #scene-travessia-game .travessia-thought.visible {
+      transform: translateX(-50%) !important;
+    }
     #scene-travessia-game .travessia-progress-area {
       width: calc(100% - 32px);
       max-width: 100%;
-      margin-top: auto;
+      margin: 14px auto 0;
+      flex-shrink: 0;
+    }
+    #scene-travessia-game .travessia-touch-zone {
+      height: 70px;
     }
 
-    /* FUSOS: círculo de respiração centralizado na zona de baixo */
-    #scene-fusos-game {
-      align-items: center !important;
-    }
-    #scene-fusos-game .fusos-container {
-      margin-top: 50%;
-      padding: 12px 20px;
-    }
-    #scene-fusos-game .breath-circle-container {
-      width: clamp(120px, 28vw, 160px) !important;
-      height: clamp(120px, 28vw, 160px) !important;
-    }
-    #scene-fusos-game .fusos-instruction {
-      font-size: clamp(13px, 3.4vw, 15px) !important;
-      margin-bottom: 20px !important;
-    }
-
-    /* ENCONTRO: diálogo e banco de palavras na parte de baixo */
+    /* ===== ENCONTRO GAMEPLAY ===== */
     #scene-encontro-game {
-      padding-top: 56% !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
     }
     #scene-encontro-game .encontro-dialogue-area {
-      min-height: 100px;
-      padding: 14px 16px;
+      width: calc(100% - 24px);
+      max-width: 100%;
+      margin: 12px auto 12px;
+      padding: 12px 14px !important;
+      min-height: auto !important;
+      flex-shrink: 0;
+    }
+    #scene-encontro-game .encontro-line {
+      font-size: clamp(15px, 4vw, 17px) !important;
+      margin-bottom: 7px !important;
+    }
+    #scene-encontro-game .encontro-words-area {
+      width: calc(100% - 24px);
+      max-width: 100%;
+      margin: 0 auto 16px;
+      padding: 10px !important;
+      gap: 6px !important;
+      min-height: auto !important;
+      flex-shrink: 0;
+    }
+    #scene-encontro-game .duo-word {
+      padding: 9px 14px !important;
+      font-size: clamp(13px, 3.4vw, 15px) !important;
     }
 
-    /* RUÍDO: padrão Morse na parte de baixo (em cima da imagem fica feio) */
-    #scene-ruido-game {
-      padding-top: 56% !important;
-    }
-    #scene-ruido-game .morse-pattern-floating {
-      padding: 14px 18px;
-      gap: 10px;
-    }
-    #scene-ruido-game .morse-revealed-floating {
-      bottom: 16px;
-    }
-    #scene-ruido-game .morse-counter {
-      top: 14px;
-      right: 14px;
-    }
-
-    /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
-    /* mas comprime altura pra não cortar */
+    /* ===== FASE 1 (SINTONIA) - layout vertical 2 metades ===== */
     #scene-gameplay {
-      background-size: cover !important;
-      background-position: center !important;
-      flex-direction: row !important;
+      flex-direction: column !important;
       padding: 0 !important;
+      background: #0F1419 !important;
     }
     #scene-gameplay::before {
-      display: none;
+      display: none !important;
     }
+    #scene-gameplay .side {
+      flex: 1;
+      width: 100%;
+      height: 50%;
+      padding: 8px 12px;
+      background-size: cover !important;
+      background-position: center !important;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Aplica o mesmo filtro de dessaturação do desktop pra harmonizar
+       imagens da Lia (cerrado) e Bento (floresta) com a paleta sóbria */
+    #scene-gameplay .side-lia,
+    #scene-gameplay .side-bento {
+      filter: saturate(0.55) contrast(1.05) brightness(0.85);
+    }
+    #scene-gameplay .side-lia {
+      background-image:
+        linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+        url('assets/lia-night.png') !important;
+    }
+    #scene-gameplay .side-bento {
+      background-image:
+        linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+        url('assets/bento-dawn.png') !important;
+    }
+    #scene-gameplay .side > * {
+      position: relative;
+      z-index: 2;
+    }
+    #scene-gameplay .side-divider {
+      width: 100% !important;
+      height: 1px !important;
+      background: rgba(244, 232, 216, 0.25) !important;
+      flex-shrink: 0;
+    }
+    #scene-gameplay .radio-dial {
+      width: clamp(120px, 32vw, 150px) !important;
+      margin: 8px 0 !important;
+    }
+    #scene-gameplay .side {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    #scene-gameplay .character-label,
+    #scene-gameplay .character-name,
+    #scene-gameplay .character-location {
+      margin-bottom: 1px !important;
+    }
+    #scene-gameplay .character-label { font-size: 10px !important; order: -3; }
+    #scene-gameplay .character-name { font-size: 16px !important; order: -2; }
+    #scene-gameplay .character-location { font-size: 9px !important; margin-bottom: 8px !important; order: -1; }
 
-    /* TUTORIAL da Fase 1 - posiciona embaixo pra não cobrir os personagens */
+    /* IMPORTANTE: frequência aparece ACIMA do dial (não abaixo)
+       Assim o dedo do usuário não cobre o display ao arrastar */
+    #scene-gameplay .frequency-display {
+      margin: 0 0 6px 0 !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      padding: 6px 14px !important;
+      order: 0;  /* antes do dial */
+    }
+    #scene-gameplay .radio-dial { order: 1; }
+    #scene-gameplay .signal-strength { margin: 8px 0 4px 0 !important; order: 2; }
+    #scene-gameplay .signal-label { margin-top: 3px !important; font-size: 9px !important; order: 3; }
+
     #scene-gameplay #tutorial {
-      top: auto !important;
-      bottom: 24px !important;
+      top: 50% !important;
       left: 50% !important;
-      transform: translateX(-50%) !important;
-      max-width: 320px !important;
+      transform: translate(-50%, -50%) !important;
+      max-width: 280px !important;
+      bottom: auto !important;
+      padding: 18px 22px !important;
     }
 
-    /* Instruction overlay: posiciona no topo SEM cobrir imagem */
-    .instruction-overlay {
-      top: 12px !important;
-      width: calc(100% - 24px) !important;
-      padding: 10px 14px !important;
-    }
-    .instruction-overlay p {
-      font-size: 12px !important;
-      line-height: 1.4 !important;
-    }
-    .instruction-overlay .hint-line {
-      font-size: 9px !important;
-    }
-
+    /* ===== TÍTULO ===== */
+    #scene-title { padding-top: 6vh !important; }
     .title-content { padding: 20px; }
-    .cutscene { padding-bottom: 16vh; }
-    #scene-characters { padding: 20px 16px; padding-top: 5vh; }
-    .characters-container { flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
-    .character-card { padding: 12px 14px 14px; flex-direction: row; gap: 14px; text-align: left; align-items: center; }
-    .character-portrait { width: 90px; flex-shrink: 0; aspect-ratio: 3/4; margin-bottom: 0; }
+
+    /* ===== PERSONAGENS ===== */
+    #scene-characters {
+      padding: 16px 14px !important;
+      padding-top: 4vh !important;
+      justify-content: center !important;
+      /* Reforça o radial gradient temático (vinho escuro -> escuro do jogo) */
+      background: radial-gradient(ellipse at top, #1a1014 0%, #0F1419 60%, #050709 100%) !important;
+    }
+    .characters-container {
+      flex-direction: column !important;
+      gap: 14px !important;
+      max-width: 100% !important;
+      padding: 0 4px;
+    }
+    .character-card {
+      padding: 14px 16px 16px !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+      text-align: left !important;
+      align-items: center !important;
+    }
+    .character-portrait {
+      width: 110px !important;
+      flex-shrink: 0;
+      aspect-ratio: 3/4 !important;
+      margin-bottom: 0 !important;
+    }
     .character-card-info { flex: 1; min-width: 0; }
-    .character-card h3 { font-size: 18px; margin-bottom: 2px; }
-    .character-card .age-loc { margin-bottom: 8px; font-size: 9px; }
-    .character-card .description { font-size: 12px; line-height: 1.5; }
-    .side { padding: 16px 8px; }
-    .character-location { margin-bottom: 16px; }
-    .frequency-display { margin-top: 10px; }
-    .signal-strength { margin-top: 12px; }
-    .dialogue-line.bento { padding-left: 16px; }
-    .end-content { padding: 28px 22px; max-width: calc(100% - 32px); }
+    .character-card h3 { font-size: 22px !important; margin-bottom: 3px; }
+    .character-card .age-loc { margin-bottom: 10px; font-size: 9.5px; letter-spacing: 0.18em; }
+    .character-card .description { font-size: 12.5px; line-height: 1.5; }
+    .characters-header { margin-bottom: 14px; }
+
+    /* ===== TELA FINAL ===== */
+    .end-content { padding: 24px 20px !important; max-width: calc(100% - 24px) !important; }
     .continue-hint { bottom: 4vh; }
-    .encontro-line.bento { padding-left: 16px; }
-    .duo-word { padding: 8px 14px; }
+
+    /* Diálogos cutscene em mobile */
+    .dialogue-line.bento { padding-left: 16px !important; }
   }
 
   /* Mobile landscape ou tablets pequenos: comportamento próximo do desktop */
@@ -688,107 +2020,7 @@
 
   /* ===== LAYOUT MOBILE: 3 REGIÕES (imagem 60% / texto 25% / UI 15%) ===== */
   @media (max-width: 768px) {
-    /* Aplicado apenas em cenas de GAMEPLAY (não cutscenes nem título) */
-    #scene-fusos-game,
-    #scene-ruido-game,
-    #scene-travessia-game,
-    #scene-encontro-game {
-      background-size: 100% 60%;
-      background-position: top center;
-      background-repeat: no-repeat;
-      background-attachment: local;
-    }
-    /* Cor de fundo escura na parte de baixo (40%) */
-    #scene-fusos-game::before,
-    #scene-ruido-game::before,
-    #scene-travessia-game::before,
-    #scene-encontro-game::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 40%;
-      background: linear-gradient(180deg, rgba(15, 20, 25, 0.6) 0%, rgba(15, 20, 25, 1) 25%, rgba(15, 20, 25, 1) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    /* Garantir que conteúdo fica acima do gradiente */
-    #scene-fusos-game > *,
-    #scene-ruido-game > *,
-    #scene-travessia-game > *,
-    #scene-encontro-game > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Fusos: container fica embaixo */
-    #scene-fusos-game { justify-content: flex-end; padding-bottom: 8vh; }
-    .fusos-container { padding: 16px; max-width: 100%; }
-    .fusos-instruction { margin-bottom: 20px; font-size: 14px; }
-    .breath-circle-container {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 16px;
-    }
-    .fusos-counter { margin-top: 12px; }
-
-    /* Travessia: pensamento fica na zona de texto (não centralizado absoluto) */
-    .travessia-thought {
-      position: absolute;
-      top: 60%;
-      left: 0;
-      right: 0;
-      transform: translateY(-50%);
-      font-size: clamp(15px, 4.5vw, 18px);
-      padding: 16px 24px;
-      max-width: 100%;
-      width: auto;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-    }
-    .travessia-thought.visible {
-      transform: translateY(-50%);
-    }
-    #scene-travessia-game {
-      justify-content: flex-end;
-      padding: 16px 16px 6vh;
-    }
-    .travessia-progress-area { margin-top: auto; }
-    .travessia-touch-zone { height: 60px; }
-
-    /* Morse: imagem em cima, padrão e contador embaixo */
-    #scene-ruido-game { justify-content: flex-end; padding-bottom: 4vh; }
-    .morse-pattern-floating {
-      margin-bottom: 16px;
-      padding: 12px 16px;
-      gap: 10px;
-    }
-    .morse-revealed-floating {
-      bottom: 14vh;
-    }
-
-    /* Encontro: dialog area embaixo */
-    #scene-encontro-game {
-      justify-content: flex-end;
-      padding: 16px 16px 4vh;
-    }
-    .encontro-dialogue-area {
-      background: rgba(15, 20, 25, 0.85);
-      padding: 14px 16px;
-      min-height: auto;
-      margin-bottom: 12px;
-    }
-    .encontro-line {
-      font-size: clamp(13px, 3.6vw, 15px);
-      margin-bottom: 6px;
-    }
-    .encontro-words-area {
-      min-height: 90px;
-      padding: 8px;
-      gap: 6px;
-    }
-    .duo-word { padding: 7px 12px; font-size: 13px; }
-
+    /* Apenas ajustes que NÃO conflitam com layout 640px portrait */
     /* Instrução overlay menor em mobile */
     .instruction-overlay {
       top: 12px;
@@ -815,14 +2047,19 @@
     width: calc(100% - 48px);
     max-width: 540px;
     text-align: center;
-    background: rgba(15, 20, 25, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(15, 20, 25, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 14px 20px;
-    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
     z-index: 50;
     transition: opacity 1.2s ease, transform 1.2s ease;
-    border-radius: 2px;
+    border-radius: 0;
+    pointer-events: none;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 4px 20px rgba(0, 0, 0, 0.5);
   }
   .instruction-overlay.hidden {
     opacity: 0;
@@ -882,7 +2119,7 @@
       <p class="cutscene-narration">A internet caiu há sete anos. As cidades pararam. Lia ficou. Continuou aprendendo no escuro, do jeito que sempre soube fazer.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-intro-bento&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-intro-bento" data-next="scene-characters">
     <div class="cutscene-text">
@@ -890,7 +2127,7 @@
       <p class="cutscene-narration">Bento construiu uma rede improvisada de antenas na borda da floresta. Não esperava nada. Só o gesto de tentar.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-characters&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-characters" data-action="startGameplay" style="cursor: pointer;">
     <div class="characters-header"><p class="subtitle">PERSONAGENS</p></div>
@@ -902,7 +2139,7 @@
           <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
           <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada.</p>
         </div>
-      </div>
+      <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
       <div class="character-card">
         <div class="character-portrait bento"></div>
         <div class="character-card-info">
@@ -910,7 +2147,7 @@
           <p class="age-loc">50 ANOS · SINOP, MT</p>
           <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
         </div>
-      </div>
+      <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     </div>
     <p class="continue-hint" onclick="startGameplay()">TOQUE PARA SINTONIZAR</p>
   </div>
@@ -919,7 +2156,7 @@
     <div id="tutorial">
       <p>Arraste os dois dials para sintonizar a mesma frequência ao mesmo tempo.</p>
       <small>FREQUÊNCIA ALVO: 88.7</small>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div id="connection-line"></div>
     <div class="side side-lia">
       <p class="character-label">LIA</p>
@@ -957,7 +2194,7 @@
       <p class="cutscene-narration" style="margin-top: 18px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-map&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-map" data-next="scene-fusos-intro">
     <div class="cutscene-text">
@@ -965,7 +2202,7 @@
       <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-fusos-intro&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-fusos-intro" data-action="startFusos">
     <div class="cutscene-text">
@@ -973,7 +2210,7 @@
       <p class="cutscene-narration">Ela vivia de noite. Ele de dia. O encontro só cabia no fio fino entre os dois. Aprenderam a esperar.</p>
     </div>
     <p class="continue-hint" onclick="startFusos()">TOQUE PARA ESPERAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-fusos-game">
     <div class="fusos-container">
@@ -983,8 +2220,8 @@
         <div class="breath-text" id="breath-text">RESPIRE</div>
       </div>
       <p class="fusos-counter" id="fusos-counter">00:10</p>
-    </div>
-  </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-ruido-intro" data-action="startRuido">
     <div class="cutscene-text">
@@ -992,17 +2229,17 @@
       <p class="cutscene-narration">A comunicação falhou. As palavras chegavam quebradas. Foi preciso aprender a ouvir o que não estava sendo dito.</p>
     </div>
     <p class="continue-hint" onclick="startRuido()">TOQUE PARA DECIFRAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-ruido-game">
     <div class="instruction-overlay" id="morse-instruction-overlay">
       <p id="morse-instruction-text">Toque na tela seguindo o padrão de Bento.</p>
       <p class="hint-line">RÁPIDO = · &nbsp;&nbsp; SEGURADO = —</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
 
     <div class="morse-counter" id="morse-counter">1 / 3</div>
 
-    <div class="morse-pattern-floating" id="morse-pattern"></div>
+    <div class="morse-pattern-floating" id="morse-pattern"><span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
 
     <div class="morse-tap-hint" id="morse-tap-hint">
       <span>↓</span>
@@ -1012,7 +2249,7 @@
     <div class="morse-revealed-floating" id="morse-revealed"></div>
 
     <div class="morse-pulse-overlay" id="morse-pulse"></div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
     <div class="cutscene-text">
@@ -1020,13 +2257,13 @@
       <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado custou tudo o que tinham.</p>
     </div>
     <p class="continue-hint" onclick="startTravessia()">TOQUE PARA ATRAVESSAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-travessia-game">
     <div class="instruction-overlay" id="travessia-instruction-overlay">
       <p>Lia caminha enquanto você sustenta o gesto.</p>
       <p class="hint-line">MANTENHA O DEDO · NÃO SOLTE</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <p class="travessia-thought" id="travessia-thought"></p>
     <div class="travessia-progress-area">
       <p class="travessia-km" id="travessia-km">0 / 1.547 KM</p>
@@ -1035,7 +2272,7 @@
         <p class="travessia-touch-label">SEGURE AQUI</p>
       </div>
     </div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-convergencia" data-action="startEncontro">
     <div class="cutscene-text">
@@ -1043,27 +2280,27 @@
       <p class="cutscene-narration">Em algum ponto rural de Goiás, no fim de uma tarde dourada, dois caminhos finalmente se cruzaram no mesmo plano.</p>
     </div>
     <p class="continue-hint" onclick="startEncontro()">TOQUE PARA SE APROXIMAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-encontro-game">
     <div class="instruction-overlay" id="encontro-instruction-overlay">
       <p>Toque numa palavra e depois no espaço onde ela cabe.</p>
       <p class="hint-line">CADA FRASE PRECISA DE ESFORÇO</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="encontro-dialogue-area">
       <div class="encontro-line lia" id="line-1"></div>
       <div class="encontro-line bento" id="line-2"></div>
       <div class="encontro-line lia" id="line-3"></div>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="encontro-words-area" id="encontro-words"></div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-toque" data-next="scene-end">
     <div class="cutscene-text">
       <p class="cutscene-narration">A pulseira larga prateada dela. O relógio de couro dele. As duas mãos, finalmente, no mesmo lugar.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-end&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-end">
     <div class="end-content">
@@ -1071,10 +2308,76 @@
       <h2>Convergir</h2>
       <p>Para chegar até você, eu atravessei o fim do mundo.</p>
       <button class="start-button" onclick="restartGame()">JOGAR NOVAMENTE</button>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="easter-egg" id="easter-egg">
       <p>Algumas histórias atravessam mais que distância.</p>
-      <p class="signature">FM 88.7 · 2026</p>
+      <p class="signature"><span id="frequency-trigger" class="frequency-clickable">FM 88.7</span> · 2026</p>
+    </div>
+
+    <!-- Modal de créditos (oculto por padrão, revelado após 8 cliques no FM 88.7) -->
+    <div class="credits-modal" id="credits-modal">
+      <div class="credits-content">
+        <span class="credits-corner tl"></span>
+        <span class="credits-corner tr"></span>
+        <span class="credits-corner bl"></span>
+        <span class="credits-corner br"></span>
+
+        <button class="credits-close" id="credits-close" aria-label="Fechar">×</button>
+
+        <div class="credits-header">
+          <p class="credits-frequency">FM 88.7</p>
+          <h3 class="credits-title">Convergir</h3>
+          <p class="credits-subtitle">UM JOGO NARRATIVO</p>
+        </div>
+
+        <div class="credits-body">
+          <div class="credits-section">
+            <p class="credits-label">CONCEITO E DIREÇÃO</p>
+            <p class="credits-name">Jess</p>
+          </div>
+          <div class="credits-section">
+            <p class="credits-label">ROTEIRO</p>
+            <p class="credits-name">Jess</p>
+          </div>
+          <div class="credits-section">
+            <p class="credits-label">DESIGN VISUAL E DIAGRAMAÇÃO</p>
+            <p class="credits-name">Jess</p>
+          </div>
+          <div class="credits-section">
+            <p class="credits-label">DESIGN DE INTERAÇÃO</p>
+            <p class="credits-name">Jess</p>
+          </div>
+          <div class="credits-section">
+            <p class="credits-label">DIREÇÃO DE ARTE</p>
+            <p class="credits-name">Jess</p>
+          </div>
+          <div class="credits-section">
+            <p class="credits-label">TRILHA SONORA</p>
+            <p class="credits-name">Jess</p>
+          </div>
+
+          <div class="credits-divider"></div>
+
+          <div class="credits-section">
+            <p class="credits-label">FERRAMENTAS</p>
+            <p class="credits-name credits-tools">HTML · CSS · JavaScript<br>Web Audio API<br>Gemini Imagen · Claude</p>
+          </div>
+
+          <div class="credits-divider"></div>
+
+          <p class="credits-quote">
+            "Para chegar até você,<br>eu atravessei o fim do mundo."
+          </p>
+
+          <div class="credits-divider"></div>
+
+          <p class="credits-dedication">
+            Para Helena<br>e Marcus Vinícius.
+          </p>
+
+          <p class="credits-year">Uberlândia · 2026</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1093,317 +2396,434 @@ function debug(msg) {
 debug('script carregado');
 
 // ============================================================================
-// MOTOR DE ÁUDIO — versão simplificada com beep de teste
 // ============================================================================
+// MOTOR DE ÁUDIO — Trilha procedural cinematográfica (post-rock-ish ambient)
+// ============================================================================
+// Camadas: pads atmosféricos + piano esparso + bass + estática + reverb
+// 6 climas distintos por fase, com transições suaves
+// ============================================================================
+
 let audioCtx = null;
 let masterGain = null;
-let activeOscillators = [];
-let currentMood = null;
+let reverbNode = null;
 let isMuted = false;
+let activeNodes = [];
+let currentMood = null;
 
+// Estado de elementos contínuos
+let padState = null;
+let pianoTimer = null;
+let bassTimer = null;
+let staticState = null;
+
+// Inicialização do contexto e reverb
 function audioInit() {
   if (audioCtx) {
     if (audioCtx.state === 'suspended') {
-      audioCtx.resume().then(() => debug('audio resumed: ' + audioCtx.state));
+      // Retorna Promise que resolve quando contexto estiver running
+      return audioCtx.resume().then(() => true).catch(() => false);
     }
-    return true;
+    return Promise.resolve(true);
   }
   try {
     const Ctor = window.AudioContext || window.webkitAudioContext;
-    if (!Ctor) { debug('ERRO: Web Audio indisponivel'); return false; }
+    if (!Ctor) return Promise.resolve(false);
     audioCtx = new Ctor();
     masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.7;
+    masterGain.gain.value = 0.6;
+
+    // Reverb procedural via convolução com impulse response sintético
+    reverbNode = audioCtx.createConvolver();
+    reverbNode.buffer = createReverbImpulse(3.0, 2.5);  // 3 segundos, decay 2.5
+    const reverbGain = audioCtx.createGain();
+    reverbGain.gain.value = 0.4;  // mistura reverb 40%
+    reverbNode.connect(reverbGain);
+    reverbGain.connect(masterGain);
+
     masterGain.connect(audioCtx.destination);
-    debug('audio criado: ' + audioCtx.state + ', sr=' + audioCtx.sampleRate);
+
+    // Em iOS/mobile, contexto começa suspenso. Resume retorna Promise.
     if (audioCtx.state === 'suspended') {
-      audioCtx.resume().then(() => debug('resumed: ' + audioCtx.state));
+      return audioCtx.resume().then(() => true).catch(() => true);
     }
-    return true;
+    return Promise.resolve(true);
   } catch (e) {
-    debug('ERRO init: ' + e.message);
-    return false;
+    return Promise.resolve(false);
   }
 }
 
-function playTestBeep() {
-  if (!audioCtx) { debug('ERRO beep: ctx null'); return; }
-  try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = 440;
-    gain.gain.value = 0;
-    gain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.05);
-    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
-    osc.connect(gain);
-    gain.connect(masterGain);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.7);
-    debug('beep tocado');
-  } catch (e) {
-    debug('ERRO beep: ' + e.message);
+// Cria um impulse response artificial pra simular reverb de sala
+function createReverbImpulse(duration, decay) {
+  const sampleRate = audioCtx.sampleRate;
+  const length = sampleRate * duration;
+  const impulse = audioCtx.createBuffer(2, length, sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const channel = impulse.getChannelData(ch);
+    for (let i = 0; i < length; i++) {
+      channel[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+    }
   }
+  return impulse;
 }
 
-function stopAllOscillators() {
-  if (!audioCtx) return;
-  activeOscillators.forEach(o => {
-    try {
-      o.gain.gain.cancelScheduledValues(audioCtx.currentTime);
-      o.gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.2);
-      setTimeout(() => { try { o.osc.stop(); } catch(e){} }, 1400);
-    } catch(e){}
-  });
-  activeOscillators = [];
-}
-
-function playNote(freq, gainTarget, attack) {
-  if (!audioCtx || !masterGain) return null;
+// Toca uma "nota de piano" — envelope rápido + decay longo, com reverb
+function playPianoNote(freq, velocity = 0.4, duration = 4) {
+  if (!audioCtx || isMuted) return;
   try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    gain.gain.value = 0;
-    gain.gain.linearRampToValueAtTime(gainTarget, audioCtx.currentTime + (attack || 2));
-    osc.connect(gain);
-    gain.connect(masterGain);
-    osc.start();
-    activeOscillators.push({ osc, gain });
-    return { osc, gain };
-  } catch (e) {
-    debug('ERRO playNote: ' + e.message);
-    return null;
-  }
-}
-
-// ============================================================================
-// CAMADA MELÓDICA — toca notas curtas em cima dos drones
-// ============================================================================
-let melodyTimeout = null;
-let melodyEnabled = false;
-
-// Melodias por mood — frequências em Hz, escala de A menor
-// A3=220, B3=246.94, C4=261.63, D4=293.66, E4=329.63, F4=349.23, G4=392, A4=440
-const MELODIES = {
-  // Solitária, contemplativa
-  'title': [
-    { f: 440, d: 1.5, p: 3 },   // A4
-    { f: 329.63, d: 2, p: 4 },  // E4
-    { f: 293.66, d: 1.5, p: 3 },// D4
-    { f: 220, d: 3, p: 5 }      // A3
-  ],
-  'intro': [
-    { f: 440, d: 2, p: 4 },
-    { f: 392, d: 1.5, p: 3 },
-    { f: 329.63, d: 2.5, p: 4 },
-    { f: 293.66, d: 2, p: 5 }
-  ],
-  'characters': [
-    { f: 440, d: 1.2, p: 2.5 },
-    { f: 523.25, d: 1.8, p: 3 },
-    { f: 440, d: 1.5, p: 3 },
-    { f: 349.23, d: 2, p: 4 }
-  ],
-  // Dois temas alternando, dissonantes (Lia e Bento desafinados)
-  'gameplay-disconnected': [
-    { f: 440, d: 1, p: 3 },
-    { f: 466.16, d: 1, p: 3 },
-    { f: 415.30, d: 1.2, p: 4 }
-  ],
-  // Convergência harmônica
-  'gameplay-connected': [
-    { f: 440, d: 1.5, p: 2 },
-    { f: 523.25, d: 1.5, p: 2 },
-    { f: 659.25, d: 2, p: 3 }
-  ],
-  'connection': [
-    { f: 440, d: 1.8, p: 3 },
-    { f: 523.25, d: 1.5, p: 2.5 },
-    { f: 587.33, d: 1.8, p: 3 },
-    { f: 523.25, d: 2, p: 4 }
-  ],
-  // Lenta, espaçada, esperando
-  'fusos': [
-    { f: 329.63, d: 3, p: 6 },
-    { f: 293.66, d: 3.5, p: 6 },
-    { f: 220, d: 4, p: 7 }
-  ],
-  // Fragmentada, instável
-  'ruido': [
-    { f: 466.16, d: 0.8, p: 2 },
-    { f: 415.30, d: 1, p: 3 },
-    { f: 440, d: 0.6, p: 2 },
-    { f: 349.23, d: 1.5, p: 3 }
-  ],
-  // Caminho longo
-  'travessia': [
-    { f: 329.63, d: 2.5, p: 4 },
-    { f: 293.66, d: 2.5, p: 4 },
-    { f: 261.63, d: 3, p: 5 },
-    { f: 293.66, d: 2.5, p: 4 },
-    { f: 329.63, d: 3, p: 5 }
-  ],
-  // Resolução, encontro
-  'convergencia': [
-    { f: 440, d: 2, p: 3 },
-    { f: 554.37, d: 2, p: 3 },   // C#5
-    { f: 659.25, d: 2.5, p: 4 }
-  ],
-  'encontro': [
-    { f: 440, d: 1.8, p: 3 },
-    { f: 554.37, d: 1.8, p: 3 },
-    { f: 659.25, d: 2, p: 3 },
-    { f: 880, d: 2.5, p: 4 }
-  ],
-  'toque': [
-    { f: 440, d: 2.5, p: 4 },
-    { f: 329.63, d: 3, p: 5 }
-  ],
-  // Resolução final
-  'end': [
-    { f: 440, d: 2.5, p: 4 },
-    { f: 329.63, d: 2.5, p: 4 },
-    { f: 293.66, d: 3, p: 5 },
-    { f: 220, d: 4, p: 6 }
-  ]
-};
-
-function playMelodyNote(freq, duration) {
-  if (!audioCtx || !masterGain || isMuted) return;
-  try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'triangle';  // mais suave que sine, audível
-    osc.frequency.value = freq;
-
     const now = audioCtx.currentTime;
-    const attack = 0.3;
-    const release = duration * 0.7;
-    const peakGain = 0.18;  // baixinho, não atrapalha o drone
 
+    // Oscilador principal (triangle pra ter mais corpo que sine)
+    const osc = audioCtx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+
+    // Segundo oscilador uma oitava acima, mais sutil (cria timbre de piano)
+    const osc2 = audioCtx.createOscillator();
+    osc2.type = 'sine';
+    osc2.frequency.value = freq * 2;
+
+    const gain = audioCtx.createGain();
+    const gain2 = audioCtx.createGain();
+
+    // Envelope de piano: ataque rápido (10ms), decay exponencial longo
     gain.gain.value = 0;
-    gain.gain.linearRampToValueAtTime(peakGain, now + attack);
-    gain.gain.linearRampToValueAtTime(peakGain * 0.7, now + duration - release);
-    gain.gain.linearRampToValueAtTime(0, now + duration);
+    gain.gain.linearRampToValueAtTime(velocity, now + 0.01);
+    gain.gain.exponentialRampToValueAtTime(velocity * 0.3, now + 0.5);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
-    // Filtro lowpass pra suavizar harmônicos
+    gain2.gain.value = 0;
+    gain2.gain.linearRampToValueAtTime(velocity * 0.25, now + 0.01);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + duration * 0.6);
+
+    // Filtro low-pass que abre rapidamente (mimicking hammer)
     const filter = audioCtx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.value = 2000;
-    filter.Q.value = 1;
+    filter.frequency.value = 800;
+    filter.frequency.linearRampToValueAtTime(3000, now + 0.05);
+    filter.frequency.exponentialRampToValueAtTime(800, now + duration);
+    filter.Q.value = 0.7;
+
+    osc.connect(filter);
+    osc2.connect(gain2);
+    filter.connect(gain);
+
+    // Mistura dry + reverb
+    gain.connect(masterGain);
+    gain2.connect(masterGain);
+    if (reverbNode) {
+      gain.connect(reverbNode);
+      gain2.connect(reverbNode);
+    }
+
+    osc.start(now);
+    osc.stop(now + duration + 0.1);
+    osc2.start(now);
+    osc2.stop(now + duration + 0.1);
+  } catch (e) {}
+}
+
+// Pad atmosférico contínuo — 3 camadas com filter sweep
+function startPad(rootFreq, intervals, gainTarget, attackTime) {
+  if (!audioCtx) return null;
+  const oscillators = [];
+  const filters = [];
+  const gains = [];
+
+  intervals.forEach((interval, i) => {
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sawtooth';  // sawtooth tem mais harmônicos pra filtrar
+    osc.frequency.value = rootFreq * interval;
+
+    // LFO para detune sutil (movimento orgânico)
+    const lfo = audioCtx.createOscillator();
+    const lfoGain = audioCtx.createGain();
+    lfo.frequency.value = 0.08 + Math.random() * 0.12;
+    lfoGain.gain.value = 1.5;
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.detune);
+    lfo.start();
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 200;
+    filter.Q.value = 1.5;
+
+    const gain = audioCtx.createGain();
+    const target = gainTarget * (1 / (i + 1.5));  // camadas mais altas mais baixas
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(target, audioCtx.currentTime + attackTime);
 
     osc.connect(filter);
     filter.connect(gain);
     gain.connect(masterGain);
-    osc.start(now);
-    osc.stop(now + duration + 0.1);
-  } catch (e) {
-    debug('ERRO melody: ' + e.message);
-  }
+    if (reverbNode) gain.connect(reverbNode);
+
+    osc.start();
+    oscillators.push(osc);
+    filters.push(filter);
+    gains.push(gain);
+
+    // Filter sweep lento (movimento)
+    const sweepLfo = audioCtx.createOscillator();
+    const sweepGain = audioCtx.createGain();
+    sweepLfo.frequency.value = 0.04 + Math.random() * 0.05;
+    sweepGain.gain.value = 300;
+    sweepLfo.connect(sweepGain);
+    sweepGain.connect(filter.frequency);
+    sweepLfo.start();
+    oscillators.push(sweepLfo);
+    oscillators.push(lfo);
+  });
+
+  return { oscillators, filters, gains };
 }
 
-function startMelodyLoop(mood) {
-  // Cancela loop anterior
-  if (melodyTimeout) { clearTimeout(melodyTimeout); melodyTimeout = null; }
-  melodyEnabled = true;
-
-  const melody = MELODIES[mood];
-  if (!melody) return;
-
-  let noteIndex = 0;
-
-  function playNext() {
-    if (!melodyEnabled || currentMood !== mood) return;
-    const note = melody[noteIndex];
-    playMelodyNote(note.f, note.d);
-    // Próxima nota depois de pause + duration
-    const totalWait = (note.d + note.p) * 1000;
-    noteIndex = (noteIndex + 1) % melody.length;
-    melodyTimeout = setTimeout(playNext, totalWait);
-  }
-
-  // Começa com pequeno delay aleatório
-  melodyTimeout = setTimeout(playNext, 1500 + Math.random() * 1500);
-}
-
-function stopMelodyLoop() {
-  melodyEnabled = false;
-  if (melodyTimeout) { clearTimeout(melodyTimeout); melodyTimeout = null; }
-}
-
-function setMood(mood) {
-  if (!audioCtx) { debug('setMood ignorado'); return; }
-  if (currentMood === mood) return;
-  debug('mood: ' + mood);
-  currentMood = mood;
-  stopAllOscillators();
-  stopMelodyLoop();
+function stopPad(pad, releaseTime) {
+  if (!pad || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  pad.gains.forEach(g => {
+    g.gain.cancelScheduledValues(now);
+    g.gain.linearRampToValueAtTime(0, now + releaseTime);
+  });
   setTimeout(() => {
+    pad.oscillators.forEach(o => { try { o.stop(); } catch(e){} });
+  }, releaseTime * 1000 + 100);
+}
+
+// Pulso de bass (notas graves repetidas em ritmo)
+function startBassPulse(freq, intervalMs, gainTarget) {
+  if (!audioCtx) return null;
+  function pulse() {
+    if (!audioCtx || isMuted) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(gainTarget, now + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start(now);
+    osc.stop(now + 1.3);
+  }
+  pulse();
+  return setInterval(pulse, intervalMs);
+}
+
+// Estática de rádio (ruído branco filtrado, com modulação lenta)
+function startStatic(gainTarget) {
+  if (!audioCtx) return null;
+  const bufferSize = audioCtx.sampleRate * 2;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = 1200;
+  filter.Q.value = 0.6;
+
+  // LFO modulando o filtro (rádio "chiando" instável)
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.frequency.value = 0.3;
+  lfoGain.gain.value = 600;
+  lfo.connect(lfoGain);
+  lfoGain.connect(filter.frequency);
+  lfo.start();
+
+  const gain = audioCtx.createGain();
+  gain.gain.value = 0;
+  gain.gain.linearRampToValueAtTime(gainTarget, audioCtx.currentTime + 2);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  source.start();
+
+  return { source, filter, gain, lfo };
+}
+
+function stopStatic(s, releaseTime) {
+  if (!s || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  s.gain.gain.cancelScheduledValues(now);
+  s.gain.gain.linearRampToValueAtTime(0, now + releaseTime);
+  setTimeout(() => {
+    try { s.source.stop(); s.lfo.stop(); } catch(e){}
+  }, releaseTime * 1000 + 100);
+}
+
+// Sequência de piano que toca em loop (notas esparsas)
+function startPianoSequence(notes, intervalMs, velocity = 0.35) {
+  if (!audioCtx) return null;
+  let i = 0;
+  function next() {
+    if (!audioCtx || isMuted) return;
+    const note = notes[i];
+    playPianoNote(note, velocity, 4.5);
+    i = (i + 1) % notes.length;
+  }
+  next();  // toca primeira nota imediatamente
+  return setInterval(next, intervalMs);
+}
+
+// Limpa tudo
+function stopAllAudio(releaseTime = 2) {
+  if (padState) { stopPad(padState, releaseTime); padState = null; }
+  if (pianoTimer) { clearInterval(pianoTimer); pianoTimer = null; }
+  if (bassTimer) { clearInterval(bassTimer); bassTimer = null; }
+  if (staticState) { stopStatic(staticState, releaseTime); staticState = null; }
+}
+
+// Frequências de notas (em Hz)
+const NOTES = {
+  // Lá menor (Am)
+  A2: 110.00, C3: 130.81, E3: 164.81, A3: 220.00, C4: 261.63, E4: 329.63, A4: 440.00,
+  // Outras
+  D3: 146.83, F3: 174.61, G3: 196.00, B3: 246.94, D4: 293.66, F4: 349.23, G4: 392.00, B4: 493.88,
+  D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.00,
+  // Subs
+  E2: 82.41, F2: 87.31, G2: 98.00, D2: 73.42
+};
+
+// Define o clima sonoro de cada cena
+function setMood(mood) {
+  if (!audioCtx) return;
+  // Se contexto está suspenso, tenta retomar antes
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume().then(() => setMood(mood)).catch(() => {});
+    return;
+  }
+  if (currentMood === mood) return;
+  currentMood = mood;
+
+  // Para tudo com fade
+  stopAllAudio(2.5);
+
+  // Aguarda fade out parcial antes de iniciar nova mood
+  setTimeout(() => {
+    if (currentMood !== mood) return;
+
     switch (mood) {
+
+      // INTRO / ISOLAMENTO — solitário, estático, silencioso
       case 'title':
       case 'intro':
-        playNote(110, 0.4, 3);
-        playNote(165, 0.2, 4);
+        // Pad muito sutil em Am (lá menor) sem terça (sensação de vazio)
+        padState = startPad(NOTES.A2, [1, 2.5], 0.18, 5);
+        // Piano muito esparso, notas isoladas em Am
+        pianoTimer = startPianoSequence([NOTES.A3, NOTES.E4, NOTES.A4], 7000, 0.22);
+        // Estática muito baixa de fundo
+        staticState = startStatic(0.04);
         break;
+
+      // PERSONAGENS — apresentação, mais quente
       case 'characters':
-        playNote(110, 0.35, 3);
-        playNote(165, 0.25, 3);
-        playNote(220, 0.15, 4);
+        padState = startPad(NOTES.A2, [1, 1.5, 2], 0.22, 4);
+        pianoTimer = startPianoSequence([NOTES.A3, NOTES.C4, NOTES.E4, NOTES.A4], 5500, 0.28);
+        staticState = startStatic(0.025);
         break;
+
+      // SINTONIZAÇÃO DESCONECTADA — esperança tímida, dois sinais procurando
       case 'gameplay-disconnected':
-        playNote(110, 0.3, 3);
-        playNote(123.47, 0.3, 3);
+        // Pad com dissonância sutil (dois acordes próximos)
+        padState = startPad(NOTES.A2, [1, 1.06, 1.5], 0.2, 3);  // 1.06 = dissonância sutil
+        // Piano em ritmo "procurando", notas que sobem e descem
+        pianoTimer = startPianoSequence([NOTES.E4, NOTES.A3, NOTES.D4, NOTES.G3], 3500, 0.28);
+        // Estática mais alta (sinal procurando)
+        staticState = startStatic(0.12);
         break;
+
+      // SINTONIZAÇÃO CONECTADA — convergência, encontro dos sinais
       case 'gameplay-connected':
       case 'connection':
       case 'map':
-        playNote(110, 0.35, 2);
-        playNote(165, 0.3, 2);
-        playNote(220, 0.2, 3);
+        // Pad limpo, harmônico, em Am (resolvido)
+        padState = startPad(NOTES.A2, [1, 1.5, 2, 3], 0.28, 2);
+        // Piano em arpejo ascendente — Am suave
+        pianoTimer = startPianoSequence([NOTES.A3, NOTES.C4, NOTES.E4, NOTES.A4, NOTES.E4, NOTES.C4], 2800, 0.32);
+        // Estática diminui drasticamente
+        staticState = startStatic(0.02);
         break;
+
+      // OS FUSOS — paciente, terno, levemente melancólico
       case 'fusos':
-        playNote(110, 0.3, 3);
-        playNote(82.5, 0.2, 4);
+        // Pad em Fmaj7 — calmo, doce
+        padState = startPad(NOTES.F2, [1, 1.25, 1.5, 1.875], 0.24, 5);
+        // Piano em ritmo de respiração lenta (em sintonia com os 4s da animação)
+        pianoTimer = startPianoSequence([NOTES.F3, NOTES.A3, NOTES.C4, NOTES.A3], 4000, 0.3);
         break;
+
+      // RUÍDO/MORSE — tensão, comunicação imperfeita
       case 'ruido':
-        playNote(110, 0.3, 3);
-        playNote(116, 0.2, 3);
-        playNote(165, 0.18, 4);
+        // Pad em Dm (lá menor com tensão)
+        padState = startPad(NOTES.D2, [1, 1.2, 1.5, 1.78], 0.2, 4);
+        pianoTimer = startPianoSequence([NOTES.D3, NOTES.F3, NOTES.A3, NOTES.D4], 3200, 0.28);
+        // Estática um pouco mais presente (tema de comunicação)
+        staticState = startStatic(0.08);
+        // Pulso de bass mais lento (suspense)
+        bassTimer = startBassPulse(NOTES.D2, 4500, 0.18);
         break;
+
+      // A TRAVESSIA — determinada, tensa, emocionalmente intensa
       case 'travessia':
-        playNote(110, 0.35, 4);
-        playNote(82.5, 0.25, 5);
+        // Pad em Am com 9 (tensão emocional)
+        padState = startPad(NOTES.A2, [1, 1.125, 1.5, 2.25], 0.32, 3);
+        // Piano em ritmo cardíaco (corrente de pensamento)
+        pianoTimer = startPianoSequence([
+          NOTES.A3, NOTES.C4, NOTES.E4, NOTES.G4,
+          NOTES.E4, NOTES.C4, NOTES.A3, NOTES.G3
+        ], 1800, 0.34);
+        // Bass profundo pulsando (passos)
+        bassTimer = startBassPulse(NOTES.A2, 1600, 0.25);
         break;
+
+      // A CONVERGÊNCIA — alívio emocional, chegada, calor
       case 'convergencia':
       case 'encontro':
-        playNote(110, 0.35, 3);
-        playNote(138.59, 0.25, 3);
-        playNote(165, 0.25, 3);
-        playNote(220, 0.18, 4);
+        // Pad em A maior (resolução brilhante)
+        padState = startPad(NOTES.A2, [1, 1.25, 1.5, 2, 3], 0.34, 4);
+        // Piano em arpejo amplo, ascendente
+        pianoTimer = startPianoSequence([
+          NOTES.A3, NOTES.C4, NOTES.E4, NOTES.A4,
+          NOTES.E5, NOTES.A4, NOTES.E4, NOTES.C4
+        ], 2400, 0.36);
         break;
+
+      // O TOQUE — íntimo
       case 'toque':
+        padState = startPad(NOTES.A2, [1, 1.5, 2], 0.26, 5);
+        pianoTimer = startPianoSequence([NOTES.A3, NOTES.E4, NOTES.A4], 5000, 0.3);
+        break;
+
+      // FIM — silêncio após o encontro, dissolução
       case 'end':
-        playNote(110, 0.3, 4);
-        playNote(165, 0.22, 5);
-        playNote(220, 0.15, 6);
+        // Pad muito sutil, dissolvendo
+        padState = startPad(NOTES.A2, [1, 1.5], 0.15, 6);
+        // Piano muito raro — uma nota a cada 8 segundos
+        pianoTimer = startPianoSequence([NOTES.A3, NOTES.E4, NOTES.A4], 8000, 0.2);
+        // Estática volta sutilmente (amarrando o tema)
+        staticState = startStatic(0.05);
         break;
     }
-    // Inicia melodia da cena
-    startMelodyLoop(mood);
-  }, 1400);
+  }, 1800);
 }
 
 function toggleMute() {
   if (!audioCtx) return false;
   isMuted = !isMuted;
-  masterGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.7, audioCtx.currentTime + 0.4);
-  debug('muted: ' + isMuted);
+  masterGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.6, audioCtx.currentTime + 0.4);
   return isMuted;
 }
 
-// API simulando o objeto antigo pra não quebrar o resto do código
+// API pública
 const AudioEngine = {
   init: audioInit,
   setMood: setMood,
@@ -1413,82 +2833,6 @@ const AudioEngine = {
 };
 
 // ============================================================================
-// MÚSICA DE FUNDO CONTÍNUA (camada melódica baixa, em loop)
-// ============================================================================
-let bgMusicGain = null;
-let bgMusicOscillators = [];
-let bgMusicInterval = null;
-
-// Progressão harmônica em Lá menor (melancólica): Am -> F -> C -> G
-// Frequências dos baixos das notas
-const BG_PROGRESSION = [
-  { root: 110, third: 130.81, fifth: 164.81 },    // Am (A C E)
-  { root: 87.31, third: 110, fifth: 130.81 },      // F (F A C) - quinta é C
-  { root: 130.81, third: 164.81, fifth: 196 },     // C (C E G)
-  { root: 98, third: 123.47, fifth: 146.83 }       // G (G B D)
-];
-
-let bgChordIndex = 0;
-
-function startBackgroundMusic() {
-  if (!audioCtx || bgMusicGain) return;
-  bgMusicGain = audioCtx.createGain();
-  bgMusicGain.gain.value = 0;
-  bgMusicGain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 4);
-  bgMusicGain.connect(masterGain);
-  
-  playBgChord();
-  // Troca de acorde a cada 8 segundos
-  bgMusicInterval = setInterval(playBgChord, 8000);
-  debug('bg music iniciada');
-}
-
-function playBgChord() {
-  if (!audioCtx || !bgMusicGain) return;
-  const chord = BG_PROGRESSION[bgChordIndex];
-  bgChordIndex = (bgChordIndex + 1) % BG_PROGRESSION.length;
-  
-  // Apaga acorde anterior
-  bgMusicOscillators.forEach(o => {
-    try {
-      o.gain.gain.cancelScheduledValues(audioCtx.currentTime);
-      o.gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 4);
-      setTimeout(() => { try { o.osc.stop(); } catch(e){} }, 4500);
-    } catch(e){}
-  });
-  bgMusicOscillators = [];
-  
-  // Toca o novo acorde com fade in suave
-  [chord.root, chord.third, chord.fifth].forEach((freq, idx) => {
-    try {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      const filter = audioCtx.createBiquadFilter();
-      
-      osc.type = 'triangle';
-      osc.frequency.value = freq;
-      
-      filter.type = 'lowpass';
-      filter.frequency.value = 600;
-      filter.Q.value = 0.5;
-      
-      // Volume bem baixo, decrescente para notas mais agudas
-      const targetGain = idx === 0 ? 0.3 : (idx === 1 ? 0.18 : 0.12);
-      gain.gain.value = 0;
-      gain.gain.linearRampToValueAtTime(targetGain, audioCtx.currentTime + 3);
-      gain.gain.linearRampToValueAtTime(targetGain * 0.7, audioCtx.currentTime + 7);
-      
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(bgMusicGain);
-      osc.start();
-      bgMusicOscillators.push({ osc, gain });
-    } catch (e) {
-      debug('ERRO bg chord: ' + e.message);
-    }
-  });
-}
-
 // ============================================================================
 // INICIALIZAÇÃO NA PRIMEIRA INTERAÇÃO
 // ============================================================================
@@ -1497,12 +2841,29 @@ function startAudioOnInteraction(e) {
   if (audioInitialized) return;
   audioInitialized = true;
   debug('toque: ' + (e ? e.type : '?'));
-  const ok = audioInit();
-  debug('init: ' + ok);
-  setTimeout(() => {
-    setMood('title');
-    startBackgroundMusic();
-  }, 500);
+  // audioInit agora retorna Promise (importante pra iOS)
+  Promise.resolve(audioInit()).then(ok => {
+    debug('init: ' + ok);
+    if (ok && audioCtx && audioCtx.state === 'running') {
+      // Contexto realmente ativo — inicia mood baseado na cena atual
+      const sceneId = currentSceneId || 'scene-title';
+      const mood = SCENE_MOODS[sceneId] || 'title';
+      setMood(mood);
+    } else {
+      // Tentativa de fallback: pequena pausa e tenta de novo
+      setTimeout(() => {
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().then(() => {
+            const sceneId = currentSceneId || 'scene-title';
+            setMood(SCENE_MOODS[sceneId] || 'title');
+          });
+        } else if (audioCtx) {
+          const sceneId = currentSceneId || 'scene-title';
+          setMood(SCENE_MOODS[sceneId] || 'title');
+        }
+      }, 300);
+    }
+  });
 
   // Solicita fullscreen no mobile (apenas)
   if (window.innerWidth <= 768) {
@@ -1528,6 +2889,128 @@ function requestFullscreen() {
 document.addEventListener('click', startAudioOnInteraction);
 document.addEventListener('touchstart', startAudioOnInteraction);
 document.addEventListener('keydown', startAudioOnInteraction);
+
+// Injeta linha decorativa em todas as cenas com imagem (mobile portrait)
+// Apenas decorativo, faz parte da estética cinematográfica
+(function injectSceneDividers() {
+  const scenesWithImage = [
+    'scene-intro-lia', 'scene-intro-bento', 'scene-connection', 'scene-map',
+    'scene-fusos-intro', 'scene-fusos-game',
+    'scene-ruido-intro', 'scene-ruido-game',
+    'scene-travessia-intro', 'scene-travessia-game',
+    'scene-convergencia', 'scene-encontro-game',
+    'scene-toque'
+  ];
+  scenesWithImage.forEach(id => {
+    const scene = document.getElementById(id);
+    if (!scene) return;
+    if (scene.querySelector('.scene-divider-line')) return;  // já tem
+    const divider = document.createElement('div');
+    divider.className = 'scene-divider-line';
+    divider.innerHTML = '<span class="ornament">◇</span>';
+    scene.appendChild(divider);
+  });
+})();
+
+// Injeta ornamentos de canto (HUD style) em painéis principais
+(function injectHudCorners() {
+  const targets = [
+    '#tutorial',
+    '.morse-pattern-floating',
+    '.encontro-dialogue-area',
+    '.fusos-container',
+    '.character-card',
+    '.end-content',
+    '.instruction-overlay'
+  ];
+  targets.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      if (el.querySelector('.game-corner')) return;
+      ['tl', 'tr', 'bl', 'br'].forEach(pos => {
+        const corner = document.createElement('span');
+        corner.className = 'game-corner ' + pos;
+        el.appendChild(corner);
+      });
+    });
+  });
+})();
+
+// ============================================================================
+// EASTER EGG: Créditos
+// 8 cliques no "FM 88.7" da tela final → revela modal com créditos
+// ============================================================================
+(function setupCreditsEasterEgg() {
+  const trigger = document.getElementById('frequency-trigger');
+  const modal = document.getElementById('credits-modal');
+  const closeBtn = document.getElementById('credits-close');
+
+  if (!trigger || !modal) return;
+
+  let clickCount = 0;
+  let resetTimer = null;
+  const REQUIRED_CLICKS = 8;
+  const RESET_TIMEOUT_MS = 3000;  // se demorar 3s entre cliques, zera
+
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    clickCount++;
+
+    // Pulse visual em cada clique (feedback discreto)
+    trigger.classList.remove('pulse');
+    void trigger.offsetWidth;  // força reflow pra reanimar
+    trigger.classList.add('pulse');
+
+    // Reseta timer de reset
+    if (resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { clickCount = 0; }, RESET_TIMEOUT_MS);
+
+    // Nos últimos cliques, dá um toque sonoro suave (se áudio ativo)
+    if (clickCount >= REQUIRED_CLICKS - 2 && clickCount < REQUIRED_CLICKS) {
+      if (typeof playPianoNote === 'function') {
+        try {
+          playPianoNote(440 + (clickCount - REQUIRED_CLICKS + 2) * 80, 0.18, 1.5);
+        } catch(_) {}
+      }
+    }
+
+    if (clickCount >= REQUIRED_CLICKS) {
+      clickCount = 0;
+      if (resetTimer) clearTimeout(resetTimer);
+
+      // Abre modal de créditos
+      modal.classList.add('open');
+
+      // Toque sonoro de "achou" se áudio ativo
+      if (typeof playPianoNote === 'function') {
+        try {
+          playPianoNote(523.25, 0.3, 4);  // C5
+          setTimeout(() => playPianoNote(659.25, 0.3, 4), 180);  // E5
+          setTimeout(() => playPianoNote(783.99, 0.35, 5), 380); // G5
+        } catch(_) {}
+      }
+    }
+  });
+
+  // Fechar modal pelo botão
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    modal.classList.remove('open');
+  });
+
+  // Fechar modal pelo backdrop (clicando fora do conteúdo)
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.classList.remove('open');
+    }
+  });
+
+  // Tecla ESC fecha
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      modal.classList.remove('open');
+    }
+  });
+})();
 
 // Botão de mute
 document.getElementById('audio-toggle').addEventListener('click', function(e) {
@@ -1582,20 +3065,27 @@ function goToScene(sceneId) {
     debug('goToScene IGNORADO: ' + sceneId + ' (transit=' + isTransitioning + ', curr=' + currentSceneId + ')');
     return;
   }
-  debug('goToScene: ' + sceneId);
+  debug('goToScene START: ' + sceneId);
   isTransitioning = true;
   currentSceneId = sceneId;
 
   document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
   setTimeout(() => {
-    document.getElementById(sceneId).classList.add('active');
+    const target = document.getElementById(sceneId);
+    if (!target) {
+      debug('ERRO: cena nao existe: ' + sceneId);
+      isTransitioning = false;
+      return;
+    }
+    target.classList.add('active');
+    debug('goToScene OK: ' + sceneId);
 
     // Reseta visibilidade de overlays de instrução
     document.querySelectorAll('.instruction-overlay').forEach(o => {
       o.classList.remove('hidden');
     });
-    // Auto-esconde overlay da cena ativa após 5 segundos
-    const activeOverlay = document.getElementById(sceneId).querySelector('.instruction-overlay');
+    // Auto-esconde overlay da cena ativa após 8 segundos
+    const activeOverlay = target.querySelector('.instruction-overlay');
     if (activeOverlay) {
       setTimeout(() => activeOverlay.classList.add('hidden'), 8000);
     }
