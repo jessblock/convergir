@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_41.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_43.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -58,7 +58,7 @@
   #scene-characters { padding: 32px 20px; justify-content: center; }
   .characters-header { text-align: center; margin-bottom: 24px; }
   .characters-container { display: flex; gap: 16px; align-items: stretch; justify-content: center; width: 100%; max-width: 900px; }
-  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.55); padding: 14px 12px 16px; backdrop-filter: blur(4px); display: flex; flex-direction: column; align-items: center; min-width: 0; border: 0.5px solid rgba(244, 232, 216, 0.08); position: relative; overflow: hidden; }
+  .character-card { flex: 1; text-align: center; background: linear-gradient(180deg, rgba(15, 20, 25, 0.7) 0%, rgba(15, 20, 25, 0.5) 100%); padding: 14px 12px 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; min-width: 0; border: 0.5px solid rgba(244, 232, 216, 0.15); position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(244, 232, 216, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.4), 0 6px 24px rgba(0, 0, 0, 0.5); }
   .character-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; opacity: 0.6; }
   .character-card:nth-child(1)::before { background: linear-gradient(180deg, transparent 0%, #5C1A2B 30%, #5C1A2B 70%, transparent 100%); }
   .character-card:nth-child(2)::before { background: linear-gradient(180deg, transparent 0%, #1A2B4C 30%, #1A2B4C 70%, transparent 100%); }
@@ -72,8 +72,19 @@
   /* FASE 1: SINTONIA */
   #scene-gameplay { flex-direction: row; padding: 0; }
   .side { flex: 1; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px; background-size: cover; background-position: center; min-width: 0; }
-  .side-lia { background-image: linear-gradient(180deg, rgba(92, 26, 43, 0.78) 0%, rgba(61, 31, 76, 0.9) 100%), url('assets/lia-night.png'); }
-  .side-bento { background-image: linear-gradient(180deg, rgba(26, 43, 76, 0.78) 0%, rgba(42, 74, 61, 0.9) 100%), url('assets/bento-dawn.png'); }
+  /* Imagens da Fase 1 dessaturadas + tom unificado pra combinar com paleta sóbria do jogo */
+  .side-lia {
+    background-image:
+      linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+      url('assets/lia-night.png');
+    filter: saturate(0.55) contrast(1.05) brightness(0.85);
+  }
+  .side-bento {
+    background-image:
+      linear-gradient(180deg, rgba(15, 20, 25, 0.45) 0%, rgba(15, 20, 25, 0.85) 100%),
+      url('assets/bento-dawn.png');
+    filter: saturate(0.55) contrast(1.05) brightness(0.85);
+  }
   .side-divider { width: 1px; height: 100%; background: rgba(244, 232, 216, 0.25); z-index: 3; }
   .character-label { font-size: clamp(9px, 2.4vw, 11px); letter-spacing: 0.4em; opacity: 0.85; margin-bottom: 4px; }
   .character-name { font-family: Georgia, serif; font-size: clamp(18px, 4.8vw, 24px); margin-bottom: 4px; }
@@ -233,7 +244,7 @@
   .morse-tap-hint {
     margin-top: 16px;
     text-align: center;
-    font-size: clamp(10px, 2.4vw, 11px);
+    font-size: clamp(11px, 2.8vw, 12px);
     letter-spacing: 0.3em;
     opacity: 0.55;
     z-index: 20;
@@ -244,7 +255,7 @@
     animation: tapHintPulse 2.4s ease-in-out infinite;
   }
   .morse-tap-hint span:first-child {
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: 0;
     opacity: 0.7;
   }
@@ -426,28 +437,439 @@
   /* BOTÃO DE ÁUDIO */
   .audio-toggle {
     position: fixed;
-    top: 16px;
+    bottom: 16px;
     right: 16px;
-    width: 40px;
-    height: 40px;
+    top: auto;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(15, 20, 25, 0.6);
-    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
     color: #F4E8D8;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition: all 0.3s ease;
-    opacity: 0.7;
+    opacity: 0.5;
     font-size: 16px;
     padding: 0;
   }
-  .audio-toggle:hover, .audio-toggle:active { opacity: 1; background: rgba(244, 232, 216, 0.15); }
-  .audio-toggle svg { width: 18px; height: 18px; }
+  .audio-toggle:hover, .audio-toggle:active { opacity: 0.9; background: rgba(244, 232, 216, 0.18); }
+  .audio-toggle svg { width: 16px; height: 16px; }
+
+  /* Em mobile portrait, deixa o botão ainda mais discreto e fora do caminho */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .audio-toggle {
+      width: 32px;
+      height: 32px;
+      bottom: 12px;
+      right: 12px;
+      opacity: 0.4;
+    }
+    .audio-toggle svg { width: 14px; height: 14px; }
+  }
+
+  /* ===================================================================
+     GAME UI — sistema de painéis e elementos com peso de jogo
+     =================================================================== */
+
+  /* Frame com cantos chanfrados (HUD style) */
+  .game-frame {
+    position: relative;
+    background: rgba(15, 20, 25, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(244, 232, 216, 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.05),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+      0 4px 20px rgba(0, 0, 0, 0.5);
+    clip-path: polygon(
+      0 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  /* Ornamentos nos cantos do frame */
+  .game-corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 0.7px solid rgba(244, 232, 216, 0.65);
+    pointer-events: none;
+  }
+  .game-corner.tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+  .game-corner.tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+  .game-corner.bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+  .game-corner.br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+  /* Botão estilizado de jogo */
+  .game-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.08) 0%, rgba(15, 20, 25, 0.6) 100%);
+    border: 0.7px solid rgba(244, 232, 216, 0.6);
+    color: #F4E8D8;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .game-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(244, 232, 216, 0.15), transparent);
+    transition: left 0.6s ease;
+  }
+  .game-button:hover::before, .game-button:active::before {
+    left: 100%;
+  }
+  .game-button:hover, .game-button:active {
+    border-color: rgba(244, 232, 216, 0.9);
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.15) 0%, rgba(15, 20, 25, 0.6) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.2),
+      0 0 16px rgba(244, 232, 216, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+  }
+
+  /* Etiqueta de status (pequena tag tipo HUD) */
+  .game-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #F4E8D8;
+    opacity: 0.85;
+  }
+  .game-tag::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(244, 232, 216, 0.7);
+    box-shadow: 0 0 6px rgba(244, 232, 216, 0.6);
+    animation: tagPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes tagPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Barra de progresso estilo HUD */
+  .game-progress {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    overflow: hidden;
+  }
+  .game-progress::before {
+    content: '';
+    position: absolute;
+    top: 1px; left: 1px; right: 1px; bottom: 1px;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 4px,
+        rgba(244, 232, 216, 0.04) 4px,
+        rgba(244, 232, 216, 0.04) 5px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .game-progress .game-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg,
+      rgba(244, 232, 216, 0.6) 0%,
+      rgba(244, 232, 216, 0.85) 100%);
+    box-shadow: 0 0 10px rgba(244, 232, 216, 0.5);
+    transition: width 0.4s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Marcadores em forma de hash no início e fim de barras */
+  .game-hash-mark {
+    color: rgba(244, 232, 216, 0.3);
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  /* Aplicação automática nos elementos de gameplay */
+
+  /* Tutorial da Fase 1 com peso de jogo */
+  #tutorial {
+    background: rgba(15, 20, 25, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.7);
+    clip-path: polygon(
+      0 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  /* Frequency display com peso */
+  .frequency-display {
+    background: rgba(15, 20, 25, 0.6);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    padding: 4px 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 0 12px rgba(244, 232, 216, 0.1);
+  }
+
+  /* Signal strength com hash marks */
+  .signal-strength {
+    background: rgba(15, 20, 25, 0.7);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+  }
+  .signal-strength::before, .signal-strength::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 1px;
+    background: rgba(244, 232, 216, 0.4);
+  }
+  .signal-strength::before { left: -6px; }
+  .signal-strength::after { right: -6px; }
+
+  /* Radio dial mais elaborado */
+  .radio-dial {
+    background:
+      radial-gradient(circle at center, rgba(15, 20, 25, 0.3) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    box-shadow:
+      inset 0 0 24px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  .radio-dial::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border-radius: 50%;
+    border: 0.5px dashed rgba(244, 232, 216, 0.2);
+    pointer-events: none;
+  }
+  .radio-dial::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(244, 232, 216, 0.6);
+    box-shadow: 0 0 8px rgba(244, 232, 216, 0.5);
+    pointer-events: none;
+  }
+
+  /* Encontro: dialogue area com peso de jogo */
+  .encontro-dialogue-area {
+    background: rgba(15, 20, 25, 0.85) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .encontro-words-area {
+    background: rgba(15, 20, 25, 0.5);
+    border: 0.5px dashed rgba(244, 232, 216, 0.2);
+  }
+
+  /* Duo-word com peso de jogo */
+  .duo-word {
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.1) 0%, rgba(15, 20, 25, 0.6) 100%) !important;
+    border: 0.7px solid rgba(244, 232, 216, 0.5) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.25s ease;
+  }
+  .duo-word:hover, .duo-word:active {
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.2) 0%, rgba(15, 20, 25, 0.6) 100%) !important;
+    border-color: rgba(244, 232, 216, 0.85) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.2),
+      0 0 12px rgba(244, 232, 216, 0.2),
+      0 4px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* Morse pattern com peso */
+  .morse-pattern-floating {
+    background: rgba(15, 20, 25, 0.85) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Morse counter como HUD tag */
+  .morse-counter {
+    background: rgba(15, 20, 25, 0.85) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.4);
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.3em;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Travessia progress: peso de barra de jogo */
+  .travessia-progress {
+    background: rgba(15, 20, 25, 0.8) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.4);
+    height: 5px !important;
+    position: relative;
+  }
+  .travessia-progress::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 8px,
+        rgba(244, 232, 216, 0.04) 8px,
+        rgba(244, 232, 216, 0.04) 9px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .travessia-progress .travessia-bar {
+    box-shadow: 0 0 10px rgba(244, 232, 216, 0.5);
+  }
+
+  /* Travessia touch zone com peso */
+  .travessia-touch-zone {
+    background: linear-gradient(180deg, rgba(15, 20, 25, 0.4) 0%, rgba(15, 20, 25, 0.8) 100%) !important;
+    border: 0.5px dashed rgba(244, 232, 216, 0.35);
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+  .travessia-touch-zone.active {
+    border-style: solid;
+    border-color: rgba(244, 232, 216, 0.8);
+    box-shadow:
+      inset 0 0 24px rgba(244, 232, 216, 0.1),
+      0 0 16px rgba(244, 232, 216, 0.15);
+  }
+
+  /* Fusos: container com peso */
+  .fusos-container {
+    background: rgba(15, 20, 25, 0.4);
+    border: 0.5px solid rgba(244, 232, 216, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 0 rgba(244, 232, 216, 0.05);
+  }
+
+  /* Fusos counter como HUD */
+  .fusos-counter {
+    background: rgba(15, 20, 25, 0.85);
+    border: 0.5px solid rgba(244, 232, 216, 0.3);
+    padding: 4px 12px !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+  }
+
+  /* Continue-hint mais polido */
+  .continue-hint {
+    padding: 10px 22px !important;
+    background: rgba(15, 20, 25, 0.4);
+    border: 0.5px solid rgba(244, 232, 216, 0.2);
+    border-radius: 0;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.05),
+      0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Start button (título) com peso de jogo */
+  .start-button {
+    position: relative;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.08) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    border: 0.7px solid rgba(244, 232, 216, 0.7) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.12),
+      0 4px 16px rgba(0, 0, 0, 0.5),
+      0 0 24px rgba(244, 232, 216, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .start-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(244, 232, 216, 0.18), transparent);
+    transition: left 0.8s ease;
+  }
+  .start-button:hover::before, .start-button:active::before {
+    left: 100%;
+  }
+  .start-button:hover, .start-button:active {
+    border-color: rgba(244, 232, 216, 0.95) !important;
+    background: linear-gradient(180deg, rgba(244, 232, 216, 0.15) 0%, rgba(15, 20, 25, 0.7) 100%) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.22),
+      0 4px 20px rgba(0, 0, 0, 0.6),
+      0 0 32px rgba(244, 232, 216, 0.18);
+  }
+
+  /* End screen content com peso */
+  .end-content {
+    background: rgba(15, 20, 25, 0.65) !important;
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      0 8px 40px rgba(0, 0, 0, 0.6);
+  }
 
   /* ===================================================================
      MOBILE PORTRAIT — Layout em Grid (3 áreas fixas)
@@ -456,6 +878,60 @@
      - UI: resto (mecânicas, botões, controles)
      =================================================================== */
   @media (max-width: 640px) and (orientation: portrait) {
+
+    /* ===== TEXTURA E ATMOSFERA NO FUNDO ESCURO =====
+       Aplica em todas as cenas que têm fundo escuro (vazio em mobile portrait).
+       Camadas: grão de filme + vinheta sutil. */
+    #scene-intro-lia,
+    #scene-intro-bento,
+    #scene-connection,
+    #scene-map,
+    #scene-fusos-intro,
+    #scene-ruido-intro,
+    #scene-travessia-intro,
+    #scene-convergencia,
+    #scene-toque,
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      /* Vinheta radial + textura noise SVG inline */
+      background-image:
+        radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.91  0 0 0 0 0.85  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+      background-size: cover, 200px 200px !important;
+      background-position: center, top left !important;
+      background-repeat: no-repeat, repeat !important;
+    }
+
+    /* Linha decorativa entre imagem e UI */
+    .scene-divider-line {
+      width: calc(100% - 64px);
+      max-width: 280px;
+      margin: 6px auto 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-shrink: 0;
+      opacity: 0.45;
+      pointer-events: none;
+      order: 0;  /* fica entre imagem (order -1) e UI */
+    }
+    .scene-divider-line::before,
+    .scene-divider-line::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent 0%, rgba(244, 232, 216, 0.6) 50%, transparent 100%);
+    }
+    .scene-divider-line .ornament {
+      font-size: 9px;
+      color: rgba(244, 232, 216, 0.7);
+      letter-spacing: 0.6em;
+    }
+
+    /* ===== FIM TEXTURA E ATMOSFERA ===== */
 
     /* Cenas de gameplay e cutscenes recebem grid */
     #scene-intro-lia,
@@ -511,18 +987,18 @@
     .scene-header p {
       font-family: Georgia, serif;
       font-style: italic;
-      font-size: clamp(13px, 3.4vw, 15px);
-      line-height: 1.4;
+      font-size: clamp(15px, 4vw, 17px);
+      line-height: 1.45;
       color: #F4E8D8;
-      margin: 0 0 4px 0;
+      margin: 0 0 5px 0;
       max-width: 100%;
     }
     .scene-header .hint-line {
       font-style: normal;
       font-family: 'Inter', sans-serif;
-      font-size: clamp(9px, 2.2vw, 10px);
-      letter-spacing: 0.25em;
-      opacity: 0.6;
+      font-size: clamp(11px, 2.8vw, 12px);
+      letter-spacing: 0.22em;
+      opacity: 0.65;
       margin: 0;
     }
 
@@ -550,7 +1026,7 @@
     .cutscene .scene-ui .narration {
       font-family: Georgia, serif;
       font-style: italic;
-      font-size: clamp(15px, 4.2vw, 18px);
+      font-size: clamp(16px, 4.4vw, 19px);
       line-height: 1.6;
       color: #F4E8D8;
       text-align: center;
@@ -560,9 +1036,9 @@
     .cutscene .scene-ui .location {
       font-family: 'Inter', sans-serif;
       font-style: normal;
-      font-size: clamp(9px, 2.4vw, 11px);
-      letter-spacing: 0.4em;
-      opacity: 0.7;
+      font-size: clamp(11px, 2.8vw, 12px);
+      letter-spacing: 0.32em;
+      opacity: 0.75;
       margin-bottom: 16px;
     }
     .cutscene .scene-ui .dialogue {
@@ -573,9 +1049,9 @@
     .cutscene .scene-ui .dialogue-line {
       font-family: Georgia, serif;
       font-style: italic;
-      font-size: clamp(15px, 4vw, 17px);
+      font-size: clamp(16px, 4.2vw, 18px);
       line-height: 1.6;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     /* Esconde o cutscene-text antigo, vamos usar o novo wrapper */
@@ -663,11 +1139,11 @@
       min-height: auto !important;
     }
     .instruction-overlay p {
-      font-size: clamp(13px, 3.4vw, 14px) !important;
-      line-height: 1.4 !important;
+      font-size: clamp(15px, 4vw, 16px) !important;
+      line-height: 1.45 !important;
     }
     .instruction-overlay .hint-line {
-      font-size: clamp(9px, 2.2vw, 10px) !important;
+      font-size: clamp(11px, 2.8vw, 12px) !important;
     }
 
     /* ===== FUSOS GAMEPLAY ===== */
@@ -724,7 +1200,8 @@
       width: 100% !important;
       max-width: 100% !important;
       margin: 14px auto 0 !important;
-      padding: 12px 18px !important;
+      padding: 13px 20px !important;
+      font-size: clamp(16px, 4.2vw, 19px) !important;
     }
     #scene-ruido-game .morse-revealed-floating.visible {
       transform: none !important;
@@ -738,9 +1215,10 @@
       transform: translateX(-50%) !important;
       width: calc(100% - 32px) !important;
       max-width: 100% !important;
-      font-size: clamp(15px, 4.2vw, 17px) !important;
+      font-size: clamp(16px, 4.4vw, 19px) !important;
       padding: 8px 16px !important;
       z-index: 10;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.7);
     }
     #scene-travessia-game .travessia-thought.visible {
       transform: translateX(-50%) !important;
@@ -765,8 +1243,8 @@
       flex-shrink: 0;
     }
     #scene-encontro-game .encontro-line {
-      font-size: clamp(13px, 3.6vw, 15px) !important;
-      margin-bottom: 6px !important;
+      font-size: clamp(15px, 4vw, 17px) !important;
+      margin-bottom: 7px !important;
     }
     #scene-encontro-game .encontro-words-area {
       width: calc(100% - 24px);
@@ -778,8 +1256,8 @@
       flex-shrink: 0;
     }
     #scene-encontro-game .duo-word {
-      padding: 8px 14px !important;
-      font-size: clamp(12px, 3.2vw, 14px) !important;
+      padding: 10px 16px !important;
+      font-size: clamp(14px, 3.6vw, 16px) !important;
     }
 
     /* ===== FASE 1 (SINTONIA) - layout vertical 2 metades ===== */
@@ -913,15 +1391,19 @@
     width: calc(100% - 48px);
     max-width: 540px;
     text-align: center;
-    background: rgba(15, 20, 25, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(15, 20, 25, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 14px 20px;
-    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    border: 0.5px solid rgba(244, 232, 216, 0.25);
     z-index: 50;
     transition: opacity 1.2s ease, transform 1.2s ease;
-    border-radius: 2px;
+    border-radius: 0;
     pointer-events: none;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 232, 216, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      0 4px 20px rgba(0, 0, 0, 0.5);
   }
   .instruction-overlay.hidden {
     opacity: 0;
@@ -981,7 +1463,7 @@
       <p class="cutscene-narration">A internet caiu há sete anos. As cidades pararam. Lia ficou. Continuou aprendendo no escuro, do jeito que sempre soube fazer.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-intro-bento&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-intro-bento" data-next="scene-characters">
     <div class="cutscene-text">
@@ -989,7 +1471,7 @@
       <p class="cutscene-narration">Bento construiu uma rede improvisada de antenas na borda da floresta. Não esperava nada. Só o gesto de tentar.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-characters&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-characters" data-action="startGameplay" style="cursor: pointer;">
     <div class="characters-header"><p class="subtitle">PERSONAGENS</p></div>
@@ -1001,7 +1483,7 @@
           <p class="age-loc">45 ANOS · UBERLÂNDIA, MG</p>
           <p class="description">Demissexual, intelectualmente brilhante. Antes do colapso, fazia o terceiro doutorado. Direta, honesta, espevitada.</p>
         </div>
-      </div>
+      <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
       <div class="character-card">
         <div class="character-portrait bento"></div>
         <div class="character-card-info">
@@ -1009,7 +1491,7 @@
           <p class="age-loc">50 ANOS · SINOP, MT</p>
           <p class="description">Espelho de Lia. Mesma essência, mesma frequência. Construiu sua paz sozinho. Espera sem esperar.</p>
         </div>
-      </div>
+      <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     </div>
     <p class="continue-hint" onclick="startGameplay()">TOQUE PARA SINTONIZAR</p>
   </div>
@@ -1018,7 +1500,7 @@
     <div id="tutorial">
       <p>Arraste os dois dials para sintonizar a mesma frequência ao mesmo tempo.</p>
       <small>FREQUÊNCIA ALVO: 88.7</small>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div id="connection-line"></div>
     <div class="side side-lia">
       <p class="character-label">LIA</p>
@@ -1056,7 +1538,7 @@
       <p class="cutscene-narration" style="margin-top: 18px;">A onda atravessou mil quinhentos quilômetros de Brasil em ruínas. Eles não sabiam ainda. Mas alguma coisa começou.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-map&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-map" data-next="scene-fusos-intro">
     <div class="cutscene-text">
@@ -1064,7 +1546,7 @@
       <p class="cutscene-narration">Dois sinais começaram a pulsar no mesmo ritmo. Cada um do seu lado. A história continuaria.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-fusos-intro&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-fusos-intro" data-action="startFusos">
     <div class="cutscene-text">
@@ -1072,7 +1554,7 @@
       <p class="cutscene-narration">Ela vivia de noite. Ele de dia. O encontro só cabia no fio fino entre os dois. Aprenderam a esperar.</p>
     </div>
     <p class="continue-hint" onclick="startFusos()">TOQUE PARA ESPERAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-fusos-game">
     <div class="fusos-container">
@@ -1082,8 +1564,8 @@
         <div class="breath-text" id="breath-text">RESPIRE</div>
       </div>
       <p class="fusos-counter" id="fusos-counter">00:10</p>
-    </div>
-  </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-ruido-intro" data-action="startRuido">
     <div class="cutscene-text">
@@ -1091,17 +1573,17 @@
       <p class="cutscene-narration">A comunicação falhou. As palavras chegavam quebradas. Foi preciso aprender a ouvir o que não estava sendo dito.</p>
     </div>
     <p class="continue-hint" onclick="startRuido()">TOQUE PARA DECIFRAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-ruido-game">
     <div class="instruction-overlay" id="morse-instruction-overlay">
       <p id="morse-instruction-text">Toque na tela seguindo o padrão de Bento.</p>
       <p class="hint-line">RÁPIDO = · &nbsp;&nbsp; SEGURADO = —</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
 
     <div class="morse-counter" id="morse-counter">1 / 3</div>
 
-    <div class="morse-pattern-floating" id="morse-pattern"></div>
+    <div class="morse-pattern-floating" id="morse-pattern"><span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
 
     <div class="morse-tap-hint" id="morse-tap-hint">
       <span>↓</span>
@@ -1111,7 +1593,7 @@
     <div class="morse-revealed-floating" id="morse-revealed"></div>
 
     <div class="morse-pulse-overlay" id="morse-pulse"></div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
     <div class="cutscene-text">
@@ -1119,13 +1601,13 @@
       <p class="cutscene-narration">Decidiram se encontrar. Ela saiu do cerrado. Ele saiu da floresta. Atravessar o Brasil devastado custou tudo o que tinham.</p>
     </div>
     <p class="continue-hint" onclick="startTravessia()">TOQUE PARA ATRAVESSAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-travessia-game">
     <div class="instruction-overlay" id="travessia-instruction-overlay">
       <p>Lia caminha enquanto você sustenta o gesto.</p>
       <p class="hint-line">MANTENHA O DEDO · NÃO SOLTE</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <p class="travessia-thought" id="travessia-thought"></p>
     <div class="travessia-progress-area">
       <p class="travessia-km" id="travessia-km">0 / 1.547 KM</p>
@@ -1134,7 +1616,7 @@
         <p class="travessia-touch-label">SEGURE AQUI</p>
       </div>
     </div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-convergencia" data-action="startEncontro">
     <div class="cutscene-text">
@@ -1142,27 +1624,27 @@
       <p class="cutscene-narration">Em algum ponto rural de Goiás, no fim de uma tarde dourada, dois caminhos finalmente se cruzaram no mesmo plano.</p>
     </div>
     <p class="continue-hint" onclick="startEncontro()">TOQUE PARA SE APROXIMAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-encontro-game">
     <div class="instruction-overlay" id="encontro-instruction-overlay">
       <p>Toque numa palavra e depois no espaço onde ela cabe.</p>
       <p class="hint-line">CADA FRASE PRECISA DE ESFORÇO</p>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="encontro-dialogue-area">
       <div class="encontro-line lia" id="line-1"></div>
       <div class="encontro-line bento" id="line-2"></div>
       <div class="encontro-line lia" id="line-3"></div>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="encontro-words-area" id="encontro-words"></div>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene cutscene" id="scene-toque" data-next="scene-end">
     <div class="cutscene-text">
       <p class="cutscene-narration">A pulseira larga prateada dela. O relógio de couro dele. As duas mãos, finalmente, no mesmo lugar.</p>
     </div>
     <p class="continue-hint" onclick="goToScene(&#39;scene-end&#39;)">TOQUE PARA CONTINUAR</p>
-  </div>
+  <div class="scene-divider-line"><span class="ornament">◇</span></div></div>
 
   <div class="scene" id="scene-end">
     <div class="end-content">
@@ -1170,7 +1652,7 @@
       <h2>Convergir</h2>
       <p>Para chegar até você, eu atravessei o fim do mundo.</p>
       <button class="start-button" onclick="restartGame()">JOGAR NOVAMENTE</button>
-    </div>
+    <span class="game-corner tl"></span><span class="game-corner tr"></span><span class="game-corner bl"></span><span class="game-corner br"></span></div>
     <div class="easter-egg" id="easter-egg">
       <p>Algumas histórias atravessam mais que distância.</p>
       <p class="signature">FM 88.7 · 2026</p>
@@ -1656,6 +2138,51 @@ function requestFullscreen() {
 document.addEventListener('click', startAudioOnInteraction);
 document.addEventListener('touchstart', startAudioOnInteraction);
 document.addEventListener('keydown', startAudioOnInteraction);
+
+// Injeta linha decorativa em todas as cenas com imagem (mobile portrait)
+// Apenas decorativo, faz parte da estética cinematográfica
+(function injectSceneDividers() {
+  const scenesWithImage = [
+    'scene-intro-lia', 'scene-intro-bento', 'scene-connection', 'scene-map',
+    'scene-fusos-intro', 'scene-fusos-game',
+    'scene-ruido-intro', 'scene-ruido-game',
+    'scene-travessia-intro', 'scene-travessia-game',
+    'scene-convergencia', 'scene-encontro-game',
+    'scene-toque'
+  ];
+  scenesWithImage.forEach(id => {
+    const scene = document.getElementById(id);
+    if (!scene) return;
+    if (scene.querySelector('.scene-divider-line')) return;  // já tem
+    const divider = document.createElement('div');
+    divider.className = 'scene-divider-line';
+    divider.innerHTML = '<span class="ornament">◇</span>';
+    scene.appendChild(divider);
+  });
+})();
+
+// Injeta ornamentos de canto (HUD style) em painéis principais
+(function injectHudCorners() {
+  const targets = [
+    '#tutorial',
+    '.morse-pattern-floating',
+    '.encontro-dialogue-area',
+    '.fusos-container',
+    '.character-card',
+    '.end-content',
+    '.instruction-overlay'
+  ];
+  targets.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      if (el.querySelector('.game-corner')) return;
+      ['tl', 'tr', 'bl', 'br'].forEach(pos => {
+        const corner = document.createElement('span');
+        corner.className = 'game-corner ' + pos;
+        el.appendChild(corner);
+      });
+    });
+  });
+})();
 
 // Botão de mute
 document.getElementById('audio-toggle').addEventListener('click', function(e) {
