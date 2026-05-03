@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_38.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_39.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -40,7 +40,7 @@
 
   #scene-intro-lia { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/lia-uberlandia.png'); }
   #scene-intro-bento { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.92) 100%), url('assets/bento-sinop.png'); }
-  #scene-characters { background: linear-gradient(135deg, #5C1A2B 0%, #3D1F4C 50%, #1A2B4C 100%); }
+  #scene-characters { background: radial-gradient(ellipse at top, #1a1014 0%, #0F1419 60%, #050709 100%); }
   #scene-connection { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.88) 100%), url('assets/connection.png'); }
   #scene-map { background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.85) 100%), url('assets/map.png'); }
   #scene-fusos-intro { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.9) 100%), url('assets/fusos.png'); }
@@ -58,7 +58,10 @@
   #scene-characters { padding: 32px 20px; justify-content: center; }
   .characters-header { text-align: center; margin-bottom: 24px; }
   .characters-container { display: flex; gap: 16px; align-items: stretch; justify-content: center; width: 100%; max-width: 900px; }
-  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.45); padding: 14px 12px 16px; backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .character-card { flex: 1; text-align: center; background: rgba(15, 20, 25, 0.55); padding: 14px 12px 16px; backdrop-filter: blur(4px); display: flex; flex-direction: column; align-items: center; min-width: 0; border: 0.5px solid rgba(244, 232, 216, 0.08); position: relative; overflow: hidden; }
+  .character-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; opacity: 0.6; }
+  .character-card:nth-child(1)::before { background: linear-gradient(180deg, transparent 0%, #5C1A2B 30%, #5C1A2B 70%, transparent 100%); }
+  .character-card:nth-child(2)::before { background: linear-gradient(180deg, transparent 0%, #1A2B4C 30%, #1A2B4C 70%, transparent 100%); }
   .character-portrait { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center top; border: 0.5px solid rgba(244, 232, 216, 0.2); margin-bottom: 14px; }
   .character-portrait.lia { background-image: url('assets/lia-portrait.png'); }
   .character-portrait.bento { background-image: url('assets/bento-portrait.png'); }
@@ -451,37 +454,44 @@
     /* Layout em 2 regiões (mobile portrait): imagem cropada em cima + área de UI embaixo */
     /* TÉCNICA: background-size: cover + altura definida via gradient mask */
     
-    /* Cenas de gameplay: imagem ocupa proporcionalmente os 55% superiores */
+    /* MOBILE PORTRAIT: Imagem em letterbox (proporção preservada, mostra inteira) */
+    /* TÉCNICA: use uma camada de fundo separada com background-size: contain  */
+    /* a imagem ocupa a parte de cima inteira sem distorção e sem crop excessivo */
+    
     #scene-fusos-game,
     #scene-ruido-game,
     #scene-travessia-game,
     #scene-encontro-game {
-      background-size: cover !important;
-      background-position: center top !important;
-      background-repeat: no-repeat !important;
+      background-image: none !important;
       background-color: #0F1419;
       justify-content: flex-end !important;
       padding-bottom: 24px;
     }
     
-    /* Cria uma máscara que esconde a imagem após 55% da altura */
-    /* Usando um pseudo-elemento ::before que cobre só a parte de baixo com cor sólida */
+    /* Cria a imagem como ::before com contain (mostra inteira, preserva proporção) */
     #scene-fusos-game::before,
     #scene-ruido-game::before,
     #scene-travessia-game::before,
     #scene-encontro-game::before {
       content: '';
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 50%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 25%, #0F1419 100%);
+      height: 60%;
+      background-size: contain;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-color: #0F1419;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
     }
+    #scene-fusos-game::before { background-image: url('assets/fusos.png'); }
+    #scene-ruido-game::before { background-image: url('assets/ruido.png'); }
+    #scene-travessia-game::before { background-image: url('assets/travessia.png'); }
+    #scene-encontro-game::before { background-image: url('assets/encontro.png'); }
 
-    /* Cutscenes: imagem cropada em cima 60%, texto embaixo */
+    /* Cutscenes: mesma técnica, imagem em contain, bem ampla */
     #scene-intro-lia,
     #scene-intro-bento,
     #scene-connection,
@@ -491,26 +501,45 @@
     #scene-travessia-intro,
     #scene-convergencia,
     #scene-toque {
-      background-size: cover !important;
-      background-position: center top !important;
-      background-repeat: no-repeat !important;
+      background-image: none !important;
       background-color: #0F1419 !important;
       justify-content: flex-end !important;
       padding-bottom: 14vh !important;
     }
 
-    /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean em cima */
-    #scene-intro-lia { background-image: url('assets/lia-uberlandia.png') !important; }
-    #scene-intro-bento { background-image: url('assets/bento-sinop.png') !important; }
-    #scene-connection { background-image: url('assets/connection.png') !important; }
-    #scene-map { background-image: url('assets/map.png') !important; }
-    #scene-fusos-intro { background-image: url('assets/fusos.png') !important; }
-    #scene-ruido-intro { background-image: url('assets/ruido.png') !important; }
-    #scene-travessia-intro { background-image: url('assets/travessia.png') !important; }
-    #scene-convergencia { background-image: url('assets/convergencia.png') !important; }
-    #scene-toque { background-image: url('assets/toque.png') !important; }
+    /* A imagem das cutscenes vem de um ::after pra ficar atrás do conteúdo */
+    #scene-intro-lia::after,
+    #scene-intro-bento::after,
+    #scene-connection::after,
+    #scene-map::after,
+    #scene-fusos-intro::after,
+    #scene-ruido-intro::after,
+    #scene-travessia-intro::after,
+    #scene-convergencia::after,
+    #scene-toque::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 65%;
+      background-size: contain;
+      background-position: center top;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #scene-intro-lia::after { background-image: url('assets/lia-uberlandia.png'); }
+    #scene-intro-bento::after { background-image: url('assets/bento-sinop.png'); }
+    #scene-connection::after { background-image: url('assets/connection.png'); }
+    #scene-map::after { background-image: url('assets/map.png'); }
+    #scene-fusos-intro::after { background-image: url('assets/fusos.png'); }
+    #scene-ruido-intro::after { background-image: url('assets/ruido.png'); }
+    #scene-travessia-intro::after { background-image: url('assets/travessia.png'); }
+    #scene-convergencia::after { background-image: url('assets/convergencia.png'); }
+    #scene-toque::after { background-image: url('assets/toque.png'); }
 
-    /* Cutscene-text não tem mais fundo escuro */
+    /* Cutscene-text: fica acima da imagem (z-index) e SEM fundo escuro */
     #scene-intro-lia .cutscene-text,
     #scene-intro-bento .cutscene-text,
     #scene-connection .cutscene-text,
@@ -525,57 +554,42 @@
       -webkit-backdrop-filter: none !important;
       border: none !important;
       padding: 12px 20px !important;
-    }
-
-    /* Cria a máscara que esconde a imagem após 60% da altura nas cutscenes */
-    #scene-intro-lia::after,
-    #scene-intro-bento::after,
-    #scene-connection::after,
-    #scene-map::after,
-    #scene-fusos-intro::after,
-    #scene-ruido-intro::after,
-    #scene-travessia-intro::after,
-    #scene-convergencia::after,
-    #scene-toque::after {
-      content: '';
-      position: absolute;
-      top: 55%;
-      left: 0;
-      width: 100%;
-      height: 45%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 30%, #0F1419 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Garante que conteúdo das cutscenes fique acima do gradiente */
-    #scene-intro-lia .cutscene-text,
-    #scene-intro-bento .cutscene-text,
-    #scene-connection .cutscene-text,
-    #scene-map .cutscene-text,
-    #scene-fusos-intro .cutscene-text,
-    #scene-ruido-intro .cutscene-text,
-    #scene-travessia-intro .cutscene-text,
-    #scene-convergencia .cutscene-text,
-    #scene-toque .cutscene-text {
       position: relative;
       z-index: 5;
     }
 
-    /* Garante que conteúdo da gameplay fique acima do gradient */
+    /* Continue-hint nas cutscenes precisa ficar acima */
+    #scene-intro-lia .continue-hint,
+    #scene-intro-bento .continue-hint,
+    #scene-connection .continue-hint,
+    #scene-map .continue-hint,
+    #scene-fusos-intro .continue-hint,
+    #scene-ruido-intro .continue-hint,
+    #scene-travessia-intro .continue-hint,
+    #scene-convergencia .continue-hint,
+    #scene-toque .continue-hint {
+      z-index: 6;
+    }
+
+    /* Garante que conteúdo da gameplay fique acima da imagem */
     #scene-fusos-game .fusos-container,
     #scene-travessia-game .travessia-progress-area,
     #scene-encontro-game .encontro-dialogue-area,
-    #scene-encontro-game .encontro-words-area {
+    #scene-encontro-game .encontro-words-area,
+    #scene-ruido-game .morse-pattern-floating,
+    #scene-ruido-game .morse-revealed-floating,
+    #scene-ruido-game .morse-counter,
+    #scene-ruido-game .morse-tap-hint {
       position: relative;
       z-index: 5;
     }
 
-    /* TRAVESSIA: pensamentos no centro da imagem (parte de cima) */
+    /* TRAVESSIA: pensamentos sobre a imagem (parte de cima) */
     #scene-travessia-game .travessia-thought {
-      top: 27% !important;
+      top: 30% !important;
       font-size: clamp(15px, 4.5vw, 18px) !important;
       max-width: 90% !important;
+      z-index: 10;
     }
 
     /* TRAVESSIA: progresso e botão na parte de baixo */
@@ -590,23 +604,21 @@
       align-items: center !important;
     }
     #scene-fusos-game .fusos-container {
-      margin-top: 50%;
+      margin-top: 60%;
       padding: 12px 20px;
-      position: relative;
-      z-index: 5;
     }
     #scene-fusos-game .breath-circle-container {
-      width: clamp(120px, 28vw, 160px) !important;
-      height: clamp(120px, 28vw, 160px) !important;
+      width: clamp(110px, 26vw, 150px) !important;
+      height: clamp(110px, 26vw, 150px) !important;
     }
     #scene-fusos-game .fusos-instruction {
       font-size: clamp(13px, 3.4vw, 15px) !important;
       margin-bottom: 20px !important;
     }
 
-    /* ENCONTRO: diálogo e banco de palavras na parte de baixo */
+    /* ENCONTRO: padding pra conteúdo ficar abaixo da imagem */
     #scene-encontro-game {
-      padding-top: 56% !important;
+      padding-top: 62% !important;
     }
     #scene-encontro-game .encontro-dialogue-area {
       min-height: 100px;
@@ -615,13 +627,11 @@
 
     /* RUÍDO: padrão Morse na parte de baixo */
     #scene-ruido-game {
-      padding-top: 56% !important;
+      padding-top: 62% !important;
     }
     #scene-ruido-game .morse-pattern-floating {
       padding: 14px 18px;
       gap: 10px;
-      position: relative;
-      z-index: 5;
     }
     #scene-ruido-game .morse-revealed-floating {
       bottom: 16px;
@@ -631,12 +641,8 @@
       right: 14px;
       z-index: 30;
     }
-    #scene-ruido-game .morse-tap-hint {
-      position: relative;
-      z-index: 5;
-    }
 
-    /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
+    /* GAMEPLAY (Fase 1): mantém layout horizontal mesmo em retrato (split-screen) */
     #scene-gameplay {
       background-size: cover !important;
       background-position: center !important;
