@@ -19,8 +19,11 @@
   .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 1.4s ease, visibility 0s linear 1.4s; display: flex; flex-direction: column; align-items: center; justify-content: center; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #0F1419; }
   .scene.active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 1.4s ease, visibility 0s linear 0s; }
 
-  /* TÍTULO */
-  #scene-title { background-image: linear-gradient(180deg, rgba(15,20,25,0.4) 0%, rgba(15,20,25,0.55) 40%, rgba(15,20,25,0.85) 100%), url('assets/title.png'); justify-content: flex-start; padding-top: 8vh; }
+  /* TÍTULO
+     A imagem de capa é horizontal (~6:5) com a LIA de corpo inteiro centralizada.
+     Em mobile (portrait), `cover` escala pela altura e a LIA aparece inteira no centro.
+     No desktop, a media query ajusta a posição vertical para preservar os pés. */
+  #scene-title { background-image: linear-gradient(180deg, rgba(15,20,25,0.35) 0%, rgba(15,20,25,0.5) 45%, rgba(15,20,25,0.85) 100%), url('assets/title.png'); background-size: cover; background-position: center center; background-color: #1a0a0a; justify-content: flex-start; padding-top: 8vh; }
   .title-content { text-align: center; padding: 32px 28px; max-width: 90%; }
   #scene-title h1 { font-family: Georgia, serif; font-size: clamp(36px, 9vw, 64px); font-weight: 400; letter-spacing: 0.08em; color: #F4E8D8; margin-bottom: 16px; text-shadow: 0 2px 24px rgba(0,0,0,0.6); }
   .subtitle { font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; color: #F4E8D8; opacity: 0.85; margin-bottom: 8px; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
@@ -650,6 +653,17 @@
     letter-spacing: 0.04em;
     line-height: 1.5;
   }
+  .credits-dedication-quote {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(244, 232, 216, 0.85);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
 
   .credits-year {
     font-family: 'Courier New', monospace;
@@ -726,13 +740,14 @@
     .scene-divider-line {
       display: none !important;
     }
-    /* A imagem é vertical (9:16). Em widescreen com cover, ela fica
-       muito ampliada. background-position: center 25% mostra os 25%
-       superiores da imagem (céu + cabelo da Lia visíveis) com largura 100%. */
+    /* A imagem de capa é horizontal (~6:5). Em desktop widescreen com `cover`,
+       a imagem escala pela largura e cropa verticalmente. `center 65%` empurra
+       o crop para baixo, garantindo que os pés da LIA fiquem visíveis em FHD/QHD
+       e mantendo o feixe de luz e a antena de TV no enquadramento. */
     #scene-title {
-      background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.5) 40%, rgba(15,20,25,0.85) 100%), url('assets/title.png') !important;
+      background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.5) 45%, rgba(15,20,25,0.85) 100%), url('assets/title.png') !important;
       background-size: cover !important;
-      background-position: center 25% !important;
+      background-position: center 65% !important;
       background-repeat: no-repeat !important;
       background-color: #1a0a0a !important;
     }
@@ -1069,6 +1084,42 @@
         margin-bottom: 10px !important;
       }
     }
+  }
+
+  /* ===================================================================
+     ULTRAWIDE — Telas com aspect ratio >= 2:1 (21:9, 32:9, etc.)
+     Em ultrawide, `cover` escala a imagem horizontal pela largura e
+     corta o topo (cabeça/feixe). Para preservar a LIA inteira de
+     corpo inteiro junto com o feixe de luz, usamos `contain`: a imagem
+     fica enquadrada pela altura, com bordas laterais. Adicionamos um
+     gradiente vinho nas laterais para suavizar a transição.
+     =================================================================== */
+  @media (min-width: 769px) and (min-aspect-ratio: 2/1) {
+    #scene-title {
+      background-image:
+        linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.5) 45%, rgba(15,20,25,0.85) 100%),
+        url('assets/title.png') !important;
+      background-size: 100% 100%, auto 100% !important;
+      background-position: center center, center center !important;
+      background-repeat: no-repeat, no-repeat !important;
+      background-color: #1a0a0a !important;
+    }
+    /* Vinheta lateral para suavizar as bordas da imagem em contain */
+    #scene-title::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        #1a0a0a 0%,
+        rgba(26, 10, 10, 0.7) 10%,
+        rgba(26, 10, 10, 0) 22%,
+        rgba(26, 10, 10, 0) 78%,
+        rgba(26, 10, 10, 0.7) 90%,
+        #1a0a0a 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    #scene-title > * { position: relative; z-index: 2; }
   }
 
   /* ===================================================================
@@ -2390,6 +2441,7 @@
 
           <p class="credits-dedication">
             Para Marcus Vinícius<br>
+            <span class="credits-dedication-quote">"Eu vou equalizar você numa frequência que só a gente sabe."</span>
             <span class="credits-dedication-sub">Criado em dias lindos para se tomar 87 cervejinhas.</span>
           </p>
 
