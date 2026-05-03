@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_30.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_34.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0F1419">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="author" content="J.B. — JBLK Design">
 <meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
 <title>Convergir — Um encontro no fim do mundo</title>
@@ -416,8 +419,130 @@
   .audio-toggle svg { width: 18px; height: 18px; }
 
   /* MOBILE */
-  @media (max-width: 640px) {
-    #scene-title { padding-top: 6vh; }
+  @media (max-width: 640px) and (orientation: portrait) {
+    /* Layout em 3 regiões: imagem 55% / texto 25% / UI 20% */
+    /* Aplica nas cenas de gameplay */
+    #scene-gameplay,
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 55% !important;
+      background-position: top center !important;
+      background-repeat: no-repeat !important;
+      background-color: #0F1419;
+      justify-content: flex-end !important;
+      padding-bottom: 24px;
+    }
+
+    /* Adiciona um gradiente de transição entre imagem e área inferior */
+    #scene-gameplay::before,
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Garante que conteúdo da gameplay fique abaixo dos 55% iniciais */
+    #scene-fusos-game .fusos-container,
+    #scene-travessia-game .travessia-progress-area,
+    #scene-encontro-game .encontro-dialogue-area,
+    #scene-encontro-game .encontro-words-area {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* TRAVESSIA: pensamentos no centro da imagem (parte de cima) */
+    #scene-travessia-game .travessia-thought {
+      top: 27% !important;
+      font-size: clamp(15px, 4.5vw, 18px) !important;
+      max-width: 90% !important;
+    }
+
+    /* TRAVESSIA: progresso e botão na parte de baixo */
+    #scene-travessia-game .travessia-progress-area {
+      width: calc(100% - 32px);
+      max-width: 100%;
+      margin-top: auto;
+    }
+
+    /* FUSOS: círculo de respiração centralizado na zona de baixo */
+    #scene-fusos-game {
+      align-items: center !important;
+    }
+    #scene-fusos-game .fusos-container {
+      margin-top: 50%;
+      padding: 12px 20px;
+    }
+    #scene-fusos-game .breath-circle-container {
+      width: clamp(120px, 28vw, 160px) !important;
+      height: clamp(120px, 28vw, 160px) !important;
+    }
+    #scene-fusos-game .fusos-instruction {
+      font-size: clamp(13px, 3.4vw, 15px) !important;
+      margin-bottom: 20px !important;
+    }
+
+    /* ENCONTRO: diálogo e banco de palavras na parte de baixo */
+    #scene-encontro-game {
+      padding-top: 56% !important;
+    }
+    #scene-encontro-game .encontro-dialogue-area {
+      min-height: 100px;
+      padding: 14px 16px;
+    }
+
+    /* RUÍDO: padrão Morse na parte de baixo (em cima da imagem fica feio) */
+    #scene-ruido-game {
+      padding-top: 56% !important;
+    }
+    #scene-ruido-game .morse-pattern-floating {
+      padding: 14px 18px;
+      gap: 10px;
+    }
+    #scene-ruido-game .morse-revealed-floating {
+      bottom: 16px;
+    }
+    #scene-ruido-game .morse-counter {
+      top: 14px;
+      right: 14px;
+    }
+
+    /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
+    /* mas comprime altura pra não cortar */
+    #scene-gameplay {
+      background-size: cover !important;
+      background-position: center !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+    }
+    #scene-gameplay::before {
+      display: none;
+    }
+
+    /* Instruction overlay: posiciona no topo SEM cobrir imagem */
+    .instruction-overlay {
+      top: 12px !important;
+      width: calc(100% - 24px) !important;
+      padding: 10px 14px !important;
+    }
+    .instruction-overlay p {
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+    }
+    .instruction-overlay .hint-line {
+      font-size: 9px !important;
+    }
+
     .title-content { padding: 20px; }
     .cutscene { padding-bottom: 16vh; }
     .cutscene-text { padding: 22px 20px; }
@@ -436,57 +561,127 @@
     .dialogue-line.bento { padding-left: 16px; }
     .end-content { padding: 28px 22px; max-width: calc(100% - 32px); }
     .continue-hint { bottom: 4vh; }
-    .ruido-message { font-size: 18px; margin: 24px 0; }
-    .floating-letter { width: 42px; height: 42px; font-size: 17px; }
-    .ruido-letters-area { height: 200px; }
     .encontro-line.bento { padding-left: 16px; }
     .duo-word { padding: 8px 14px; }
   }
 
-  /* Overlay de rotação (mobile portrait) */
-  #rotate-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-    background: #0F1419;
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-  }
-  .rotate-content { text-align: center; max-width: 320px; }
-  .rotate-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 24px;
-    color: #F4E8D8;
-    opacity: 0.85;
-    animation: rotateHint 2.4s ease-in-out infinite;
-  }
-  @keyframes rotateHint {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-90deg); }
-  }
-  .rotate-text {
-    font-family: Georgia, serif;
-    font-size: 22px;
-    color: #F4E8D8;
-    margin-bottom: 12px;
-    letter-spacing: 0.05em;
-  }
-  .rotate-hint {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    opacity: 0.65;
-  }
-  /* Mostra overlay APENAS em mobile retrato */
-  @media (max-width: 900px) and (orientation: portrait) {
-    #rotate-overlay { display: flex; }
+  /* Mobile landscape ou tablets pequenos: comportamento próximo do desktop */
+  @media (max-width: 640px) and (orientation: landscape) {
+    .characters-container { flex-direction: row; gap: 12px; }
   }
 
+  /* ===== LAYOUT MOBILE: 3 REGIÕES (imagem 60% / texto 25% / UI 15%) ===== */
+  @media (max-width: 768px) {
+    /* Aplicado apenas em cenas de GAMEPLAY (não cutscenes nem título) */
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 60%;
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-attachment: local;
+    }
+    /* Cor de fundo escura na parte de baixo (40%) */
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(15, 20, 25, 0.6) 0%, rgba(15, 20, 25, 1) 25%, rgba(15, 20, 25, 1) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Garantir que conteúdo fica acima do gradiente */
+    #scene-fusos-game > *,
+    #scene-ruido-game > *,
+    #scene-travessia-game > *,
+    #scene-encontro-game > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Fusos: container fica embaixo */
+    #scene-fusos-game { justify-content: flex-end; padding-bottom: 8vh; }
+    .fusos-container { padding: 16px; max-width: 100%; }
+    .fusos-instruction { margin-bottom: 20px; font-size: 14px; }
+    .breath-circle-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+    }
+    .fusos-counter { margin-top: 12px; }
+
+    /* Travessia: pensamento fica na zona de texto (não centralizado absoluto) */
+    .travessia-thought {
+      position: absolute;
+      top: 60%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: clamp(15px, 4.5vw, 18px);
+      padding: 16px 24px;
+      max-width: 100%;
+      width: auto;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+    .travessia-thought.visible {
+      transform: translateY(-50%);
+    }
+    #scene-travessia-game {
+      justify-content: flex-end;
+      padding: 16px 16px 6vh;
+    }
+    .travessia-progress-area { margin-top: auto; }
+    .travessia-touch-zone { height: 60px; }
+
+    /* Morse: imagem em cima, padrão e contador embaixo */
+    #scene-ruido-game { justify-content: flex-end; padding-bottom: 4vh; }
+    .morse-pattern-floating {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .morse-revealed-floating {
+      bottom: 14vh;
+    }
+
+    /* Encontro: dialog area embaixo */
+    #scene-encontro-game {
+      justify-content: flex-end;
+      padding: 16px 16px 4vh;
+    }
+    .encontro-dialogue-area {
+      background: rgba(15, 20, 25, 0.85);
+      padding: 14px 16px;
+      min-height: auto;
+      margin-bottom: 12px;
+    }
+    .encontro-line {
+      font-size: clamp(13px, 3.6vw, 15px);
+      margin-bottom: 6px;
+    }
+    .encontro-words-area {
+      min-height: 90px;
+      padding: 8px;
+      gap: 6px;
+    }
+    .duo-word { padding: 7px 12px; font-size: 13px; }
+
+    /* Instrução overlay menor em mobile */
+    .instruction-overlay {
+      top: 12px;
+      padding: 10px 14px;
+      width: calc(100% - 24px);
+    }
+    .instruction-overlay p { font-size: 12px; }
+    .instruction-overlay .hint-line { font-size: 9px; }
+  }
 
   /* Instruções que somem após alguns segundos */
   .auto-hide {
@@ -1187,6 +1382,26 @@ function startAudioOnInteraction(e) {
     setMood('title');
     startBackgroundMusic();
   }, 500);
+
+  // Solicita fullscreen no mobile (apenas)
+  if (window.innerWidth <= 768) {
+    requestFullscreen();
+  }
+}
+
+function requestFullscreen() {
+  const el = document.documentElement;
+  try {
+    if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  } catch (e) {
+    // Silently fail - alguns browsers não permitem
+  }
 }
 
 document.addEventListener('click', startAudioOnInteraction);
@@ -1866,19 +2081,6 @@ function checkEncontroAnswer() {
 }
 
 </script>
-
-<div id="rotate-overlay">
-  <div class="rotate-content">
-    <svg class="rotate-icon" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5">
-      <rect x="22" y="14" width="36" height="52" rx="3"></rect>
-      <line x1="36" y1="60" x2="44" y2="60"></line>
-      <path d="M 12 32 Q 12 48, 28 50" stroke-dasharray="2 3"></path>
-      <polyline points="22,46 28,50 24,56"></polyline>
-    </svg>
-    <p class="rotate-text">Gire o celular</p>
-    <p class="rotate-hint">A experiência foi feita para tela na horizontal</p>
-  </div>
-</div>
 
 
 
