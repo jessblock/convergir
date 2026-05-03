@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_36.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_38.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;%3E%3Crect width=&#39;100&#39; height=&#39;100&#39; fill=&#39;%230F1419&#39;/%3E%3Ctext x=&#39;50&#39; y=&#39;65&#39; font-size=&#39;60&#39; text-anchor=&#39;middle&#39; fill=&#39;%23F4E8D8&#39; font-family=&#39;Georgia&#39;%3EC%3C/text%3E%3C/svg%3E">
 <meta name="author" content="J.B. — JBLK Design">
 <meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
 <title>Convergir — Um encontro no fim do mundo</title>
@@ -461,7 +462,6 @@
       background-color: #0F1419;
       justify-content: flex-end !important;
       padding-bottom: 24px;
-      position: relative;
     }
     
     /* Cria uma máscara que esconde a imagem após 55% da altura */
@@ -497,7 +497,6 @@
       background-color: #0F1419 !important;
       justify-content: flex-end !important;
       padding-bottom: 14vh !important;
-      position: relative;
     }
 
     /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean em cima */
@@ -834,6 +833,7 @@
     z-index: 50;
     transition: opacity 1.2s ease, transform 1.2s ease;
     border-radius: 2px;
+    pointer-events: none;
   }
   .instruction-overlay.hidden {
     opacity: 0;
@@ -1593,20 +1593,27 @@ function goToScene(sceneId) {
     debug('goToScene IGNORADO: ' + sceneId + ' (transit=' + isTransitioning + ', curr=' + currentSceneId + ')');
     return;
   }
-  debug('goToScene: ' + sceneId);
+  debug('goToScene START: ' + sceneId);
   isTransitioning = true;
   currentSceneId = sceneId;
 
   document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
   setTimeout(() => {
-    document.getElementById(sceneId).classList.add('active');
+    const target = document.getElementById(sceneId);
+    if (!target) {
+      debug('ERRO: cena nao existe: ' + sceneId);
+      isTransitioning = false;
+      return;
+    }
+    target.classList.add('active');
+    debug('goToScene OK: ' + sceneId);
 
     // Reseta visibilidade de overlays de instrução
     document.querySelectorAll('.instruction-overlay').forEach(o => {
       o.classList.remove('hidden');
     });
-    // Auto-esconde overlay da cena ativa após 5 segundos
-    const activeOverlay = document.getElementById(sceneId).querySelector('.instruction-overlay');
+    // Auto-esconde overlay da cena ativa após 8 segundos
+    const activeOverlay = target.querySelector('.instruction-overlay');
     if (activeOverlay) {
       setTimeout(() => activeOverlay.classList.add('hidden'), 8000);
     }
