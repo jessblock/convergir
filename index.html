@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_44.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_45.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -471,6 +471,187 @@
       opacity: 0.4;
     }
     .audio-toggle svg { width: 14px; height: 14px; }
+  }
+
+  /* ===================================================================
+     DESKTOP — Posicionamento de legendas por cena
+     Cada cena tem o personagem/foco em uma posição diferente.
+     Legenda vai pra área "vazia" de cada imagem.
+     Aplicado em telas >= 769px (desktop e tablet horizontal).
+     =================================================================== */
+  @media (min-width: 769px) {
+
+    /* Padrão geral: legenda com largura limitada e fundo polido */
+    .cutscene .cutscene-text {
+      width: auto;
+      max-width: 480px;
+      min-width: 360px;
+      position: absolute;
+      background: rgba(15, 20, 25, 0.85) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(244, 232, 216, 0.18);
+      box-shadow:
+        inset 0 1px 0 rgba(244, 232, 216, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.6);
+      padding: 26px 28px;
+    }
+
+    /* INTRO LIA — Lia centro-baixo. Legenda canto superior direito */
+    #scene-intro-lia {
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 5vh 5vw;
+    }
+    #scene-intro-lia .cutscene-text {
+      top: 5vh;
+      right: 5vw;
+    }
+
+    /* INTRO BENTO — Bento centro-esquerda. Legenda canto superior direito */
+    #scene-intro-bento {
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 5vh 5vw;
+    }
+    #scene-intro-bento .cutscene-text {
+      top: 5vh;
+      right: 5vw;
+    }
+
+    /* CONNECTION — rostos de Lia e Bento dominam a tela.
+       Legenda fina embaixo, espaço seguro abaixo dos rostos */
+    #scene-connection {
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 10vh;
+    }
+    #scene-connection .cutscene-text {
+      position: absolute;
+      bottom: 8vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 600px;
+      width: calc(100% - 80px);
+    }
+
+    /* MAP — convergência iluminada no centro. Cantos escuros vazios.
+       Legenda canto inferior esquerdo */
+    #scene-map {
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 5vh 5vw;
+    }
+    #scene-map .cutscene-text {
+      bottom: 8vh;
+      left: 5vw;
+      max-width: 440px;
+    }
+
+    /* FUSOS INTRO — Bento com café no centro/direita.
+       Legenda canto superior esquerdo */
+    #scene-fusos-intro {
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 5vh 5vw;
+    }
+    #scene-fusos-intro .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* RUÍDO INTRO — Lia direita, Bento esquerda (silhuetas baixas).
+       Topo da imagem está vazio. Legenda no topo central */
+    #scene-ruido-intro {
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 4vh;
+    }
+    #scene-ruido-intro .cutscene-text {
+      top: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 580px;
+    }
+
+    /* TRAVESSIA INTRO — Lia silhueta no centro, estrada.
+       Topo (céu) vazio. Legenda canto superior esquerdo */
+    #scene-travessia-intro {
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 5vh 5vw;
+    }
+    #scene-travessia-intro .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* CONVERGÊNCIA — Lia esquerda, Bento direita. Trigo embaixo.
+       Topo (céu) vazio. Legenda no topo central */
+    #scene-convergencia {
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 5vh;
+    }
+    #scene-convergencia .cutscene-text {
+      top: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 600px;
+    }
+
+    /* TOQUE — mãos centro. Cantos superiores têm céu.
+       Legenda canto superior esquerdo */
+    #scene-toque {
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 5vh 5vw;
+    }
+    #scene-toque .cutscene-text {
+      top: 5vh;
+      left: 5vw;
+    }
+
+    /* Continue-hint sempre embaixo, mas com padding pra não bater com legenda */
+    .cutscene .continue-hint {
+      bottom: 4vh !important;
+    }
+
+    /* Em telas desktop pequenas (até 1024px), aproxima as legendas dos cantos
+       mas mantém a lógica de NÃO cobrir o personagem */
+    @media (max-height: 720px) {
+      .cutscene .cutscene-text {
+        padding: 18px 22px;
+        font-size: 0.92em;
+      }
+      #scene-intro-lia .cutscene-text,
+      #scene-intro-bento .cutscene-text,
+      #scene-fusos-intro .cutscene-text,
+      #scene-travessia-intro .cutscene-text,
+      #scene-toque .cutscene-text,
+      #scene-map .cutscene-text {
+        max-width: 380px;
+        min-width: 300px;
+      }
+      .cutscene-narration {
+        font-size: 15px !important;
+      }
+    }
+
+    /* Em telas muito pequenas no desktop (laptops 13"), ainda mais compacto */
+    @media (max-height: 600px) {
+      .cutscene .cutscene-text {
+        padding: 14px 18px;
+      }
+      .cutscene-narration {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+      }
+      .cutscene-location {
+        margin-bottom: 10px !important;
+      }
+    }
   }
 
   /* ===================================================================
