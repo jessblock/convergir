@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_12.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_35.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0F1419">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="author" content="J.B. — JBLK Design">
 <meta name="description" content="Convergir — Um encontro no fim do mundo. Obra original, 2026.">
 <title>Convergir — Um encontro no fim do mundo</title>
@@ -92,7 +95,7 @@
   .breath-circle-container { width: clamp(160px, 42vw, 220px); height: clamp(160px, 42vw, 220px); margin: 0 auto 32px; position: relative; display: flex; align-items: center; justify-content: center; }
   .breath-circle { width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(244, 232, 216, 0.4); background: radial-gradient(circle, rgba(244, 232, 216, 0.06) 0%, transparent 70%); transform: scale(0.7); transition: transform 4s cubic-bezier(0.4, 0, 0.6, 1); }
   .breath-circle.expanding { transform: scale(1); }
-  .breath-text { position: absolute; font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; opacity: 0.7; transition: opacity 0.6s ease; }
+  .breath-text { position: absolute; font-size: clamp(10px, 2.6vw, 12px); letter-spacing: 0.4em; opacity: 0.7; transition: opacity 0.6s ease; text-align: center; line-height: 1.6; }
   .fusos-counter { font-family: 'Courier New', monospace; font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.2em; opacity: 0.5; margin-top: 24px; }
 
   /* FASE 3: RUÍDO */
@@ -101,146 +104,156 @@
   .ruido-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
   .ruido-message { font-family: 'Courier New', monospace; font-size: clamp(20px, 5.5vw, 28px); letter-spacing: 0.15em; text-align: center; line-height: 1.8; margin: 32px 0; min-height: 120px; }
 
-  /* MORSE — Fase 3 */
-  #scene-ruido-game { padding: 24px 20px; justify-content: space-between; }
-  .morse-header { text-align: center; margin-top: 8px; }
-  .morse-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.55; opacity: 0.9; margin-bottom: 8px; }
-  .morse-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.25em; opacity: 0.6; }
-
-  .morse-target-word {
-    text-align: center;
-    margin: 10px 0 4px;
-    font-family: Georgia, serif;
-    font-size: clamp(13px, 3.4vw, 15px);
-    letter-spacing: 0.4em;
-    opacity: 0.65;
-    text-transform: uppercase;
+  /* MORSE — Fase 3 (tela inteira como chave) */
+  #scene-ruido-game {
+    cursor: pointer;
+    touch-action: none;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
 
-  .morse-pattern {
+  .morse-pulse-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(244, 232, 216, 0.18) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+  #scene-ruido-game.pressing .morse-pulse-overlay {
+    opacity: 1;
+  }
+
+  .morse-counter {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(11px, 2.6vw, 13px);
+    letter-spacing: 0.3em;
+    opacity: 0.55;
+    z-index: 30;
+  }
+
+  .morse-pattern-floating {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 16px;
-    padding: 12px;
-    margin: 6px auto 20px;
-    width: 100%;
-    max-width: 540px;
+    gap: clamp(14px, 3vw, 24px);
+    padding: 24px 32px;
     background: rgba(15, 20, 25, 0.55);
-    border: 0.5px solid rgba(244, 232, 216, 0.12);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    z-index: 20;
+    transition: opacity 0.4s ease;
+    border-radius: 2px;
   }
 
   .morse-letter-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 6px 8px;
+    gap: 6px;
+    padding: 4px 6px;
     transition: opacity 0.4s ease, transform 0.4s ease;
-    min-width: 36px;
+    min-width: 32px;
   }
-  .morse-letter-block.completed { opacity: 0.4; }
+  .morse-letter-block.completed { opacity: 0.35; }
   .morse-letter-block.active {
-    background: rgba(244, 232, 216, 0.06);
     transform: translateY(-2px);
   }
 
   .morse-letter-char {
     font-family: Georgia, serif;
-    font-size: clamp(15px, 4vw, 18px);
+    font-size: clamp(18px, 4.6vw, 22px);
     color: #F4E8D8;
     letter-spacing: 0.05em;
   }
 
   .morse-letter-symbols {
     display: flex;
-    gap: 3px;
-    margin-top: 2px;
+    gap: 4px;
     font-family: 'Courier New', monospace;
-    font-size: clamp(13px, 3.4vw, 15px);
-    color: rgba(244, 232, 216, 0.7);
-    letter-spacing: 0.05em;
-    min-height: 18px;
+    font-size: clamp(14px, 3.6vw, 16px);
+    color: rgba(244, 232, 216, 0.5);
+    letter-spacing: 0.08em;
+    min-height: 22px;
     align-items: center;
   }
 
   .morse-symbol {
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
     opacity: 0.4;
   }
   .morse-symbol.lit {
     color: #F4E8D8;
     opacity: 1;
-    text-shadow: 0 0 8px rgba(244, 232, 216, 0.7);
+    text-shadow: 0 0 10px rgba(244, 232, 216, 0.85);
   }
 
-  .morse-revealed {
+  .morse-revealed-floating {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: calc(100% - 48px);
+    max-width: 540px;
     text-align: center;
     font-family: Georgia, serif;
     font-style: italic;
     font-size: clamp(15px, 4vw, 18px);
     color: #BFD0F0;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-    min-height: 28px;
-    padding: 8px 12px;
-  }
-  .morse-revealed.visible {
-    opacity: 0.95;
-    transform: translateY(0);
-  }
-  .morse-revealed::before { content: "— "; opacity: 0.6; }
-
-  .morse-key {
-    width: 100%;
-    max-width: 460px;
-    margin: 16px auto 8px;
-    height: 96px;
-    background: rgba(15, 20, 25, 0.6);
-    border: 0.5px solid rgba(244, 232, 216, 0.4);
-    color: #F4E8D8;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(10px, 2.6vw, 12px);
-    letter-spacing: 0.4em;
-    cursor: pointer;
-    touch-action: none;
-    user-select: none;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    background: rgba(15, 20, 25, 0.7);
     backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .morse-key:active,
-  .morse-key.pressing {
-    background: rgba(244, 232, 216, 0.18);
-    border-color: rgba(244, 232, 216, 0.85);
-    transform: scale(0.99);
-  }
-  .morse-key-label {
-    position: relative;
-    z-index: 2;
-  }
-  .morse-key-pulse {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(244, 232, 216, 0.25) 0%, transparent 70%);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 22px;
     opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    z-index: 25;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    border: 0.5px solid rgba(244, 232, 216, 0.1);
   }
-  .morse-key.pressing .morse-key-pulse {
-    opacity: 1;
+  .morse-revealed-floating.visible {
+    opacity: 0.95;
+    transform: translateX(-50%) translateY(0);
+  }
+  .morse-revealed-floating::before { content: "— "; opacity: 0.6; }
+
+  .morse-tap-hint {
+    margin-top: 16px;
+    text-align: center;
+    font-size: clamp(10px, 2.4vw, 11px);
+    letter-spacing: 0.3em;
+    opacity: 0.55;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    animation: tapHintPulse 2.4s ease-in-out infinite;
+  }
+  .morse-tap-hint span:first-child {
+    font-size: 18px;
+    letter-spacing: 0;
+    opacity: 0.7;
+  }
+  @keyframes tapHintPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  .morse-tap-hint.gone {
+    opacity: 0;
+    transition: opacity 1s ease;
   }
 
-    .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
+  .ruido-slot { display: inline-block; min-width: 28px; border-bottom: 1px solid rgba(244, 232, 216, 0.4); margin: 0 2px; color: #F4E8D8; transition: all 0.4s ease; }
   .ruido-slot.filled { border-bottom-color: transparent; color: #F4E8D8; text-shadow: 0 0 8px rgba(244, 232, 216, 0.5); }
   .ruido-letters-area { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
   .floating-letter { position: absolute; width: 52px; height: 52px; border-radius: 50%; background: rgba(15, 20, 25, 0.7); border: 1px solid rgba(244, 232, 216, 0.5); color: #F4E8D8; font-family: 'Courier New', monospace; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease, transform 0.6s ease, background 0.3s ease; user-select: none; overflow: hidden; }
@@ -263,8 +276,30 @@
   .travessia-header { text-align: center; margin-top: 16px; }
   .travessia-instruction { font-family: Georgia, serif; font-style: italic; font-size: clamp(14px, 3.6vw, 16px); line-height: 1.6; opacity: 0.95; margin-bottom: 8px; }
   .travessia-hint { font-size: clamp(9px, 2.2vw, 11px); letter-spacing: 0.3em; opacity: 0.55; }
-  .travessia-thought { text-align: center; font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); line-height: 1.7; color: #F4E8D8; opacity: 0; transition: opacity 1.5s ease; padding: 20px; max-width: 480px; }
-  .travessia-thought.visible { opacity: 0.85; }
+  .travessia-thought {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(18px, 5vw, 24px);
+    line-height: 1.5;
+    color: #F4E8D8;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    padding: 24px 32px;
+    max-width: 90%;
+    width: auto;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    z-index: 15;
+  }
+  .travessia-thought.visible {
+    opacity: 0.95;
+    transform: translate(-50%, -50%);
+  }
   .travessia-progress-area { width: 100%; max-width: 480px; margin: 0 auto; }
   .travessia-km { font-family: 'Courier New', monospace; font-size: clamp(12px, 3vw, 14px); letter-spacing: 0.15em; text-align: center; margin-bottom: 12px; opacity: 0.85; }
   .travessia-progress { width: 100%; height: 3px; background: rgba(244, 232, 216, 0.15); border-radius: 1.5px; overflow: hidden; margin-bottom: 24px; }
@@ -280,12 +315,90 @@
   .encontro-line { margin-bottom: 12px; min-height: 24px; font-family: Georgia, serif; font-style: italic; font-size: clamp(15px, 4vw, 17px); line-height: 1.6; }
   .encontro-line.lia { color: #F0BFD0; }
   .encontro-line.bento { color: #BFD0F0; padding-left: 24px; }
-  .encontro-slot { display: inline-block; min-width: 50px; border-bottom: 1px solid rgba(244, 232, 216, 0.3); margin: 0 3px; padding: 0 4px; transition: all 0.4s ease; }
-  .encontro-slot.filled { border-bottom-color: transparent; }
-  .encontro-words-area { position: relative; width: 100%; height: 140px; margin-bottom: 20px; }
-  .draggable-word { position: absolute; padding: 10px 18px; background: rgba(15, 20, 25, 0.65); border: 1px solid rgba(244, 232, 216, 0.4); color: #F4E8D8; font-family: Georgia, serif; font-style: italic; font-size: clamp(13px, 3.4vw, 15px); cursor: grab; touch-action: none; backdrop-filter: blur(4px); transition: opacity 0.4s ease; user-select: none; }
-  .draggable-word.captured { opacity: 0; pointer-events: none; }
-  .draggable-word:active { cursor: grabbing; }
+  .encontro-words-area {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  /* Slots na frase (lacunas que recebem palavras) */
+  .duo-slot {
+    display: inline-block;
+    min-width: 60px;
+    padding: 4px 10px;
+    margin: 0 2px;
+    border-bottom: 1.5px solid rgba(244, 232, 216, 0.4);
+    transition: all 0.3s ease;
+    cursor: default;
+    color: #F4E8D8;
+  }
+  .duo-slot.filled {
+    background: rgba(244, 232, 216, 0.12);
+    border-bottom-color: rgba(244, 232, 216, 0.7);
+    cursor: pointer;
+  }
+  .duo-slot.filled:hover {
+    background: rgba(244, 232, 216, 0.2);
+  }
+  .duo-slot.correct {
+    background: rgba(120, 180, 130, 0.18);
+    border-bottom-color: rgba(150, 220, 170, 0.85);
+    cursor: default;
+  }
+  .duo-slot.incorrect {
+    background: rgba(180, 80, 80, 0.18);
+    border-bottom-color: rgba(220, 130, 130, 0.85);
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  /* Palavras no banco (clicáveis) */
+  .duo-word {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(15, 20, 25, 0.7);
+    border: 1px solid rgba(244, 232, 216, 0.4);
+    border-radius: 4px;
+    color: #F4E8D8;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(13px, 3.4vw, 15px);
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    user-select: none;
+    box-shadow: 0 2px 0 rgba(244, 232, 216, 0.15);
+  }
+  .duo-word:hover {
+    background: rgba(244, 232, 216, 0.12);
+    border-color: rgba(244, 232, 216, 0.7);
+    transform: translateY(-1px);
+  }
+  .duo-word:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(244, 232, 216, 0.1);
+  }
+  .duo-word.used {
+    opacity: 0.25;
+    cursor: default;
+    pointer-events: none;
+    border-color: rgba(244, 232, 216, 0.15);
+    background: rgba(15, 20, 25, 0.4);
+    box-shadow: none;
+  }
 
   /* DIÁLOGOS */
   .dialogue { text-align: left; margin: 16px 0 4px; }
@@ -333,11 +446,222 @@
   .audio-toggle svg { width: 18px; height: 18px; }
 
   /* MOBILE */
-  @media (max-width: 640px) {
-    #scene-title { padding-top: 6vh; }
+  @media (max-width: 640px) and (orientation: portrait) {
+    /* Layout em 3 regiões: imagem 55% / texto 25% / UI 20% */
+    /* Aplica nas cenas de gameplay */
+    #scene-gameplay,
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 55% !important;
+      background-position: top center !important;
+      background-repeat: no-repeat !important;
+      background-color: #0F1419;
+      justify-content: flex-end !important;
+      padding-bottom: 24px;
+    }
+
+    /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean */
+    #scene-intro-lia { background-image: url('assets/lia-uberlandia.png') !important; }
+    #scene-intro-bento { background-image: url('assets/bento-sinop.png') !important; }
+    #scene-connection { background-image: url('assets/connection.png') !important; }
+    #scene-map { background-image: url('assets/map.png') !important; }
+    #scene-fusos-intro { background-image: url('assets/fusos.png') !important; }
+    #scene-ruido-intro { background-image: url('assets/ruido.png') !important; }
+    #scene-travessia-intro { background-image: url('assets/travessia.png') !important; }
+    #scene-convergencia { background-image: url('assets/convergencia.png') !important; }
+    #scene-toque { background-image: url('assets/toque.png') !important; }
+
+    /* Cutscenes também: imagem 60% topo, texto 40% baixo */
+    #scene-intro-lia,
+    #scene-intro-bento,
+    #scene-connection,
+    #scene-map,
+    #scene-fusos-intro,
+    #scene-ruido-intro,
+    #scene-travessia-intro,
+    #scene-convergencia,
+    #scene-toque {
+      background-size: 100% 60% !important;
+      background-position: top center !important;
+      background-repeat: no-repeat !important;
+      background-color: #0F1419 !important;
+      justify-content: flex-end !important;
+      padding-bottom: 14vh !important;
+    }
+
+    /* Cutscene-text não tem mais fundo escuro (porque o fundo já é escuro) */
+    #scene-intro-lia .cutscene-text,
+    #scene-intro-bento .cutscene-text,
+    #scene-connection .cutscene-text,
+    #scene-map .cutscene-text,
+    #scene-fusos-intro .cutscene-text,
+    #scene-ruido-intro .cutscene-text,
+    #scene-travessia-intro .cutscene-text,
+    #scene-convergencia .cutscene-text,
+    #scene-toque .cutscene-text {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      padding: 12px 20px !important;
+    }
+
+    /* Adiciona um gradiente de transição entre imagem e área inferior nas cutscenes */
+    #scene-intro-lia::after,
+    #scene-intro-bento::after,
+    #scene-connection::after,
+    #scene-map::after,
+    #scene-fusos-intro::after,
+    #scene-ruido-intro::after,
+    #scene-travessia-intro::after,
+    #scene-convergencia::after,
+    #scene-toque::after {
+      content: '';
+      position: absolute;
+      top: 45%;
+      left: 0;
+      width: 100%;
+      height: 25%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Adiciona um gradiente de transição entre imagem e área inferior nas gameplay */
+    #scene-gameplay::before,
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Garante que conteúdo das cutscenes fique acima do gradiente */
+    #scene-intro-lia .cutscene-text,
+    #scene-intro-bento .cutscene-text,
+    #scene-connection .cutscene-text,
+    #scene-map .cutscene-text,
+    #scene-fusos-intro .cutscene-text,
+    #scene-ruido-intro .cutscene-text,
+    #scene-travessia-intro .cutscene-text,
+    #scene-convergencia .cutscene-text,
+    #scene-toque .cutscene-text {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Garante que conteúdo da gameplay fique abaixo dos 55% iniciais */
+    #scene-fusos-game .fusos-container,
+    #scene-travessia-game .travessia-progress-area,
+    #scene-encontro-game .encontro-dialogue-area,
+    #scene-encontro-game .encontro-words-area {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* TRAVESSIA: pensamentos no centro da imagem (parte de cima) */
+    #scene-travessia-game .travessia-thought {
+      top: 27% !important;
+      font-size: clamp(15px, 4.5vw, 18px) !important;
+      max-width: 90% !important;
+    }
+
+    /* TRAVESSIA: progresso e botão na parte de baixo */
+    #scene-travessia-game .travessia-progress-area {
+      width: calc(100% - 32px);
+      max-width: 100%;
+      margin-top: auto;
+    }
+
+    /* FUSOS: círculo de respiração centralizado na zona de baixo */
+    #scene-fusos-game {
+      align-items: center !important;
+    }
+    #scene-fusos-game .fusos-container {
+      margin-top: 50%;
+      padding: 12px 20px;
+    }
+    #scene-fusos-game .breath-circle-container {
+      width: clamp(120px, 28vw, 160px) !important;
+      height: clamp(120px, 28vw, 160px) !important;
+    }
+    #scene-fusos-game .fusos-instruction {
+      font-size: clamp(13px, 3.4vw, 15px) !important;
+      margin-bottom: 20px !important;
+    }
+
+    /* ENCONTRO: diálogo e banco de palavras na parte de baixo */
+    #scene-encontro-game {
+      padding-top: 56% !important;
+    }
+    #scene-encontro-game .encontro-dialogue-area {
+      min-height: 100px;
+      padding: 14px 16px;
+    }
+
+    /* RUÍDO: padrão Morse na parte de baixo (em cima da imagem fica feio) */
+    #scene-ruido-game {
+      padding-top: 56% !important;
+    }
+    #scene-ruido-game .morse-pattern-floating {
+      padding: 14px 18px;
+      gap: 10px;
+    }
+    #scene-ruido-game .morse-revealed-floating {
+      bottom: 16px;
+    }
+    #scene-ruido-game .morse-counter {
+      top: 14px;
+      right: 14px;
+    }
+
+    /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
+    /* mas comprime altura pra não cortar */
+    #scene-gameplay {
+      background-size: cover !important;
+      background-position: center !important;
+      flex-direction: row !important;
+      padding: 0 !important;
+    }
+    #scene-gameplay::before {
+      display: none;
+    }
+
+    /* TUTORIAL da Fase 1 - posiciona embaixo pra não cobrir os personagens */
+    #scene-gameplay #tutorial {
+      top: auto !important;
+      bottom: 24px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      max-width: 320px !important;
+    }
+
+    /* Instruction overlay: posiciona no topo SEM cobrir imagem */
+    .instruction-overlay {
+      top: 12px !important;
+      width: calc(100% - 24px) !important;
+      padding: 10px 14px !important;
+    }
+    .instruction-overlay p {
+      font-size: 12px !important;
+      line-height: 1.4 !important;
+    }
+    .instruction-overlay .hint-line {
+      font-size: 9px !important;
+    }
+
     .title-content { padding: 20px; }
     .cutscene { padding-bottom: 16vh; }
-    .cutscene-text { padding: 22px 20px; }
     #scene-characters { padding: 20px 16px; padding-top: 5vh; }
     .characters-container { flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
     .character-card { padding: 12px 14px 14px; flex-direction: row; gap: 14px; text-align: left; align-items: center; }
@@ -353,12 +677,175 @@
     .dialogue-line.bento { padding-left: 16px; }
     .end-content { padding: 28px 22px; max-width: calc(100% - 32px); }
     .continue-hint { bottom: 4vh; }
-    .ruido-message { font-size: 18px; margin: 24px 0; }
-    .floating-letter { width: 42px; height: 42px; font-size: 17px; }
-    .ruido-letters-area { height: 200px; }
     .encontro-line.bento { padding-left: 16px; }
-    .draggable-word { padding: 8px 14px; }
+    .duo-word { padding: 8px 14px; }
   }
+
+  /* Mobile landscape ou tablets pequenos: comportamento próximo do desktop */
+  @media (max-width: 640px) and (orientation: landscape) {
+    .characters-container { flex-direction: row; gap: 12px; }
+  }
+
+  /* ===== LAYOUT MOBILE: 3 REGIÕES (imagem 60% / texto 25% / UI 15%) ===== */
+  @media (max-width: 768px) {
+    /* Aplicado apenas em cenas de GAMEPLAY (não cutscenes nem título) */
+    #scene-fusos-game,
+    #scene-ruido-game,
+    #scene-travessia-game,
+    #scene-encontro-game {
+      background-size: 100% 60%;
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-attachment: local;
+    }
+    /* Cor de fundo escura na parte de baixo (40%) */
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(15, 20, 25, 0.6) 0%, rgba(15, 20, 25, 1) 25%, rgba(15, 20, 25, 1) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Garantir que conteúdo fica acima do gradiente */
+    #scene-fusos-game > *,
+    #scene-ruido-game > *,
+    #scene-travessia-game > *,
+    #scene-encontro-game > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Fusos: container fica embaixo */
+    #scene-fusos-game { justify-content: flex-end; padding-bottom: 8vh; }
+    .fusos-container { padding: 16px; max-width: 100%; }
+    .fusos-instruction { margin-bottom: 20px; font-size: 14px; }
+    .breath-circle-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+    }
+    .fusos-counter { margin-top: 12px; }
+
+    /* Travessia: pensamento fica na zona de texto (não centralizado absoluto) */
+    .travessia-thought {
+      position: absolute;
+      top: 60%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: clamp(15px, 4.5vw, 18px);
+      padding: 16px 24px;
+      max-width: 100%;
+      width: auto;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+    .travessia-thought.visible {
+      transform: translateY(-50%);
+    }
+    #scene-travessia-game {
+      justify-content: flex-end;
+      padding: 16px 16px 6vh;
+    }
+    .travessia-progress-area { margin-top: auto; }
+    .travessia-touch-zone { height: 60px; }
+
+    /* Morse: imagem em cima, padrão e contador embaixo */
+    #scene-ruido-game { justify-content: flex-end; padding-bottom: 4vh; }
+    .morse-pattern-floating {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .morse-revealed-floating {
+      bottom: 14vh;
+    }
+
+    /* Encontro: dialog area embaixo */
+    #scene-encontro-game {
+      justify-content: flex-end;
+      padding: 16px 16px 4vh;
+    }
+    .encontro-dialogue-area {
+      background: rgba(15, 20, 25, 0.85);
+      padding: 14px 16px;
+      min-height: auto;
+      margin-bottom: 12px;
+    }
+    .encontro-line {
+      font-size: clamp(13px, 3.6vw, 15px);
+      margin-bottom: 6px;
+    }
+    .encontro-words-area {
+      min-height: 90px;
+      padding: 8px;
+      gap: 6px;
+    }
+    .duo-word { padding: 7px 12px; font-size: 13px; }
+
+    /* Instrução overlay menor em mobile */
+    .instruction-overlay {
+      top: 12px;
+      padding: 10px 14px;
+      width: calc(100% - 24px);
+    }
+    .instruction-overlay p { font-size: 12px; }
+    .instruction-overlay .hint-line { font-size: 9px; }
+  }
+
+  /* Instruções que somem após alguns segundos */
+  .auto-hide {
+    animation: fadeOutInstruction 0s ease 5s forwards;
+    -webkit-animation: fadeOutInstruction 0s ease 5s forwards;
+  }
+  @keyframes fadeOutInstruction {
+    to { opacity: 0; pointer-events: none; visibility: hidden; }
+  }
+  .instruction-overlay {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
+    max-width: 540px;
+    text-align: center;
+    background: rgba(15, 20, 25, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 20px;
+    border: 0.5px solid rgba(244, 232, 216, 0.15);
+    z-index: 50;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    border-radius: 2px;
+  }
+  .instruction-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -8px);
+  }
+  .instruction-overlay p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(12px, 3vw, 14px);
+    line-height: 1.5;
+    margin: 0;
+    color: #F4E8D8;
+  }
+  .instruction-overlay .hint-line {
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9px, 2.2vw, 10px);
+    letter-spacing: 0.3em;
+    opacity: 0.65;
+    margin-top: 6px;
+  }
+
 </style>
 </head>
 <body>
@@ -508,21 +995,23 @@
   </div>
 
   <div class="scene" id="scene-ruido-game">
-    <div class="morse-header">
-      <p class="morse-instruction" id="morse-instruction">Bento está transmitindo. Reproduza o sinal pra confirmar que recebeu.</p>
-      <p class="morse-hint">TOQUE CURTO = · &nbsp;&nbsp; TOQUE LONGO = —</p>
+    <div class="instruction-overlay" id="morse-instruction-overlay">
+      <p id="morse-instruction-text">Toque na tela seguindo o padrão de Bento.</p>
+      <p class="hint-line">RÁPIDO = · &nbsp;&nbsp; SEGURADO = —</p>
     </div>
 
-    <div class="morse-target-word" id="morse-target-word"></div>
+    <div class="morse-counter" id="morse-counter">1 / 3</div>
 
-    <div class="morse-pattern" id="morse-pattern"></div>
+    <div class="morse-pattern-floating" id="morse-pattern"></div>
 
-    <div class="morse-revealed" id="morse-revealed"></div>
+    <div class="morse-tap-hint" id="morse-tap-hint">
+      <span>↓</span>
+      <span>TOQUE EM QUALQUER LUGAR DA TELA</span>
+    </div>
 
-    <button class="morse-key" id="morse-key">
-      <span class="morse-key-label">CHAVE TELEGRÁFICA</span>
-      <span class="morse-key-pulse" id="morse-key-pulse"></span>
-    </button>
+    <div class="morse-revealed-floating" id="morse-revealed"></div>
+
+    <div class="morse-pulse-overlay" id="morse-pulse"></div>
   </div>
 
   <div class="scene cutscene" id="scene-travessia-intro" data-action="startTravessia">
@@ -534,9 +1023,9 @@
   </div>
 
   <div class="scene" id="scene-travessia-game">
-    <div class="travessia-header">
-      <p class="travessia-instruction">Lia caminha enquanto você sustenta o gesto.</p>
-      <p class="travessia-hint">MANTENHA O DEDO · NÃO SOLTE</p>
+    <div class="instruction-overlay" id="travessia-instruction-overlay">
+      <p>Lia caminha enquanto você sustenta o gesto.</p>
+      <p class="hint-line">MANTENHA O DEDO · NÃO SOLTE</p>
     </div>
     <p class="travessia-thought" id="travessia-thought"></p>
     <div class="travessia-progress-area">
@@ -557,8 +1046,9 @@
   </div>
 
   <div class="scene" id="scene-encontro-game">
-    <div class="encontro-header">
-      <p class="encontro-instruction">As palavras precisam de esforço. Arraste cada uma para o lugar.</p>
+    <div class="instruction-overlay" id="encontro-instruction-overlay">
+      <p>Toque numa palavra e depois no espaço onde ela cabe.</p>
+      <p class="hint-line">CADA FRASE PRECISA DE ESFORÇO</p>
     </div>
     <div class="encontro-dialogue-area">
       <div class="encontro-line lia" id="line-1"></div>
@@ -1013,6 +1503,26 @@ function startAudioOnInteraction(e) {
     setMood('title');
     startBackgroundMusic();
   }, 500);
+
+  // Solicita fullscreen no mobile (apenas)
+  if (window.innerWidth <= 768) {
+    requestFullscreen();
+  }
+}
+
+function requestFullscreen() {
+  const el = document.documentElement;
+  try {
+    if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  } catch (e) {
+    // Silently fail - alguns browsers não permitem
+  }
 }
 
 document.addEventListener('click', startAudioOnInteraction);
@@ -1079,6 +1589,16 @@ function goToScene(sceneId) {
   document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
   setTimeout(() => {
     document.getElementById(sceneId).classList.add('active');
+
+    // Reseta visibilidade de overlays de instrução
+    document.querySelectorAll('.instruction-overlay').forEach(o => {
+      o.classList.remove('hidden');
+    });
+    // Auto-esconde overlay da cena ativa após 5 segundos
+    const activeOverlay = document.getElementById(sceneId).querySelector('.instruction-overlay');
+    if (activeOverlay) {
+      setTimeout(() => activeOverlay.classList.add('hidden'), 8000);
+    }
 
     // Muda clima sonoro
     if (SCENE_MOODS[sceneId] && AudioEngine.isStarted()) {
@@ -1213,7 +1733,7 @@ function startFusos() {
     counter.textContent = '00:' + s.toString().padStart(2, '0');
     if (s <= 0) {
       clearInterval(fusosTimer); clearInterval(breathTimer);
-      breathText.textContent = 'BENTO ACORDOU';
+      breathText.innerHTML = 'BENTO<br>ACORDOU';
       instruction.textContent = 'A resposta chegou.';
       setTimeout(() => goToScene('scene-ruido-intro'), 2400);
     }
@@ -1241,13 +1761,16 @@ const MORSE_WORDS = [
 ];
 
 // Tempo limite (ms) entre toque curto e longo
-const MORSE_DOT_MAX = 250; // até 250ms = ponto
+const MORSE_DOT_MAX = 300; // até 300ms = ponto
 // Acima de 250ms = traço
 
 let morseState = null;
 
 function startRuido() {
   goToScene('scene-ruido-game');
+  // Reseta a dica de toque
+  const hint = document.getElementById('morse-tap-hint');
+  if (hint) hint.classList.remove('gone');
   setTimeout(() => initMorse(), 300);
 }
 
@@ -1280,10 +1803,10 @@ function loadMorseWord() {
   morseState.currentSymbolIdx = 0;
   morseState.letters = [];
 
-  // Atualiza o título da palavra-alvo
-  const targetEl = document.getElementById('morse-target-word');
+  // Atualiza o contador de transmissões
+  const targetEl = document.getElementById('morse-counter');
   if (targetEl) {
-    targetEl.textContent = 'Transmissão ' + (morseState.wordIndex + 1) + ' de ' + MORSE_WORDS.length;
+    targetEl.textContent = (morseState.wordIndex + 1) + ' / ' + MORSE_WORDS.length;
   }
 
   // Limpa frase revelada
@@ -1338,19 +1861,29 @@ function loadMorseWord() {
 }
 
 function setupMorseKey() {
-  const key = document.getElementById('morse-key');
-  if (!key) return;
+  const scene = document.getElementById('scene-ruido-game');
+  if (!scene) return;
 
-  // Remove listeners antigos clonando o nó
-  const newKey = key.cloneNode(true);
-  key.parentNode.replaceChild(newKey, key);
+  // Remove listeners antigos clonando o nó (mas precisamos manter os filhos)
+  // Em vez disso, usamos uma flag pra evitar duplicação
+  if (scene.dataset.morseSetup === 'true') return;
+  scene.dataset.morseSetup = 'true';
 
   function onPressStart(e) {
+    if (!morseState) return;
+    // Ignora cliques fora da cena ativa ou em elementos UI específicos
+    if (!scene.classList.contains('active')) return;
+    if (e.target.closest('#audio-toggle')) return;
     e.preventDefault();
-    if (!morseState || morseState.isPressing) return;
+    if (morseState.isPressing) return;
     morseState.isPressing = true;
     morseState.pressStart = Date.now();
-    newKey.classList.add('pressing');
+    scene.classList.add('pressing');
+    // Esconde a dica de toque depois do primeiro contato
+    const hint = document.getElementById('morse-tap-hint');
+    if (hint && !hint.classList.contains('gone')) {
+      hint.classList.add('gone');
+    }
   }
 
   function onPressEnd(e) {
@@ -1359,18 +1892,18 @@ function setupMorseKey() {
     const duration = Date.now() - morseState.pressStart;
     morseState.isPressing = false;
     morseState.pressStart = null;
-    newKey.classList.remove('pressing');
+    scene.classList.remove('pressing');
 
     const symbol = duration < MORSE_DOT_MAX ? '.' : '-';
     processMorseInput(symbol);
   }
 
-  newKey.addEventListener('mousedown', onPressStart);
-  newKey.addEventListener('touchstart', onPressStart, { passive: false });
-  newKey.addEventListener('mouseup', onPressEnd);
-  newKey.addEventListener('mouseleave', onPressEnd);
-  newKey.addEventListener('touchend', onPressEnd);
-  newKey.addEventListener('touchcancel', onPressEnd);
+  scene.addEventListener('mousedown', onPressStart);
+  scene.addEventListener('touchstart', onPressStart, { passive: false });
+  scene.addEventListener('mouseup', onPressEnd);
+  scene.addEventListener('mouseleave', onPressEnd);
+  scene.addEventListener('touchend', onPressEnd);
+  scene.addEventListener('touchcancel', onPressEnd);
 }
 
 function processMorseInput(symbol) {
@@ -1446,11 +1979,9 @@ function completeMorseWord() {
 
 // FASE 4 — TRAVESSIA
 const TRAVESSIA_TOTAL_KM = 1547;
-const TRAVESSIA_DURATION_MS = 35000;
+const TRAVESSIA_DURATION_MS = 12000;
 const TRAVESSIA_THOUGHTS = [
   '"Quantos quilômetros são uma decisão?"',
-  '"O cerrado parece o mesmo em todo lugar."',
-  '"Bento sabia o caminho de cor. Eu não."',
   '"Nada pesa mais que o silêncio dele em mim."',
   '"Falta menos do que parece."'
 ];
@@ -1490,7 +2021,7 @@ function travessiaTick() {
     document.getElementById('travessia-bar').style.width = (progress * 100) + '%';
     document.getElementById('travessia-km').textContent = km.toLocaleString('pt-BR') + ' / 1.547 KM';
 
-    const thoughtProgress = Math.floor((travessiaElapsed / 1000) / 6);
+    const thoughtProgress = Math.floor((travessiaElapsed / 1000) / 3.5);
     if (thoughtProgress !== currentThoughtIdx && thoughtProgress < TRAVESSIA_THOUGHTS.length) {
       currentThoughtIdx = thoughtProgress;
       const t = document.getElementById('travessia-thought');
@@ -1515,18 +2046,24 @@ function travessiaTick() {
   }
 }
 
-// FASE 5 — ENCONTRO
+// FASE 5 — ENCONTRO (estilo Duolingo: toque na palavra, vai pra frase)
 const ENCONTRO_LINES = [
-  { speaker: 'lia', words: ['Você', 'é', 'menor', 'do que', 'eu', 'imaginei.'] },
+  { speaker: 'lia',   words: ['Você', 'é', 'menor', 'do que', 'eu', 'imaginei.'] },
   { speaker: 'bento', words: ['Você', 'é', 'mais', 'velho.'] },
-  { speaker: 'lia', words: ['Você', 'é', 'tudo.'] }
+  { speaker: 'lia',   words: ['Você', 'é', 'tudo.'] }
 ];
-let encontroLineIndex = 0, encontroSlots = [];
+let encontroLineIndex = 0;
+let encontroAnswer = []; // palavras escolhidas em ordem
+let encontroExpected = []; // palavras esperadas em ordem
 
 function startEncontro() {
   goToScene('scene-encontro-game');
   encontroLineIndex = 0;
-  ['line-1', 'line-2', 'line-3'].forEach(id => document.getElementById(id).innerHTML = '');
+  // Limpa todas as linhas
+  ['line-1', 'line-2', 'line-3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
   setTimeout(buildEncontroLine, 400);
 }
 
@@ -1535,94 +2072,145 @@ function buildEncontroLine() {
     setTimeout(() => goToScene('scene-toque'), 2400);
     return;
   }
-  const line = ENCONTRO_LINES[encontroLineIndex];
-  const lineEl = document.getElementById('line-' + (encontroLineIndex + 1));
-  lineEl.innerHTML = '— ';
-  encontroSlots = [];
-  line.words.forEach((word, idx) => {
-    const slot = document.createElement('span');
-    slot.className = 'encontro-slot';
-    slot.dataset.expected = word;
-    slot.innerHTML = '&nbsp;&nbsp;&nbsp;';
-    lineEl.appendChild(slot);
-    if (idx < line.words.length - 1) lineEl.appendChild(document.createTextNode(' '));
-    encontroSlots.push({ el: slot, expected: word, filled: false });
-  });
 
-  const wordsArea = document.getElementById('encontro-words');
-  wordsArea.innerHTML = '';
+  const line = ENCONTRO_LINES[encontroLineIndex];
+  encontroExpected = [...line.words];
+  encontroAnswer = new Array(line.words.length).fill(null);
+
+  renderEncontroLine();
+
+  // Embaralha as palavras pro banco
   const shuffled = [...line.words];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  setTimeout(() => {
-    const areaRect = wordsArea.getBoundingClientRect();
-    const areaW = areaRect.width || window.innerWidth - 48;
-    const areaH = areaRect.height || 140;
-    const cols = Math.min(3, shuffled.length);
-    const rows = Math.ceil(shuffled.length / cols);
-    shuffled.forEach((word, idx) => {
-      const el = document.createElement('div');
-      el.className = 'draggable-word';
-      el.textContent = word;
-      el.dataset.word = word;
-      const col = idx % cols;
-      const row = Math.floor(idx / cols);
-      const cellW = areaW / cols;
-      const cellH = areaH / rows;
-      el.style.left = (col * cellW + Math.random() * 20) + 'px';
-      el.style.top = (row * cellH + Math.random() * 10) + 'px';
-      setupDraggableWord(el);
-      wordsArea.appendChild(el);
-    });
-  }, 100);
+
+  renderWordBank(shuffled);
 }
 
-function setupDraggableWord(el) {
-  let isDragging = false, startX = 0, startY = 0;
-  function onStart(x, y) {
-    isDragging = true; startX = x; startY = y;
-    el.style.zIndex = '100';
+function renderEncontroLine() {
+  // Renderiza a frase com slots clicáveis (palavras já posicionadas)
+  const lineEl = document.getElementById('line-' + (encontroLineIndex + 1));
+  if (!lineEl) return;
+  lineEl.innerHTML = '— ';
+
+  for (let i = 0; i < encontroExpected.length; i++) {
+    const slot = document.createElement('span');
+    slot.className = 'duo-slot';
+    slot.dataset.idx = i;
+
+    if (encontroAnswer[i]) {
+      // Tem palavra preenchida
+      slot.textContent = encontroAnswer[i];
+      slot.classList.add('filled');
+      slot.addEventListener('click', () => removeWordFromSlot(i));
+    } else {
+      // Slot vazio
+      slot.innerHTML = '\u00A0\u00A0\u00A0\u00A0';
+    }
+
+    lineEl.appendChild(slot);
+    if (i < encontroExpected.length - 1) {
+      lineEl.appendChild(document.createTextNode(' '));
+    }
   }
-  function onMove(x, y) {
-    if (!isDragging) return;
-    el.style.transform = `translate(${x - startX}px, ${y - startY}px)`;
-  }
-  function onEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-    el.style.zIndex = '';
-    const word = el.dataset.word;
-    const target = encontroSlots.find(s => !s.filled && s.expected === word);
-    if (target) {
-      const sr = target.el.getBoundingClientRect();
-      const er = el.getBoundingClientRect();
-      const dist = Math.sqrt((er.left + er.width/2 - sr.left - sr.width/2)**2 + (er.top + er.height/2 - sr.top - sr.height/2)**2);
-      if (dist < 90) {
-        target.filled = true;
-        target.el.textContent = word;
-        target.el.classList.add('filled');
-        el.classList.add('captured');
-        if (encontroSlots.every(s => s.filled)) {
-          encontroLineIndex++;
-          setTimeout(buildEncontroLine, 1400);
-        }
-        return;
+}
+
+function renderWordBank(shuffledWords) {
+  const wordsArea = document.getElementById('encontro-words');
+  if (!wordsArea) return;
+  wordsArea.innerHTML = '';
+
+  shuffledWords.forEach((word, idx) => {
+    const el = document.createElement('div');
+    el.className = 'duo-word';
+    el.textContent = word;
+    el.dataset.word = word;
+
+    // Marca como usada se já está em algum slot
+    if (encontroAnswer.includes(word)) {
+      // Mas só marca a primeira ocorrência - pode ter palavras repetidas
+      const usedCount = encontroAnswer.filter(w => w === word).length;
+      const idxInBank = shuffledWords.slice(0, idx + 1).filter(w => w === word).length;
+      if (idxInBank <= usedCount) {
+        el.classList.add('used');
       }
     }
-    el.style.transition = 'transform 0.4s ease';
-    el.style.transform = 'translate(0, 0)';
-    setTimeout(() => { el.style.transition = ''; }, 400);
-  }
-  el.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX, e.clientY); });
-  el.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: false });
-  document.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
-  document.addEventListener('touchmove', e => { if (isDragging) { e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); } }, { passive: false });
-  document.addEventListener('mouseup', onEnd);
-  document.addEventListener('touchend', onEnd);
+
+    el.addEventListener('click', () => placeWordInNextSlot(el, word));
+    wordsArea.appendChild(el);
+  });
 }
+
+function placeWordInNextSlot(wordEl, word) {
+  if (wordEl.classList.contains('used')) return;
+
+  // Acha o próximo slot vazio
+  const nextEmptyIdx = encontroAnswer.indexOf(null);
+  if (nextEmptyIdx === -1) return;
+
+  encontroAnswer[nextEmptyIdx] = word;
+  wordEl.classList.add('used');
+
+  renderEncontroLine();
+
+  // Verifica se completou
+  if (!encontroAnswer.includes(null)) {
+    checkEncontroAnswer();
+  }
+}
+
+function removeWordFromSlot(slotIdx) {
+  const word = encontroAnswer[slotIdx];
+  if (!word) return;
+
+  encontroAnswer[slotIdx] = null;
+  renderEncontroLine();
+
+  // Libera UMA ocorrência da palavra no banco (pega a primeira used que match)
+  const wordsArea = document.getElementById('encontro-words');
+  if (!wordsArea) return;
+  const wordEls = wordsArea.querySelectorAll('.duo-word.used');
+  for (let el of wordEls) {
+    if (el.dataset.word === word) {
+      el.classList.remove('used');
+      break;
+    }
+  }
+}
+
+function checkEncontroAnswer() {
+  const correct = encontroAnswer.every((w, i) => w === encontroExpected[i]);
+
+  if (correct) {
+    // Marca slots como certos
+    document.querySelectorAll('#line-' + (encontroLineIndex + 1) + ' .duo-slot').forEach(s => {
+      s.classList.add('correct');
+    });
+
+    encontroLineIndex++;
+    setTimeout(buildEncontroLine, 1600);
+  } else {
+    // Pisca em vermelho e libera tudo após delay
+    document.querySelectorAll('#line-' + (encontroLineIndex + 1) + ' .duo-slot.filled').forEach(s => {
+      s.classList.add('incorrect');
+    });
+
+    setTimeout(() => {
+      // Reseta a linha
+      encontroAnswer = new Array(encontroExpected.length).fill(null);
+      const wordsArea = document.getElementById('encontro-words');
+      if (wordsArea) {
+        wordsArea.querySelectorAll('.duo-word.used').forEach(el => el.classList.remove('used'));
+      }
+      renderEncontroLine();
+    }, 900);
+  }
+}
+
 </script>
+
 
 
 </body></html>
