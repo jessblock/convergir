@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_57.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_58.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -721,6 +721,11 @@
     /* ===================================================================
        DESKTOP — Tela de título com largura 100%, focando a Lia
        =================================================================== */
+    /* Esconde os losangos divisores que só fazem sentido no mobile portrait
+       (separam imagem de UI). No desktop ficam soltos e não funcionam. */
+    .scene-divider-line {
+      display: none !important;
+    }
     /* A imagem é vertical (9:16). Em widescreen com cover, ela fica
        muito ampliada. background-position: center 25% mostra os 25%
        superiores da imagem (céu + cabelo da Lia visíveis) com largura 100%. */
