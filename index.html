@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_43.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_44.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -1111,6 +1111,15 @@
       order: -1;
     }
 
+    /* Imagem do Encontro reduzida (UI complexa precisa de mais espaço) */
+    #scene-encontro-game::before {
+      height: 38vh !important;
+    }
+    /* Imagem do Ruído também precisa ser menor (instrução + padrão + frase + hint) */
+    #scene-ruido-game::before {
+      height: 42vh !important;
+    }
+
     /* Cutscene - texto vai no flex container abaixo da imagem */
     .cutscene {
       justify-content: flex-start !important;
@@ -1234,6 +1243,10 @@
     }
 
     /* ===== ENCONTRO GAMEPLAY ===== */
+    #scene-encontro-game {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
     #scene-encontro-game .encontro-dialogue-area {
       width: calc(100% - 24px);
       max-width: 100%;
@@ -1249,15 +1262,15 @@
     #scene-encontro-game .encontro-words-area {
       width: calc(100% - 24px);
       max-width: 100%;
-      margin: 0 auto;
-      padding: 8px !important;
+      margin: 0 auto 16px;
+      padding: 10px !important;
       gap: 6px !important;
       min-height: auto !important;
       flex-shrink: 0;
     }
     #scene-encontro-game .duo-word {
-      padding: 10px 16px !important;
-      font-size: clamp(14px, 3.6vw, 16px) !important;
+      padding: 9px 14px !important;
+      font-size: clamp(13px, 3.4vw, 15px) !important;
     }
 
     /* ===== FASE 1 (SINTONIA) - layout vertical 2 metades ===== */
