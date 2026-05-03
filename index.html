@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_58.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_60.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -740,14 +740,15 @@
     .scene-divider-line {
       display: none !important;
     }
-    /* A imagem de capa é horizontal (~6:5). Em desktop widescreen com `cover`,
-       a imagem escala pela largura e cropa verticalmente. `center 65%` empurra
-       o crop para baixo, garantindo que os pés da LIA fiquem visíveis em FHD/QHD
-       e mantendo o feixe de luz e a antena de TV no enquadramento. */
+    /* A imagem de capa é horizontal (~6:5). Em desktop com `cover`, a imagem
+       escala pela largura e cropa verticalmente. `center 75%` empurra o crop
+       para baixo, garantindo que os pés da LIA fiquem visíveis e mantendo a
+       maior parte do corpo + antena + ruínas no enquadramento, em uma ampla
+       gama de aspect ratios (16:9, 16:10, 19:9, 19:10, etc). */
     #scene-title {
       background-image: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.5) 45%, rgba(15,20,25,0.85) 100%), url('assets/title.png') !important;
       background-size: cover !important;
-      background-position: center 65% !important;
+      background-position: center 75% !important;
       background-repeat: no-repeat !important;
       background-color: #1a0a0a !important;
     }
@@ -1087,14 +1088,13 @@
   }
 
   /* ===================================================================
-     ULTRAWIDE — Telas com aspect ratio >= 2:1 (21:9, 32:9, etc.)
-     Em ultrawide, `cover` escala a imagem horizontal pela largura e
-     corta o topo (cabeça/feixe). Para preservar a LIA inteira de
-     corpo inteiro junto com o feixe de luz, usamos `contain`: a imagem
-     fica enquadrada pela altura, com bordas laterais. Adicionamos um
-     gradiente vinho nas laterais para suavizar a transição.
+     ULTRAWIDE EXTREMO — Telas com aspect ratio >= 2.4:1 (32:9 e mais).
+     Em ratios entre 16:9 e ~2.4 a regra desktop com `cover + center 75%`
+     já entrega a LIA inteira ocupando 100% da largura. Só nos casos
+     realmente extremos (super ultrawide) `cover` cortaria demais o
+     corpo da LIA, então caímos em `contain` com vinheta lateral.
      =================================================================== */
-  @media (min-width: 769px) and (min-aspect-ratio: 2/1) {
+  @media (min-width: 769px) and (min-aspect-ratio: 12/5) {
     #scene-title {
       background-image:
         linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.5) 45%, rgba(15,20,25,0.85) 100%),
