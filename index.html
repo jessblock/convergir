@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_35.html -->
+<!-- saved from url=(0046)file:///C:/Users/jessi/Downloads/index_36.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -447,22 +447,60 @@
 
   /* MOBILE */
   @media (max-width: 640px) and (orientation: portrait) {
-    /* Layout em 3 regiões: imagem 55% / texto 25% / UI 20% */
-    /* Aplica nas cenas de gameplay */
-    #scene-gameplay,
+    /* Layout em 2 regiões (mobile portrait): imagem cropada em cima + área de UI embaixo */
+    /* TÉCNICA: background-size: cover + altura definida via gradient mask */
+    
+    /* Cenas de gameplay: imagem ocupa proporcionalmente os 55% superiores */
     #scene-fusos-game,
     #scene-ruido-game,
     #scene-travessia-game,
     #scene-encontro-game {
-      background-size: 100% 55% !important;
-      background-position: top center !important;
+      background-size: cover !important;
+      background-position: center top !important;
       background-repeat: no-repeat !important;
       background-color: #0F1419;
       justify-content: flex-end !important;
       padding-bottom: 24px;
+      position: relative;
+    }
+    
+    /* Cria uma máscara que esconde a imagem após 55% da altura */
+    /* Usando um pseudo-elemento ::before que cobre só a parte de baixo com cor sólida */
+    #scene-fusos-game::before,
+    #scene-ruido-game::before,
+    #scene-travessia-game::before,
+    #scene-encontro-game::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 25%, #0F1419 100%);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean */
+    /* Cutscenes: imagem cropada em cima 60%, texto embaixo */
+    #scene-intro-lia,
+    #scene-intro-bento,
+    #scene-connection,
+    #scene-map,
+    #scene-fusos-intro,
+    #scene-ruido-intro,
+    #scene-travessia-intro,
+    #scene-convergencia,
+    #scene-toque {
+      background-size: cover !important;
+      background-position: center top !important;
+      background-repeat: no-repeat !important;
+      background-color: #0F1419 !important;
+      justify-content: flex-end !important;
+      padding-bottom: 14vh !important;
+      position: relative;
+    }
+
+    /* Remove gradiente sobreposto das cutscenes em mobile portrait — a imagem fica clean em cima */
     #scene-intro-lia { background-image: url('assets/lia-uberlandia.png') !important; }
     #scene-intro-bento { background-image: url('assets/bento-sinop.png') !important; }
     #scene-connection { background-image: url('assets/connection.png') !important; }
@@ -473,25 +511,7 @@
     #scene-convergencia { background-image: url('assets/convergencia.png') !important; }
     #scene-toque { background-image: url('assets/toque.png') !important; }
 
-    /* Cutscenes também: imagem 60% topo, texto 40% baixo */
-    #scene-intro-lia,
-    #scene-intro-bento,
-    #scene-connection,
-    #scene-map,
-    #scene-fusos-intro,
-    #scene-ruido-intro,
-    #scene-travessia-intro,
-    #scene-convergencia,
-    #scene-toque {
-      background-size: 100% 60% !important;
-      background-position: top center !important;
-      background-repeat: no-repeat !important;
-      background-color: #0F1419 !important;
-      justify-content: flex-end !important;
-      padding-bottom: 14vh !important;
-    }
-
-    /* Cutscene-text não tem mais fundo escuro (porque o fundo já é escuro) */
+    /* Cutscene-text não tem mais fundo escuro */
     #scene-intro-lia .cutscene-text,
     #scene-intro-bento .cutscene-text,
     #scene-connection .cutscene-text,
@@ -508,7 +528,7 @@
       padding: 12px 20px !important;
     }
 
-    /* Adiciona um gradiente de transição entre imagem e área inferior nas cutscenes */
+    /* Cria a máscara que esconde a imagem após 60% da altura nas cutscenes */
     #scene-intro-lia::after,
     #scene-intro-bento::after,
     #scene-connection::after,
@@ -520,28 +540,11 @@
     #scene-toque::after {
       content: '';
       position: absolute;
-      top: 45%;
+      top: 55%;
       left: 0;
       width: 100%;
-      height: 25%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 70%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Adiciona um gradiente de transição entre imagem e área inferior nas gameplay */
-    #scene-gameplay::before,
-    #scene-fusos-game::before,
-    #scene-ruido-game::before,
-    #scene-travessia-game::before,
-    #scene-encontro-game::before {
-      content: '';
-      position: absolute;
-      top: 40%;
-      left: 0;
-      width: 100%;
-      height: 30%;
-      background: linear-gradient(180deg, transparent 0%, #0F1419 60%);
+      height: 45%;
+      background: linear-gradient(180deg, transparent 0%, #0F1419 30%, #0F1419 100%);
       pointer-events: none;
       z-index: 1;
     }
@@ -560,7 +563,7 @@
       z-index: 5;
     }
 
-    /* Garante que conteúdo da gameplay fique abaixo dos 55% iniciais */
+    /* Garante que conteúdo da gameplay fique acima do gradient */
     #scene-fusos-game .fusos-container,
     #scene-travessia-game .travessia-progress-area,
     #scene-encontro-game .encontro-dialogue-area,
@@ -590,6 +593,8 @@
     #scene-fusos-game .fusos-container {
       margin-top: 50%;
       padding: 12px 20px;
+      position: relative;
+      z-index: 5;
     }
     #scene-fusos-game .breath-circle-container {
       width: clamp(120px, 28vw, 160px) !important;
@@ -609,13 +614,15 @@
       padding: 14px 16px;
     }
 
-    /* RUÍDO: padrão Morse na parte de baixo (em cima da imagem fica feio) */
+    /* RUÍDO: padrão Morse na parte de baixo */
     #scene-ruido-game {
       padding-top: 56% !important;
     }
     #scene-ruido-game .morse-pattern-floating {
       padding: 14px 18px;
       gap: 10px;
+      position: relative;
+      z-index: 5;
     }
     #scene-ruido-game .morse-revealed-floating {
       bottom: 16px;
@@ -623,10 +630,14 @@
     #scene-ruido-game .morse-counter {
       top: 14px;
       right: 14px;
+      z-index: 30;
+    }
+    #scene-ruido-game .morse-tap-hint {
+      position: relative;
+      z-index: 5;
     }
 
     /* GAMEPLAY (Fase 1 com dois lados): mantém layout horizontal mesmo em retrato */
-    /* mas comprime altura pra não cortar */
     #scene-gameplay {
       background-size: cover !important;
       background-position: center !important;
